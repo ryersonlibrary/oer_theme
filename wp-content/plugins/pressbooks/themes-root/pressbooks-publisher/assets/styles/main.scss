@@ -31,6 +31,10 @@ body {
     clear:both
   }
 }
+.noradiusbtn{
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px; 
+}
 .ajaxloader{
   display:block;
   margin: 6em auto;
@@ -736,10 +740,13 @@ section.bgbox{
     margin: 0 15px 0 0;
     padding: 0;
     display: block;
-    border: solid 1px $clr4;
+    border-top: none;
+    border-right: solid 1px $clr4;
+    border-bottom: solid 1px $clr4;
+    border-left: solid 1px $clr4;
     position: absolute;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: lighten($clr4-lighter,20%);
     z-index: 2;
   
     ul {
@@ -754,7 +761,7 @@ section.bgbox{
       display: block;
       width: 100%;
       font-weight: bold;
-      background-color: #fff;
+      background-color: lighten($clr4-lighter,20%);
       cursor: pointer;
     }
     li:hover{

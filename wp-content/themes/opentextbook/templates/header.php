@@ -12,11 +12,11 @@
 				?>
 			</nav><!-- .main-navigation -->
 			<div id="social-controls">
-				<img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-yellow.png" class="icon">
-				<img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon">
-				<img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon">
-				<img src="<?= get_template_directory_uri(); ?>/dist/images/linkedin-icon-dark.png" class="icon">
-				<img src="<?= get_template_directory_uri(); ?>/dist/images/youtube-icon-dark.png" class="icon">
+				<a href="/catalogue/find/"><img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-yellow.png" class="icon"></a>
+				<a href="http://www.twitter.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon"></a>
+				<a href="http://www.facebook.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon"></a>
+				<a href="http://www.linkedin.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/linkedin-icon-dark.png" class="icon"></a>
+				<a href="http://www.youtube.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/youtube-icon-dark.png" class="icon"></a>
 			</div>
 		</div><!-- .site-header-menu -->
 	<?php endif; ?>
@@ -71,14 +71,23 @@ if( $showquicksearch ): ?>
     		<div id="preview-header" class="col-lg-12 col-md-12">
            		<h1 id="textbook-title"></h1>
            		<h3 id="textbook-title-authors"></h3>
-           		<div id="read-versions" class="col-lg-3 col-md-3 col-lg-offset-3 col-md-offset-3">
-           			<span class="btn" id="download-btn">Download and Read &#9660;</span>
-           			<div id="available-versions">
-           				<ul></ul>
-           			</div>
-           		</div>
-           		<div class="col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1">
-               		<a href="" class="btn" id="print-btn">Order Print Version</a>
+				<div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
+               		<div id="read-versions" class="col-lg-6 col-md-6">
+               			<span class="btn" id="download-btn">Download and Read ▼</span>
+               			<div id="available-versions" style="display: none;">
+               				<ul></ul>
+               			</div>
+               		</div>
+               		<div class="col-lg-6 col-md-6">
+                   		<a href="" class="btn" id="print-btn">Order Print Version</a>
+                   	</div>
+			    </div>
+               	<div id="textbook-social-media" class="col-lg-2 col-md-2 col-lg-offset-5 col-md-offset-5">
+               		<a href="http://www.twitter.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon" title="Tweet about this textbook!"></a>
+				<a href="http://www.facebook.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon" title="Share this textbook!"></a>
+               	</div>
+               	<div id="textbook-read-description" class="col-lg-2 col-md-2 col-lg-offset-5 col-md-offset-5">
+               	&#129123;
                	</div>
            	</div>
       	</div>

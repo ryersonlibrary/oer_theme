@@ -88,6 +88,22 @@
   margin: 0 25px 0 0;
 }
 
+#textbook-social-media {
+  text-align:center;
+  .icon {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+    display: inline-block;
+  }
+}
+
+#textbook-read-description {
+  text-align:center;
+  font-size: 2em;
+  font-weight: bold;
+}
+
 #site-header-menu {
   display: inline;
 }
@@ -127,15 +143,19 @@
     clear: both;
     margin: 0;
     
-    .icon {
-      height: 30px;
-      width: 30px;
-      margin-right: 10px;
-      display: inline;
-      float: left;
+    a {
+      .icon {
+        height: 30px;
+        width: 30px;
+        margin-right: 10px;
+        display: inline;
+        float: left;
+      }
     }
-    .icon:last-of-type{
-      margin-right: 0;
+    a:last-of-type {
+      .icon {
+        margin-right: 0;
+      }
     }
   }
 }

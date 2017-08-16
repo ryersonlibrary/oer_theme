@@ -76,8 +76,6 @@ use Roots\Sage\Wrapper;
 		var author='';
 		var subjects=[];
 		jQuery.each(data.metadata,function(k,v){
-			console.log(v);
-			console.log(v.key);
 			if(v.key==='dc.contributor.author'){
 				var authorelement='<div class="author-info"><h4 class="author-name">'+v.value+'</h4><p class="author-bio">';
 				if(v.image_url){
@@ -121,6 +119,7 @@ use Roots\Sage\Wrapper;
 		});
 	});
 	jQuery('#download-btn').click(function(){
+		jQuery('#download-btn').toggleClass('noradiusbtn');
 		jQuery('#available-versions').toggle();
 	});
 </script>
