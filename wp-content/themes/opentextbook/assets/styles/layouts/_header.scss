@@ -1,0 +1,161 @@
+.banner {
+  padding-bottom: 4em;
+  text-align: center;
+  background: $header-bg;
+}
+
+.custom-logo-link img {
+  width: auto;
+  max-height: 100px;
+  margin: 25px 0;
+}
+
+.brand {
+  @extend h1;
+  display: block;
+  margin: 20px 0;
+  font-size: 3.75em;
+}
+
+.link-wrap {
+  margin-top: 20px;
+  text-align: center;
+
+  @media (min-width: $screen-md-min) {
+    text-align: right;
+  }
+}
+
+.intro-text {
+  margin: 3em auto 0;
+  line-height: 1.6;
+  text-align: center;
+
+  &.two-column {
+    text-align: left;
+    columns: 300px 2;
+
+    @media (min-width: $screen-md-min) {
+      max-width: 65%;
+	  }
+	}
+
+  @media (min-width: $screen-md-min) {
+    max-width: 50%;
+  }
+}
+
+.login-block {
+  margin-top: 2em;
+  text-align: center;
+}
+
+#main-header {
+  padding: 2em 0 4em;
+}
+
+#ecampus-openlibrary-title h2 {
+  font-size: 2.6em;
+  text-transform: none;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+#ecampus-openlibrary-title h1 {
+  font-size: 3.8em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 0;
+  color: $clr4;
+}
+
+#ecampus-openlibrary-title {
+  margin-bottom: 40px;
+}
+
+#titlelogo{
+  display:block;
+  float:right;
+  max-width:120px;
+  margin-top:5px;
+}
+
+#headerlogo{
+  width:auto;
+  max-height: 100px;
+  display:block;
+  float:left;
+  margin: 0 25px 0 0;
+}
+
+#textbook-social-media {
+  text-align:center;
+  .icon {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+    display: inline-block;
+  }
+}
+
+#textbook-read-description {
+  text-align:center;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#site-header-menu {
+  display: inline;
+}
+
+#site-header-menu {
+  display: inline-block;
+  height: 70px;
+  float: right;
+
+  #site-navigation{
+    float: right;
+    max-height: 100px;
+  
+    ul {
+      list-style:none;
+      margin:0;
+      padding:0;
+      font-family: $font-family-header;
+      font-weight: normal;
+    
+      li {
+        list-style: none;
+        display: inline;
+        line-height: 2.5em;
+        margin: 0 0.25em;
+      }
+      li:last-of-type{
+        margin-right: 0;
+      }
+      li.current-menu-item a, li.current-page-ancestor a {
+        color: $clr4;
+      }
+    }
+  }
+  #social-controls {
+    float: right;
+    clear: both;
+    margin: 0;
+    
+    a {
+      .icon {
+        height: 30px;
+        width: 30px;
+        margin-right: 10px;
+        display: inline;
+        float: left;
+      }
+    }
+    a:last-of-type {
+      .icon {
+        margin-right: 0;
+      }
+    }
+  }
+}
