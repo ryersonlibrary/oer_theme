@@ -59,7 +59,7 @@ function setup() {
         'name'          => __('Footer', 'opentextbook' ),
         'id'            => 'footer',
         'description'   => __( 'Add widgets here to appear in your sidebar.', 'opentextbook' ),
-        'before_widget' => '<div class="col-md-3"><div id="footer-%1$s" class="widget %2$s">',
+        'before_widget' => '<div class="col-sm-3 col-xs-12"><div id="footer-%1$s" class="widget %2$s">',
         'after_widget'  => '</div></div>',
     ) );
 }

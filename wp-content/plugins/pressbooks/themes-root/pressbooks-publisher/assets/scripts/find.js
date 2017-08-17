@@ -85,10 +85,10 @@
 					}
 				});
 				var subj=subjects.join(",");
-				jQuery('#results-list').append('<div class="result-item col-lg-3 col-md-4"><span id="'+v.uuid+'" class="textbook"><span id="'+v.uuid+'-cover"class="textbook-cover"></span><p class="textbook-header">'+subj+'</p><h4 class="textbook-title">'+v.name+'</h4><p class="textbook-authors">'+author+'</p><p class="textbook-footer">&gt;&nbsp;&nbsp;<a href="preview/?id='+v.uuid+'">About this book</a></p>');
+				jQuery('#results-list').append('<div class="result-item col-lg-3 col-md-4 col-sm-6 col-xs-6"><span id="'+v.uuid+'" class="textbook"><span id="'+v.uuid+'-cover"class="textbook-cover"></span><p class="textbook-header">'+subj+'</p><h4 class="textbook-title">'+v.name+'</h4><p class="textbook-authors">'+author+'</p><p class="textbook-footer">&gt;&nbsp;&nbsp;<a href="preview/?id='+v.uuid+'">About this book</a></p>');
 				jQuery('#'+v.uuid+'-cover').css("backgroundImage","url('/wp-content/themes/opentextbook/dist/images/ryerson_stock_bg.jpg')");
 			});
-			jQuery('#results-list').append('<div class="result-item create-new-item col-lg-3 col-md-4"><span id="new-textbook" class="textbook"><span class="textbook-cover"></span><p class="textbook-header">&nbsp;</p><h4 class="textbook-title">Create your own textbook</h4><p class="textbook-authors">Add a text to this (or any) topic.</p><p class="textbook-footer"><input type="button" value="Start Authoring" class="btn btn-secondary"></p></span></div>');
+			jQuery('#results-list').append('<div class="result-item create-new-item col-lg-3 col-md-4 col-sm-6 col-xs-6"><span id="new-textbook" class="textbook"><span class="textbook-cover"></span><p class="textbook-header">&nbsp;</p><h4 class="textbook-title">Create your own textbook</h4><p class="textbook-authors">Add a text to this (or any) topic.</p><p class="textbook-footer"><a id="start-authoring-btn" href="" class="btn btn-secondary">Start Authoring</a></p></span></div>');
 		});
 	}
 	

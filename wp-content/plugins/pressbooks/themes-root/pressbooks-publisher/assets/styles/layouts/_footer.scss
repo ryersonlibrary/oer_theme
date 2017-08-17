@@ -24,7 +24,6 @@
 }
 
 #credits-footer {
-  @extend .centerbox;
   padding: 1em 0;
   background-color:$clr1-dark;
   color:#fff;
@@ -41,7 +40,32 @@
     line-height: 32px;
   }
   #credits-social-icons {
+    padding:0;
     text-align:right;
     float: right;
+  }
+ 
+  /* XS styling */
+  @media (max-width: $screen-xs-max) {
+    img {
+      max-width: 24px;
+    }
+    #credits-pressbooks {
+      font-size: 0.83em;
+      height: 24px;
+      line-height: 24px;
+      text-align:left;
+    }
+  }
+  /* SM styling */
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    img {
+      max-width: 24px;
+    }
+    #credits-pressbooks {
+      height: 24px;
+      line-height: 24px;
+      text-align:left;
+    }
   }
 }

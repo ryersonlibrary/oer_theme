@@ -6,8 +6,8 @@ use Roots\Sage\Wrapper;
 <section id="discovery" class="whitebox">
 	<div class="container">
     	<div class="content row">
-        	<div id="discovery-box" class="col-lg-12 col-md-12">
-            	<div id="discovery-interface" class="col-lg-3 col-md-3">
+        	<div id="discovery-box" class="row">
+            	<div id="discovery-interface" class="col-lg-3 col-md-3 col-sm-3">
                 	<h4>Find a Textbook</h4>
                 	<div id="discovery-keyword">
                 		<input type="text" value="" id="discovery-keyword-term" placeholder="AUTHOR OR KEYWORD">
@@ -72,16 +72,16 @@ use Roots\Sage\Wrapper;
                 		<span id="discovery-reset-btn" class="btn">Reset and Start Again</span>
                 	</div>
             	</div>
-            	<div id="discovery-results" class="col-lg-9 col-md-9">
-                	<div id="results-header" class="col-lg-10 col-md-10 col-md-offset-1">
+            	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9">
+                	<div id="results-header" class="row">
                 		<h3>Displaying <span class="searchterm" id="search-limitations"></span> items <span class="searchterm" id="search-subject"></span> <span class="searchterm" id="search-keyword"></span> <span class="searchterm" id="search-created"></span></h3>
                 	</div>
-                	<div id="results-box" class="col-lg-12 col-md-12">
+                	<div id="results-box" class="row">
                     	<div id="results-prev" class="col-lg-1 col-md-1">
                     		<span class="catalogue-results-nav">&lt;</span>
                     	</div>
-                    	<div id="results" class="col-lg-10 col-md-10">
-                        	<div id="results-list" class="results-row col-lg-12 col-md-12">
+                    	<div id="results" class="col-lg-10 col-md-10 col-sm-12">
+                        	<div id="results-list" class="results-row row">
 
                     		</div>
                     	</div>
@@ -89,11 +89,14 @@ use Roots\Sage\Wrapper;
                     		<span class="catalogue-results-nav">&gt;</span>
                     	</div>
                 	</div>
-                	<div id="results-footer" class="col-lg-12 col-md-12">
-                		<div id="results-pagecounter" class="col-lg-12 col-md-12">
+                	<div id="results-footer" class="row">
+                		<div id="results-more" class="row">
+                    		<span id="results-more-btn" class="btn">View More</span>
+                    	</div>
+                		<div id="results-pagecounter" class="row">
                 			<p id="results-pagecounter-pages"><span class="resultspage" id="resultspage-1">1</span><span class="resultspage" id="resultspage-2">2</span></p>
                 		</div>
-                		<div id="results-counterdetails" class="col-lg-12 col-md-12">
+                		<div id="results-counterdetails" class="row">
                 			<p>Showing <span id="results-counter-thispage">1</span> of <span id="results-counter-totalpages">5</span> of <span id="results-counter-totalresults">20</span> Results</p>
                 		</div>
                 	</div>

@@ -80,6 +80,31 @@
   margin-top:5px;
 }
 
+/* XS styling */
+@media (max-width: $screen-xs-max) {
+  #ecampus-openlibrary-title h2 {
+    font-size: 2em;
+    text-align:center;
+  }
+  #titlelogo{
+    margin: 0 auto;
+    float: none;
+  }
+}
+
+/* SM styling */
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  #ecampus-openlibrary-title h2 {
+    font-size: 2em;
+    text-align:center;
+  }
+  #titlelogo{
+    margin: 0 auto;
+    float: none;
+  }
+}
+
+
 #headerlogo{
   width:auto;
   max-height: 100px;
