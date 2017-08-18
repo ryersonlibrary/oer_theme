@@ -1,0 +1,1 @@
+!function(e){e(".catalog").each(function(){e(this).children(".book").matchHeight()});jQuery("#site-header-menu-mobile-btn").click(function(){jQuery("#site-header-menu-mobile-btn").toggle(),jQuery("#site-navigation").toggle()}),jQuery("#site-header-menu-mobile-btn").click(function(){jQuery("#quick-search").submit()})}(jQuery);
