@@ -34,6 +34,7 @@
 			querydata=querydata+"query_field[]=dc."+dspacefriendlyterm+"&query_op[]=contains&query_val[]="+v+"&";
 		});
 		searchterm=jQuery('#discovery-keyword-term').val();
+		console.log(searchterm);
 		var searchdata=querydata+"query_field[]=*&query_op[]=contains&query_val[]="+searchterm+"&limit="+defaultitemstodisplay.toString()+"&offset="+offset.toString();
 		/* and now we can safely make another ajax request since the previous one is aborted */
 		opentextbookxhr = jQuery.getJSON( "/10_items.json", searchdata, function(data){
@@ -72,6 +73,12 @@
 					opentextbookxhrpaginate(k);
 				});
 			});
+			if(data.totalpages>offset*defaultpagestodisplay){
+				jQuery('#results-next-btn').show();
+			}
+			if(data.totalpages<defaultpagestodisplay || offset===0){
+				jQuery('#results-prev-btn').hide();
+			}
 			***/
 			jQuery.each(data,function(k,v){
 				var author='';

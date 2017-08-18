@@ -3,6 +3,9 @@
   <img src="<?= get_template_directory_uri(); ?>/dist/images/ecampus_logo_dark.png" id="headerlogo">
 	<?php if ( has_nav_menu( 'primary-menu' ) ) : ?>
 		<div id="site-header-menu" class="site-header-menu">
+			<div id="site-header-menu-mobile-btn">
+				<img src="<?= get_template_directory_uri(); ?>/dist/images/mobile-nav-icon.png">
+			</div>
 			<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu'); ?>">
 				<?php
 					wp_nav_menu( array(
@@ -47,11 +50,13 @@ if( $showquicksearch ): ?>
            	<?php endif;?>
            	<div id="quick-search" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
            		<div id="quick-searchbox" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-           			<input value="" placeholder="SEARCH FOR TEXTBOOKS BY TITLE, AUTHOR AND KEYWORD" type="text">
-           			<img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-dark.png">
+           			<form action="/catalogue/find/" method="get" id="quick-search">
+           				<input value="" id="quick-search-term" name="quick-search-term" placeholder="SEARCH FOR TEXTBOOKS BY TITLE, AUTHOR AND KEYWORD" type="text">
+           				<img id="quick-search-btn" src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-dark.png" title="quick search for this term">
+           			</form>
            		</div>
            		<div id="quick-browsebox" class="col-lg-3 col-lg-push-1 col-md-3 col-md-push-1 col-sm-12 col-xs-12">
-           			<a href="" class="btn btn-primary" id="browse-btn">Browse the Catalogue</a>
+           			<a href="/catalogue/find/" class="btn btn-primary" id="browse-btn">Browse the Catalogue</a>
            		</div>
            	</div>
     	</div>

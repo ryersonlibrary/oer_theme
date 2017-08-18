@@ -15,8 +15,6 @@
 				var author='';
 				var subjects=[];
 				jQuery.each(data.metadata,function(k,v){
-					console.log(v);
-					console.log(v.key);
 					if(v.key==='dc.contributor.author'){
 						var authorelement='<div class="author-info"><h4 class="author-name">'+v.value+'</h4><p class="author-bio">';
 						if(v.image_url){
@@ -56,4 +54,12 @@
 			});
 		}
 	}
+	
+	jQuery('#site-header-menu-mobile-btn').click(function(){
+		jQuery('#site-header-menu-mobile-btn').toggle();
+		jQuery('#site-navigation').toggle();
+	});
+	jQuery('#site-header-menu-mobile-btn').click(function(){
+		jQuery('#quick-search').submit();
+	});
 })(jQuery);

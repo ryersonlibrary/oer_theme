@@ -10,7 +10,7 @@ use Roots\Sage\Wrapper;
             	<div id="discovery-interface" class="col-lg-3 col-md-3 col-sm-3">
                 	<h4>Find a Textbook</h4>
                 	<div id="discovery-keyword">
-                		<input type="text" value="" id="discovery-keyword-term" placeholder="AUTHOR OR KEYWORD">
+                		<input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="AUTHOR OR KEYWORD">
                 	</div>
                 	<div id="discovery-facets">
                     	<h5>Subject</h5>
@@ -78,7 +78,7 @@ use Roots\Sage\Wrapper;
                 	</div>
                 	<div id="results-box" class="row">
                     	<div id="results-prev" class="col-lg-1 col-md-1">
-                    		<span class="catalogue-results-nav">&lt;</span>
+                    		<span id="results-prev-btn" class="catalogue-results-nav">&lt;</span>
                     	</div>
                     	<div id="results" class="col-lg-10 col-md-10 col-sm-12">
                         	<div id="results-list" class="results-row row">
@@ -86,7 +86,7 @@ use Roots\Sage\Wrapper;
                     		</div>
                     	</div>
                     	<div id="results-next" class="col-lg-1 col-md-1">
-                    		<span class="catalogue-results-nav">&gt;</span>
+                    		<span id="results-next-btn" class="catalogue-results-nav">&gt;</span>
                     	</div>
                 	</div>
                 	<div id="results-footer" class="row">

@@ -79,31 +79,9 @@
   max-width:120px;
   margin-top:5px;
 }
-
-/* XS styling */
-@media (max-width: $screen-xs-max) {
-  #ecampus-openlibrary-title h2 {
-    font-size: 2em;
-    text-align:center;
-  }
-  #titlelogo{
-    margin: 0 auto;
-    float: none;
-  }
+#site-header-menu-mobile-btn {
+  display: none;
 }
-
-/* SM styling */
-@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-  #ecampus-openlibrary-title h2 {
-    font-size: 2em;
-    text-align:center;
-  }
-  #titlelogo{
-    margin: 0 auto;
-    float: none;
-  }
-}
-
 
 #headerlogo{
   width:auto;
@@ -182,5 +160,88 @@
         margin-right: 0;
       }
     }
+  }
+}
+
+/* XS styling */
+@media (max-width: $screen-xs-max) {
+  #ecampus-openlibrary-title h2 {
+    font-size: 2em;
+    text-align:center;
+  }
+  #titlelogo{
+    margin: 0 auto;
+    float: none;
+  }
+  #site-header-menu {
+    
+    #site-navigation,#social-controls {
+      display: none;
+    }  
+  
+    #site-header-menu-mobile-btn {
+      display: inline-block;
+      width: 100%;
+    
+      img {
+        width:40px;
+        height:40px;
+        margin: 10px 0;
+        float:right;
+      }
+    }
+    #site-navigation {
+      width: 100%;
+      z-index: 2;
+      top: 0;    
+      right: 0;
+      position: absolute;
+      background-color: #fff;
+      
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-family: Karla,sans-serif;
+        font-weight: 400;
+        display: block;
+        
+        li {
+          list-style: none;
+          display: inline;
+          margin: 0;
+          
+          a {
+            line-height: 2.5em;
+            margin: 0;
+            padding: 0.25em 1em;
+            width: 100%;
+            display: inline-block;
+            background-color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+          }
+          a:hover {
+            background-color: $clr4-lighter;
+          }
+        }
+        li.current-menu-item a, li.current-page-ancestor a {
+          color: $clr1-dark;
+          background-color: $clr4;
+        }
+      }
+    }
+  }
+}
+
+/* SM styling */
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  #ecampus-openlibrary-title h2 {
+    font-size: 2em;
+    text-align:center;
+  }
+  #titlelogo{
+    margin: 0 auto;
+    float: none;
   }
 }
