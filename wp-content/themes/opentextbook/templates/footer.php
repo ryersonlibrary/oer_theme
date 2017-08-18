@@ -11,11 +11,12 @@
 	</div><!-- #content -->
 
 	<section id="main-footer">
-	<div class="container"><?php if ( is_active_sidebar( 'footer' ) ) :
+	<div class="container">
+	<div class="row"><?php if ( is_active_sidebar( 'footer' ) ) :
     dynamic_sidebar( 'footer' );
-    endif; //#footer?>
+    endif; //#footer?></div>
 
-    <div class="link-wrap">
+    <div class="link-wrap row">
     		<?php if ( is_user_logged_in() ) {
     			if ( is_super_admin() || is_user_member_of_blog() ) { ?>
     				<a href="<?php echo get_option( 'home' ); ?>/wp-admin" class="btn btn-primary btn-sm"><?php _e( 'Admin', 'opentextbook' ); ?></a>
@@ -39,8 +40,8 @@
     </div>
     </section>
     <footer id="credits-footer">
-    	<div class="container"><div id="credits-pressbooks" class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2"  id="credit">Powered by <a href="https://pressbooks.com">Pressbooks</a> | Learn More</div>
-    	<div id="credits-social-icons" class="col-lg-2 col-md-2"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-white.png" id="footer-twitter"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-white.png" id="footer-facebook"></div>
+    	<div class="container"><div id="credits-pressbooks" class="col-sm-8 col-sm-offset-2 col-xs-10"  id="credit">Powered by <a href="https://pressbooks.com">Pressbooks</a> | Learn More</div>
+    	<div id="credits-social-icons" class="col-xs-2"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-white.png" id="footer-twitter"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-white.png" id="footer-facebook"></div>
     	</div>
     </footer><!-- .content-info -->
 
