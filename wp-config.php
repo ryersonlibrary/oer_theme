@@ -24,18 +24,18 @@
 /** Load local settings file. Use this file for local database credentials. */
 
 if (file_exists(ABSPATH . 'wp-config-local.php')) {
-  
-  require_once(ABSPATH . 'wp-config-local.php');
-  
+
+    require_once(ABSPATH . 'wp-config-local.php');
+
 } else {
 
-  define('DB_NAME', 'agile-opentextbook');
-  
-  /** MySQL database username */
-  define('DB_USER', 'agile');
-  
-  /** MySQL database password */
-  define('DB_PASSWORD', 'agilehumanities');
+    define('DB_NAME', 'agile-opentextbook');
+
+    /** MySQL database username */
+    define('DB_USER', 'agile');
+
+    /** MySQL database password */
+    define('DB_PASSWORD', 'agilehumanities');
 
 }
 
@@ -104,9 +104,9 @@ define('BLOG_ID_CURRENT_SITE', 1);
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
-	
-/** Sets up WordPress vars and included files. */
-require_once(ABSPATH . 'wp-settings.php');
+    define('ABSPATH', dirname(__FILE__) . '/');
+
+    /** Sets up WordPress vars and included files. */
+    require_once(ABSPATH . 'wp-settings.php');
 
 
