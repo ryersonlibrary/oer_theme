@@ -44,7 +44,7 @@ function asset_path( $filename ) {
 	$directory = dirname( $filename ) . '/';
 	$file = basename( $filename );
 	static $manifest;
-
+	
 	if ( empty( $manifest ) ) {
 		$manifest_path = get_template_directory() . '/dist/assets.json';
 		$manifest = new JsonManifest( $manifest_path );

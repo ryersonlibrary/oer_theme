@@ -1,160 +1,442 @@
 /* jshint latedef:nofunc */
-//needed for function hoisting for build
+//needed for function hoisting for build 
 
 (function($) {
+    
+    class DiscoveryController {
+      constructor() {
+      
+      }  
+    }
+    
+    class DiscoveryView {
+      contructor() {
+        
+      }
+    }
+        
+    class HTMLUIController extends DiscoveryController {
+      constructor(controllerID) {
+        super();
+        this.id = $(controllerID);
+        
+      }
+    }
+    
+    class HTMLView extends DiscoveryView {
+      constructor(viewID) {
+        super();
+        this.id = $(viewID);
+        
+      }
+    }
+    
+    class PaginatedHTMLView extends DiscoveryView {
+      constructor() {
+        super();
+        
+      }
+    }
+    
+    /* !DATA HANDLER */
+    
+    class DiscoveryDataHandler {
+      constructor(dbURI, dbmethod) {
+        this.dburl = dbmethod + '://' + dbURI;
+        this.paths = this.build_paths();
+        this.query = {};
+        this.XHROpts = this.resetXHROpts();
+        this.results = {};
+                
+      }
+      
+      resetQueryParameters() {
+        this.query = {};
+      }
+  
+      // Placeholder. Will be particualar to database implementation. 
+      
+      setQueryParameter(parameter,value,operator='like') {
+        this.query[Parameter] = value;
+        return this;  
+      }
+      
+      // Placeholder. Will be particular to database implementation
+      
+      addSearchTerm(term,operator='contains') {
+        return this;
+      }
+      
+      // Placeholder. Will be particualar to database implementation. 
+      
+      setLimit(limit,offset) {
+        return this;
+      }      
+      
+      // A wrapper for the query Parameter
+      
+      getQuery() {
+        return this.query;
+      }
+      
+      // Sets default options for the AJAX call.
+      
+      resetXHROpts() {
+        this.XHROpts = {
+          async: false,
+          method: "GET", // default
+          traditional: true,
+          crossOrigin: true,
+          error: this.xhrError,
+          success: this.xhrResultsHandler
+        };
+      }
+      
+      // Set AJAX option as per http://api.jquery.com/jquery.ajax/
+      
+      setXHROpt(opt,value) {
+        this.XHROpts[opt] = value;
+        return this;
+      }
+      
+      // Wrapper that returns AJAX options
+      
+      getXHROpts() {
+        return this.XHROpts;
+      }
+      
+      // Performs filtered query
+      
+      performQuery() {
+        this.resetXHROpts();
+        this
+          .setXHROpt('url',this.makeURL(this.paths.query.filtered_items.path))
+          .setXHROpt('method',this.paths.query.filtered_items.method)
+          .setXHROpt('data',this.query);  
+        this.retrieve(); 
+        return this;     
+      }
+      
+      getResults() {
+        console.log('get results');
+        console.log(this.results);
+        return this.results;
+      }
+      
+      makeURL(path) {
+        return this.dburl + "/" + path;
+      }
+      
+      /* ! -- AJAX call */
+      
+      /*
+        A number of things are going on here. The data results need to be scoped to the object instance so the success
+        a function expression was needed. The $.extend method allows us to do this and retain our this.XHROpts property.
+        The success parameter is passed an array, which calls a second method for post-processing.
+      */ 
+                
+        
+      retrieve() {
+        var self = this;
+        $.ajax($.extend(this.XHROpts,{success: [function(data) { self.results = data},self.xhrResultsHandler]}));
+      }
+      
+      xhrError(xhr, ajaxOptions, thrownError) {
+        console.log('error');
+        console.log(xhr);
+        console.log(thrownError);
+      }
+      
+      // called after a successful ajax request 
+      
+      xhrResultsHandler(data,textStatus,jqXHR) {
+      
+      }
+      
+      // see DSpace Handler for an extended implementation
+      
+      build_paths() {
+        return {
+          items: {
+            list: {                              // Returns a list of items
+              method: "GET",
+              path:     "[path]", 
+              },                              
+            item: {                               // Returns a single item with ID %%
+              method: "GET",
+              path:     "[path]/%%"
+              },                           
+            item_metadata: {                      // Returns metadata for item %%
+              method: "GET",
+              path:     "[path]/%%/[key]",  
+              },       
+            find_by_metadata: {                   // Returns items based on specified metadata value
+              method: "POST",
+              path:     "[path]"
+            }     
+          },
+          query: {  
+            filtered_items: {                     // Returns items based on chosen filters
+              method: "GET",
+              path:     "[path]",  
+              },           
+            filtered_collections: {               // Returns collections based on chosen filters
+              method: "GET",
+              path:     "[path]",
+              }, 
+            collection: {                         // Returns collection with ID %%
+              method: "GET",
+              path:     "[path]/%%",
+              }         
+          }
+        };
+      }
+    }
+    
+    /* !DSPACE HANDLER */
+    
+    class DSpaceDataHandler extends DiscoveryDataHandler {
+      constructor(dbURI, dbmethod) {
+        super(dbURI, dbmethod);
+        this.query = [];
+        this.expansion = []; // expands the dataset
+        this.filters = [];  // adds filters
+        this.fields = []; // fields to show
+      }
+      
+      resetQueryParameters() {
+        this.query = [];
+      }
+  
+      /* Available operators:
+        
+        exists
+        doesnt_exist
+        equals
+        not_equals
+        like
+        not_like
+        contains
+        doesnt_contain
+        matches
+        doesnt_match
+      */
 
-	/***OpenTextBook***/
-	var opentextbookxhr = null;
-	var searchfacets={"subject":"","type":"","date":"3months","peerreview":"reviewed","level":"postsecondary","language":"","rights":"","source":""};
-	var searchterm='';
-	var offset=0;
-	var defaultitemstodisplay=10;
-	
-	function opentextbookxhrpaginate(v){
-		offset=(v*defaultitemstodisplay)-defaultitemstodisplay; //subtract default to handle offset of 0*10 and pagination; i.e. offset is *start* of page, not end (page 1 contains items 0-9; page 2, 10-19)
-		opentextbookdspacexhr();
-	}
-	
-	function opentextbookdspacexhr(){
-		jQuery('#results-list').html('<img class="ajaxloader" src="/wp-content/themes/opentextbook/dist/images/ajax-loader.gif">');
-		/* if there is a previous ajax request, then we abort it and then set xhr to null */
-		if( opentextbookxhr != null ) {
-			opentextbookxhr.abort();
-			opentextbookxhr = null;
-		}
-		/**build querydata**/
-		var querydata='';
-		$.each(searchfacets,function(k,v){
-			var dspacefriendlyterm=k;
-			switch(k){
-				case "date":
-					dspacefriendlyterm=k+".issued";
-				break;
-			}
-			querydata=querydata+"query_field[]=dc."+dspacefriendlyterm+"&query_op[]=contains&query_val[]="+v+"&";
-		});
-		searchterm=jQuery('#discovery-keyword-term').val();
-		console.log(searchterm);
-		var searchdata=querydata+"query_field[]=*&query_op[]=contains&query_val[]="+searchterm+"&limit="+defaultitemstodisplay.toString()+"&offset="+offset.toString();
-		/* and now we can safely make another ajax request since the previous one is aborted */
-		opentextbookxhr = jQuery.getJSON( "/10_items.json", searchdata, function(data){
-			jQuery('#results-list,.searchterm').empty();
-			jQuery('#results-counter-totalresults').text(data.length);
-			var searchlimitations='';
-			//maintain array order! it is syntactic. date is handled afterwards for similar reasons.
-			var searchlimitationsparams=["peerreview","source","rights","language","level","type"];
-			
-			/*jshint -W069 */
-			/*Disable Warning Justification:
-			    Using bracket notation to facilitate querystring params for DSpace API which use periods, e.g. dc.contributor.author */
-			$.each(searchlimitationsparams,function(k,v){
-				if(searchfacets[v]!==''){
-					searchlimitations=searchlimitations+' '+$('[data-term="'+searchfacets[v]+'"]').text();
-				}
-			});
-			jQuery('#search-limitations').text(searchlimitations.replace(/Items Only/gi, ""));
-			if(searchfacets["subject"]!==''){
-				jQuery('#search-subject').html(' <span class="notsearchterm">in</span> '+$('[data-term="'+searchfacets["subject"]+'"]').text());
-			}
-			if(searchterm!==''){
-				jQuery('#search-keyword').html(' <span class="notsearchterm">with the keyword "</span>'+searchterm+'<span class="notsearchterm">"</span>');
-			}
-			if(searchfacets["date"]!==''){
-				jQuery('#search-created').html(' <span class="notsearchterm">created within the</span> '+$('[data-term="'+searchfacets["date"]+'"]').text());
-			}
-			/*jshint +W069 */
-			
-			/*** NEED PAGINATION in JSON
-			jQuery('#results-counter-totalpages').text(data.totalpages);
-			jQuery('#results-counter-thispage').text(data.thispage);
-			jQuery.each(data.totalpages,function(k,v)){
-				jQuery('#results-pagecounter-pages').append('<span class="resultspage" id="resultspage-'+k+'">'+k+'</span>');
-				jQuery('#resultspage-'+k).click(function(){
-					opentextbookxhrpaginate(k);
-				});
-			});
-			if(data.totalpages>offset*defaultpagestodisplay){
-				jQuery('#results-next-btn').show();
-			}
-			if(data.totalpages<defaultpagestodisplay || offset===0){
-				jQuery('#results-prev-btn').hide();
-			}
-			***/
-			jQuery.each(data,function(k,v){
-				var author='';
-				var subjects=[];
-				jQuery.each(v.metadata,function(k,v){
-					if(v.key==='dc.contributor.author'){
-						author=v.value;
-					}
-					if(v.key==='dc.subject'){
-						subjects.push(v.value);
-					}
-				});
-				var subj=subjects.join(",");
-				jQuery('#results-list').append('<div class="result-item col-lg-3 col-md-4 col-sm-6 col-xs-6"><span id="'+v.uuid+'" class="textbook"><span id="'+v.uuid+'-cover"class="textbook-cover"></span><p class="textbook-header">'+subj+'</p><h4 class="textbook-title">'+v.name+'</h4><p class="textbook-authors">'+author+'</p><p class="textbook-footer">&gt;&nbsp;&nbsp;<a href="preview/?id='+v.uuid+'">About this book</a></p>');
-				jQuery('#'+v.uuid+'-cover').css("backgroundImage","url('/wp-content/themes/opentextbook/dist/images/ryerson_stock_bg.jpg')");
-			});
-			jQuery('#results-list').append('<div class="result-item create-new-item col-lg-3 col-md-4 col-sm-6 col-xs-6"><span id="new-textbook" class="textbook"><span class="textbook-cover"></span><p class="textbook-header">&nbsp;</p><h4 class="textbook-title">Create your own textbook</h4><p class="textbook-authors">Add a text to this (or any) topic.</p><p class="textbook-footer"><a id="start-authoring-btn" href="" class="btn btn-secondary">Start Authoring</a></p></span></div>');
-		});
-	}
-	
-	/**set up discovery ui facets**/
-	function opentextbooksetupdiscovery(){
-		offset=0; //reset offset
-		$('li').removeClass('selectedfacet');
-		jQuery.getJSON( "/subjects.json", function(data){
-			$.each(data.subjects,function(k,v){
-				jQuery('#discovery-ui-subject').append('<li data-term="'+v+'" class="subjectfacet">'+v+'</li>');
-			});
-			var subjectstoshow=5;
-			jQuery('#discovery-ui-subject').children('li').hide();
-			jQuery('#discovery-ui-subject > li').slice(0,subjectstoshow).show();
-			$('#discovery-moresubjects').click(function() {
-				$('#discovery-ui-subject > li:hidden').slice(0,subjectstoshow).show();
-				if($('#discovery-ui-subject > li:hidden').length === 0){
-					$('#discovery-moresubjects').hide();
-				}
-			});
-		}).done(function(){
-			$.each(searchfacets,function(k,v){
-				$('#discovery-ui-'+k).children('li').each(function(){
-					if($(this).attr('data-term')===v){
-						$(this).addClass('selectedfacet');
-					}
-				});
-				$('#discovery-ui-'+k).children('li').click(function(){
-					offset=0; //changing search params, reset offset for pagination
-					searchfacets[k]=$(this).attr('data-term');
-					$('#discovery-ui-'+k).children('li').removeClass('selectedfacet');
-					$(this).addClass('selectedfacet');
-				});
-			});
-			//auto run a search to populate results.
-			opentextbookdspacexhr();
-		});
-	}
-	
-	opentextbooksetupdiscovery();
-	
-	//test purposes only!
-	jQuery('#resultspage-2').click(function(){
-		opentextbookxhrpaginate(2);
-	});
-	
-	jQuery('#discovery-submit-btn').click(function(){
-		opentextbookdspacexhr();
-	});
-	jQuery('#discovery-reset-btn').click(function(){
-		searchfacets={"subject":"","type":"","date":"3months","peerreview":"reviewed","level":"postsecondary","language":"","rights":"","source":""};
-		opentextbooksetupdiscovery();
-	});
-	
-	/**make term input fire**/
-	$('#discovery-keyword-term').keypress(function(e) {
-		offset=0; //reset offset anytime typing occurs in keyword-term
-	    if(e.which === 13) {
-	    	opentextbookdspacexhr();
-	    }
-	});
+      
+      setQueryParameter(parameter,value,operator='like') {
+        
+        this.query.push({
+          name:   "query_field[]",
+          value:  parameter
+        });
+        
+        this.query.push({
+          name:   "query_op[]",
+          value:  operator
+        });
+        
+        this.query.push({
+          name:   "query_val[]",
+          value:  value
+        });
+        
+        return this;  
+      }
+      
+      // A search term is general across all metadata
+      
+      addSearchTerm(value,operator='contains') {
+        this.setQueryParameter('*',value,operator);
+        return this;
+      }
+      
+      setAdditionalParameter(Parameter,value) {
+        var pobject = {};
+        pobject[Parameter] = value;
+        this.query.push(pobject);
+        return this;
+      }
+      
+      // Rudimentary. Will be particualar to database implementation. 
+      
+      setLimit(limit=100,offset=0) {
+        this
+          .setAdditionalParameter('limit',limit)
+          .setAdditionalParameter('offset',offset);
+        return this;
+      }
+      
+      setCollection(collectionID) {
+        this.setAdditionalParameter('collSel[]',collectionID);
+        return this;
+      }
+      
+      /*  Expands the returned dataset. 
+        
+          Some values:
+            metadata
+            bitstreams
+            parentCollection
+            parentCollectionList
+            parentCommunityList
+      */
+            
+      expandQuery(expansion) {
+        this.expansion.push(expansion);
+        this.setAdditionalParameter('expand',this.expansion.join(','));
+        return this;
+      }
+      
+      // Filters the dataset. Exanmples include 'is_withdrawn' or 'is_discoverable'
+      
+      filterQuery(filter) {
+        this.filters.push(filter);
+        this.setAdditionalParameter('expand',this.filters.join(','));
+        return this;
+      }
+      
+      // A shortcut to include metadata in results
+      
+      includeMetaData() {
+        this.expandQuery('metadata');
+        return this;
+      }
+      
+      // A shortcut to include bitstreams in results
+      
+      includeBitstreams() {
+        this.expandQuery('bitstreams');
+        return this;
+      }
+            
+      // Builds DSpace-specific paths
+      // TO DO: Build this into a common schema for all storage devices
+      
+      build_paths() {
+        return {
+          items: {
+            list: {                              // Returns a list of items
+              method: "GET",
+              path:     "items", 
+              },                              
+            item: {                               // Returns a single item with ID %%
+              method: "GET",
+              path:     "items/%%"
+              },                           
+            item_metadata: {                      // Returns metadata for item %%
+              method: "GET",
+              path:     "items/%%/metadata",  
+              },       
+            item_bitstreams: {                    // Returns available bitstreams for item %%
+              method: "GET",
+              path:     "items/%%/bitstreams"  
+              },
+            find_by_metadata: {                   // Returns items based on specified metadata value
+              method: "POST",
+              path:     "items/find-by-metadata-field"
+            }     
+          },
+          query: {  
+            filtered_items: {                     // Returns items based on chosen filters
+              method: "GET",
+              path:     "filtered-items",  
+              },           
+            filtered_collections: {               // Returns collections based on chosen filters
+              method: "GET",
+              path:     "filtered-collections",
+              }, 
+            collection: {                         // Returns collection with ID %%
+              method: "GET",
+              path:     "filtered-collections/%%",
+              }         
+          },
+          bitstreams: { 
+            list: {                                // Returns all bitstreams in DSpace
+              method: "GET",
+              path:     "bitsreams"
+            },
+            item: {                               // Returns an item with bitstream ID %%
+              method: "GET",
+              path:     "bitstreams/{%%}"
+            },
+            item_policy: {                        // Returns the policy for a bitstream with ID %%
+              method: "GET",
+              path:     "bitstreams/%%/policy"
+            },
+            content: {                             // Retrieve content for a bitstream with ID %%
+              method:  "GET",
+              path:      "bitstreams/%%/retrieve"
+            }
+          },
+          schemas: {
+            list: {                        // Returns a list of all schemas
+              method: "GET",
+              path:     "registries/schema"
+            },
+            item: {                             // Returns a metadata schema with schema prefix %%
+              method: "GET",
+              path:     "registries/schema/%%"
+            },
+            field: {                              // Returns a metadata schema with field ID %%
+              method: "GET",
+              path:     "registries/metadata-fields/%%"
+            }
+          }
+        };
+      }
+      
+    }
+    
+    class Discovery {
+      constructor() {
+        // this.controller = new DiscoveryController();
+        // this.view = new DiscoveryView();
+        // this.DataHandler = new DiscoveryDataHandler();
+      }
+    }
+    
+    /* !ECO DISCOVERY CLASS */
+    /*
+      vars expects:
+      
+      {
+        controllerID: '#discovery-interface',
+        viewID:       '#results',
+        dbURI:        'books.spi.ryerson.ca/rest',
+        dbmethod:   'https'
+      }
+      
+    */
+    
+    class ECommonsOntarioDiscovery extends Discovery {
+      constructor(vars) {
+        super();
+        this.controller = new HTMLUIController(vars.controllerID);
+        this.view = new PaginatedHTMLView(vars.viewID);
+        this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
+        
+      }
+    }
+    
+    
+    /* !DOCUMENT READY */
+    
+    $(document).ready(function() {
+            
+      var discovery = new ECommonsOntarioDiscovery
+        ({
+          controllerID: '#discovery-interface',
+          viewID:       '#results',
+          dbURI:        'books.spi.ryerson.ca/rest',
+          dbmethod:     'https'
+        });
+      
+      var results = discovery.data.addSearchTerm('Electrical').performQuery().getResults();
+      
+    });
+  
+    
 })(jQuery);
+
+
+
