@@ -63,7 +63,7 @@
       
       // Placeholder. Will be particular to database implementation
       
-      addSearchTerm(term,operator='contains') {
+      setSearchTerm(term,operator='contains') {
         return this;
       }
       
@@ -138,7 +138,7 @@
         
       retrieve() {
         var self = this;
-        $.ajax($.extend(this.XHROpts,{success: [function(data) { self.results = data},self.xhrResultsHandler]}));
+        $.ajax($.extend(this.XHROpts,{success: [function(data) { self.results = data; },self.xhrResultsHandler]}));
       }
       
       xhrError(xhr, ajaxOptions, thrownError) {
@@ -245,7 +245,7 @@
       
       // A search term is general across all metadata
       
-      addSearchTerm(value,operator='contains') {
+      setSearchTerm(value,operator='contains') {
         this.setQueryParameter('*',value,operator);
         return this;
       }
@@ -432,7 +432,7 @@
           dbmethod:     'https'
         });
       
-      var results = discovery.data.addSearchTerm('Electrical').includeMetaData().performQuery().getResults();
+      var results = discovery.data.setSearchTerm('Electrical').includeMetaData().performQuery().getResults();
       
     });
   
