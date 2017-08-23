@@ -250,10 +250,11 @@
         return this;
       }
       
-      setAdditionalParameter(Parameter,value) {
-        var pobject = {};
-        pobject[Parameter] = value;
-        this.query.push(pobject);
+      setAdditionalParameter(parameter,value) {
+        this.query.push({
+          name: parameter,
+          value: value
+          });
         return this;
       }
       
@@ -431,7 +432,7 @@
           dbmethod:     'https'
         });
       
-      var results = discovery.data.addSearchTerm('Electrical').performQuery().getResults();
+      var results = discovery.data.addSearchTerm('Electrical').includeMetaData().performQuery().getResults();
       
     });
   
