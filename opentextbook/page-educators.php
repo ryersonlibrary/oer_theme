@@ -10,30 +10,30 @@ use Roots\Sage\Wrapper;
     		<div id="educator-header" class="row box-header">
         		<hr>
         		<h2>Tools for Educators</h2>
-        		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
+        		<p>Make an open textbook part of your next course, adapt an existing resource, remix open materials or write your own open textbook. </p>
     		</div>
     		<div class="col-lg-4 col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12">
     			<div id="adopt">
     				<hr>
         			<h3>Adopt</h3>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
-        			<a href="" class="btn btn-inverted" id="adopt-btn">Find and Adopt</a>
+        			<p>Search our collection of open textbooks.This high-quality, curated collection features resources on some of the top subject areas in post-secondary education in Ontario today. Many of the textbooks have been reviewed and vetted by educators across Canada.</p>
+        			<p class="footer"><a href="" class="btn btn-inverted" id="adopt-btn">Find and Adopt</a></p>
         		</div>
         	</div>
     		<div class="col-lg-4 col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12">
         		<div id="adapt">
         			<hr>
         			<h3>Adapt</h3>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
-        			<a href="" class="btn btn-secondary" id="adapt-btn">Find and Adapt</a>
+        			<p>Reuse, remix and repurpose open textbooks to suit your unique teaching needs, take advantage of the open textbook Creative Commons license and customize an open textbook to help your students achieve their learning goals.</p>
+        			<p class="footer"><a href="" class="btn btn-secondary" id="adapt-btn">Find and Adapt</a></p>
             	</div>
         	</div>
     		<div class="col-lg-4 col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12">
         		<div id="create">
         			<hr>
         			<h3>Create</h3>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
-        			<a href="" class="btn btn-secondary" id="create-btn">Start Authoring</a>
+        			<p>Find all the tools you need to create your very own open learning resources including free publishing tools and support, as well as a way to connect with the growing community of open educational creators and editors.</p>
+        			<p class="footer"><a href="" class="btn btn-secondary" id="create-btn">Start Authoring</a></p>
         		</div>
         	</div>
     	</div>

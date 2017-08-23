@@ -66,7 +66,7 @@ if( $showquicksearch ): ?>
     	<div class="content row">
     		<div id="discovery-title" class="row">
            		<h1>Open Library Catalogue</h1>
-           		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
+           		<p>Your home for finding free and open educational resources to support your higher education goals</p>
            	</div>
       	</div>
     </div>

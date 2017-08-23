@@ -8,7 +8,7 @@
 }
 
 .page-content {
-  @extend .centerbox;
+  text-align:center;
   padding-left:0;
   padding-right:0;
   hr {
@@ -29,6 +29,20 @@
     border: 2px solid $clr2-dark;
     border-radius: 4px;
     text-align: left;
+    h1{
+      font-size: 2.8em;
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
+    h2{
+      font-size: 1.8em;
+      text-transform: uppercase;
+    }
+    h3{
+      font-size: 1.2em;
+      text-transform: uppercase;
+      font-style:italic;
+    }
     hr {
       @extend .headerbar;
       background-color:#fff;
@@ -43,7 +57,16 @@
     p:not(:only-type):last-of-type {
       margin: 2em 0em 0em;
     }
+    blockquote {
+      border-left: 10px solid $clr2;
+    }
   }  
+  .entry-content > :first-child{
+    margin-top: 0;
+  }
+  .entry-content > :last-child{
+    margin-bottom: 0;
+  }
 }
 
 #page-footer {
