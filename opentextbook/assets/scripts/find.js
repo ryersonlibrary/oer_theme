@@ -167,7 +167,7 @@
       submit() {
         super.submit();
         this.enqueue();
-        this.discoveryObj.stateChange();
+        this.discoveryObj.controllerStateChange();
       }
       
       
@@ -706,9 +706,26 @@
       
       // fired by Controller when it changes state
       
-      stateChange() {
+      controllerStateChange() {
         this.dataOpQueue = this.criteriaController.queue;
         this.retrieveData().extractItems(); // populates this items
+        this.displayResults();
+      }
+      
+      setDataOp(op,values) {
+        this.dataOpQueue.push({
+          op: op,
+          values: values
+        });
+      }
+      
+      quickSearch(term) {
+        this.dataOpQueue = [];
+        this.setDataOp('setSearchTerm',[term]);
+        this.retrieveData().extractItems().displayResults();
+      }
+      
+      displayResults() {
         this.view
           .setItems(this.items)
           .displayQueryResults();
@@ -757,6 +774,24 @@
         this.paginationController = new HTMLPaginationController(this);
         this.view = new ECommonsOntarioHTMLView(this);
         this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
+        this.inboundState();
+      }
+      
+      // Right now only accepts search paramaters
+      
+      inboundState() {
+        var op = getUrlParameter('op');
+        var value = decodeURIComponent(getUrlParameter('value'));
+                
+        if (op === 'setSearchTerm') {
+          this.quickSearch(value);
+          $('#search-value').val(value);
+        } else {
+          this.setDataOp('setQueryParameter',['dc:language','en']);
+          this.retrieveData().extractItems().displayResults();
+        }
+        
+        
       }
       
       resetDataParameters() {
@@ -805,5 +840,21 @@ String.prototype.replaceLast = function(find, replace) {
   return this.toString();
 };
 
+// With thanks to http://www.jquerybyexample.net/2012/06/get-url-parameters-using-jquery.html
+
+function getUrlParameter (sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+    sURLVariables = sPageURL.split('&'),
+    sParameterName,
+    i;
+
+  for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split('=');
+
+    if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined ? true : sParameterName[1];
+    }
+  }
+}
 
 

@@ -74,7 +74,7 @@ function assets() {
     wp_enqueue_script( 'opentextbook-publisher/skip-link-focus-fix', Assets\asset_path( 'scripts/skip-link-focus-fix.js' ), [], null, true );
     wp_enqueue_script( 'opentextbook-publisher/match-height', Assets\asset_path( 'scripts/matchheight.js' ), [ 'jquery' ], null, true );
     wp_enqueue_script( 'opentextbook-publisher/js', Assets\asset_path( 'scripts/main.js' ), [ 'jquery' ], null, true );
-    if(is_page('find')){
+    if(is_page('find') || is_page('catalogue')){
         wp_enqueue_script('opentextbook-publisher/find_js', Assets\asset_path('scripts/find.js'), ['jquery'], null, true);
     }
     if(is_page('preview')){

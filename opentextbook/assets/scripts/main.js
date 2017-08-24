@@ -3,6 +3,25 @@
 	$('.catalog').each(function() {
 		$(this).children('.book').matchHeight();
 	});
+	
+/** TEMP: Search Widget */
+
+var qs = $('#quick-search');
+
+if (qs.length > 0) {
+  var qsbox = qs.find('#quick-search-term');
+  var qsbtn = qs.find('#browse-btn');
+  
+  qsbox.attr('placeholder','Search for textbooks by author, title or keyword');
+  qsbtn.bind('click',function(event) {
+    event.preventDefault();
+    if (qsbox.val() !== '') {
+      window.location.href = "catalogue?op=setSearchTerm&value=" + encodeURIComponent(qsbox.val());
+    } else {
+      window.location.href = "catalogue";
+    }
+  });
+}
 
 /***Opentextbook Preview.js***/
 	var opentextbookxhr = null;

@@ -25,7 +25,7 @@
 	<?php endif; ?>
 	</div>
 	<?php $showquicksearch=false;
-	$showquicksearchon=array('educators','learners','catalogue');
+	$showquicksearchon=array('educators','learners');
 	if( is_front_page() ):
 	    $showquicksearch=true;
 	endif;
@@ -62,6 +62,15 @@ if( $showquicksearch ): ?>
     	</div>
 	</div>
 <?php elseif(is_page('find')):?>
+    <div id="maintitle" class="container">
+    	<div class="content row">
+    		<div id="discovery-title" class="row">
+           		<h1>Open Library Catalogue</h1>
+           		<p>Your home for finding free and open educational resources to support your higher education goals</p>
+           	</div>
+      	</div>
+    </div>
+<?php elseif(is_page('catalogue')):?>
     <div id="maintitle" class="container">
     	<div class="content row">
     		<div id="discovery-title" class="row">

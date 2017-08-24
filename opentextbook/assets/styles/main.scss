@@ -584,7 +584,7 @@ section.bgbox{
   color: $color;
   border: 1px solid $border-color;
   margin-bottom:2em;
-  min-height:450px;
+  min-height:500px;
   position:relative;
   hr {
     @extend .headerbar;
@@ -861,10 +861,10 @@ section.bgbox{
               position: absolute;
               margin-bottom: 0;
               font-size: 0.7em;
-              background-image: url(../images/ui-bullet-white.svg);
+             // background-image: url(../images/ui-bullet-white.svg);
               margin:0;
               background-size: 1.3em;
-              padding: 0 0 0 0.5em;
+              padding: 0 0 0 0em;
               color: $clr1;
               font-weight:bold;
               width: 90%;
@@ -875,6 +875,7 @@ section.bgbox{
               a {
                 color: #fff;
                 font-weight: normal;
+                text-decoration: underline;
               }
               a:hover{
                 text-decoration: underline;
