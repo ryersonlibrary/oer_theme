@@ -113,10 +113,6 @@ main{
   background-image: url('../images/ryerson_stock_bg.jpg');
 }
 
-.centerbox{
-  text-align:center;
-}
-
 .splashbox{
   margin: 50px 0;
 }
@@ -244,7 +240,7 @@ section.bgbox{
 }
 
 #educator-tools,#catalogue{
-  @extend .centerbox;
+  text-align:center;
   .box-header{
     p {
       margin: 1em 0 3em;
@@ -286,7 +282,7 @@ section.bgbox{
 }
 
 #getinvolved {
-  @extend .centerbox;
+  text-align:center;
   border: 2px solid darken($clr4,20%);
   border-radius: 4px;
   background-color: #fff;
@@ -355,7 +351,7 @@ section.bgbox{
 }
 
 #recentlyadded {
-  @extend .centerbox;
+  text-align:center;
   border: 2px solid darken($clr4,20%);
   border-radius: 4px;
   background-color: #fff;
@@ -399,7 +395,7 @@ section.bgbox{
 }
 
 #peerreview {
-  @extend .centerbox;
+  text-align:center;
   padding-left:0;
   padding-right:0;
   .box-header {
@@ -492,7 +488,7 @@ section.bgbox{
 }
 
 #openeducation {
-  @extend .centerbox;
+  text-align:center;
   border: 2px solid $clr3;
   border-radius: 4px;
   background-color: #fff;
@@ -560,6 +556,24 @@ section.bgbox{
         display:block;
         margin: 0 auto;
       }
+      #twitterfeed p {
+        height: 300px;
+        overflow: auto;
+        margin: 15px;
+      }
+      #rssfeed {
+        .nav-links{
+          display:none;
+        } 
+        ul {
+          height: 300px;
+          overflow: auto;
+          margin: 15px;
+          .feed-item-link {
+            text-align: left;
+          }
+        }
+      }
     }
   }
 }
@@ -570,6 +584,8 @@ section.bgbox{
   color: $color;
   border: 1px solid $border-color;
   margin-bottom:2em;
+  min-height:450px;
+  position:relative;
   hr {
     @extend .headerbar;
     background-color:$color;
@@ -577,17 +593,29 @@ section.bgbox{
   .btn {
     padding: 1em 3em;
   }
-  /* XS styling */
-  @media (max-width: $screen-xs-max) {
+  p.footer {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 36px;
+    width: 100%;
+    box-sizing: border-box;
     .btn {
-      padding: 1em;
-      width: 100%;
+      display: inline-block;
     }
-  }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-    .btn {
+    /* XS styling */
+    @media (max-width: $screen-xs-max) {
+      .btn {
+        padding: 1em;
+        width: 100%;
+      }
+    }
+    /* SM styling */
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      .btn {
       
+      }
     }
   }
 }
@@ -609,7 +637,7 @@ section.bgbox{
 }
 
 #maintitle{
-  @extend .centerbox;
+  text-align:center;
   margin: 100px auto 30px;
   h1 {
     color: $clr4;
