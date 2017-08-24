@@ -110,10 +110,10 @@ use Roots\Sage\Wrapper;
                     	<div id="results-prev" class="col-lg-1 col-md-1">
                     		<span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous>&lt;</span>
                     	</div>
-                    	<div id="results" class="col-lg-10 col-md-10 col-sm-12" data-view-stage>
-                        	<div id="results-list" class="results-row row">
+                    	<div id="results" class="col-lg-10 col-md-10 col-sm-12">
+                      	<div id="results-list" class="results-row row" data-view-stage>
 
-                    		</div>
+                  		  </div>
                     	</div>
                     	<div id="results-next" class="col-lg-1 col-md-1">
                     		<span id="results-next-btn" class="catalogue-results-nav" data-controller-next>&gt;</span>
