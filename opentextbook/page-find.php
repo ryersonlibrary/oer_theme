@@ -7,17 +7,20 @@ use Roots\Sage\Wrapper;
 	<div class="container">
     	<div class="content row">
         	<div id="discovery-box" class="row">
-            	<div id="discovery-interface" class="col-lg-3 col-md-3 col-sm-3">
+            	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3">
                 	<h4>Find a Textbook</h4>
-                	<div id="discovery-keyword">
-                		<input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="AUTHOR OR KEYWORD">
+                	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|contains' data-ui-type="textfield">
+                		<input id='search-value' data-user-input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="AUTHOR OR KEYWORD" data-value>
                 	</div>
                 	<div id="discovery-facets">
-                    	<h5>Subject</h5>
-                    	<ul id="discovery-ui-subject" data-param="subject">
-                    		<li data-term="" class="subjectfacet">All Subjects</li>
-                    	</ul>
-                    	<p class="showmore" id="discovery-moresubjects">Show 5 More Subjects</p>
+                  	  <div id="discovery-ui-subject" class='facet' data-facet data-op='setQueryParameter' data-values="dc:subject|%%" data-ui-type="list">
+                      	<h5 class='facet-title'>Subject</h5>
+                      	<ul data-user-input-wrapper>
+                      		<li data-value="*">All Subjects</li>
+                      	</ul>
+                      	<p class="showmore" id="discovery-moresubjects">Show 5 More Subjects</p>
+                  	  </div>
+                    	<!--
                     	<h5>Type</h5>
                     	<ul id="discovery-ui-type" data-param="type">
                     		<li data-term="" class="typefacet">All Types</li>
@@ -27,24 +30,31 @@ use Roots\Sage\Wrapper;
                     	</ul>
                     	<h5>Education Level</h5>
                     	<ul id="discovery-ui-level" data-param="level">
-                    		<li data-term="" class="levelfacet">All Levels</li>
+                    		<li data-term=""t class="levelfacet">All Levels</li>
                     		<li data-term="primary" class="levelfacet">Primary</li>
                     		<li data-term="secondary" class="levelfacet">Secondary</li>
     	               		<li data-term="postsecondary" class="levelfacet">Post-Secondary</li>
                     	</ul>
-                    	<h5>Language</h5>
-                    	<ul id="discovery-ui-language" data-param="language">
-                    		<li data-term="" class="languagefacet">English and French</li>
-                    		<li data-term="en" class="languagefacet">English</li>
-    	               		<li data-term="fr" class="languagefacet">French</li>
-                    	</ul>
-                    	<h5>Date of Creation</h5>
-                    	<ul id="discovery-ui-date" data-param="date">
-                    		<li data-term="" class="createdfacet">Any Date</li>
-                    		<li data-term="3months" class="createdfacet">Past 3 Months</li>
-                    		<li data-term="year" class="createdfacet">Past Year</li>
-    	               		<li data-term="5years" class="createdfacet">Past Five Years</li>
-                    	</ul>
+                    	-->
+                  	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-type="list">
+                      	<h5 class='facet-title'>Language</h5>
+                      	<ul data-user-input-wrapper>
+                      		<li data-value="*">English and French</li>
+                      		<li data-value="en">English</li>
+      	               		<li data-value="fr">French</li>
+                      	</ul>
+                  	  </div>
+                  	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc:date.issued|%%" data-ui-type="list">
+                      	<h5 class='facet-title'>Date of Creation</h5>
+                      	<ul data-user-input-wrapper>
+                    		<li data-value="*" class="createdfacet">Any Date</li>
+                    		<li data-value="<?php print (time() - (90 * 24 * 60 * 60)); ?>">Past 3 Months</li>
+                    		<li data-value="<?php print (time() - (365 * 24 * 60 * 60)); ?>">Past Year</li>
+    	               		<li data-value="<?php print (time() - (5 * 365 * 24 * 60 * 60)); ?>">Past Five Years</li>
+                      	</ul>
+                  	  </div>
+                  	  
+                  	  <!--
                     	<h5>Peer Review <img class="icon" src="<?= get_template_directory_uri(); ?>/dist/images/ui-star-dark.svg"></h5>
                     	<ul id="discovery-ui-peerreview" data-param="peerreview">
                     		<li data-term="" class="peerreviewfacet">Reviewed and Unreviewed</li>
@@ -66,10 +76,11 @@ use Roots\Sage\Wrapper;
                     		<li data-term="remixshare" class="usefacet">Remix and Share</li>
     	               		<li data-term="share" class="usefacet">Share Only</li>
                     	</ul>
+                    	-->
                 	</div>
                 	<div id="discovery-controls">
-                		<span id="discovery-submit-btn" class="btn">Submit</span>
-                		<span id="discovery-reset-btn" class="btn">Reset and Start Again</span>
+                		<span id="discovery-submit-btn" class="btn" data-submit>Submit</span>
+                		<span id="discovery-reset-btn" class="btn" data-reset>Reset and Start Again</span>
                 	</div>
             	</div>
             	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9">

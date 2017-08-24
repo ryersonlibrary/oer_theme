@@ -4,9 +4,21 @@
 (function($) {
     
     class DiscoveryController {
-      constructor() {
-      
+      constructor(discoveryObj) {
+        this.discoveryObj = discoveryObj;
+        this.controller = null;
+        this.facets = null;
+        this.queue = [];
       }  
+      
+      enqueue() {
+        
+      }
+      
+      submit() {
+        
+      }
+      
     }
     
     class DiscoveryView {
@@ -14,13 +26,118 @@
         
       }
     }
+    
+    /* !HTMLUIController */
         
     class HTMLUIController extends DiscoveryController {
-      constructor(controllerID) {
-        super();
-        this.id = $(controllerID);
-        
+      constructor(discoveryObj) {
+        super(discoveryObj);
+        this.controller = $("[data-widget='discovery-controller']");
+        this.facets = this.controller.find("[data-facet]");
+        this.initUI();
       }
+      
+      initUI() {
+        var self = this;
+        
+        /* 
+           Allows us to define widget initialization methods based on the ui-type.
+           Methods are in the form init[ui-type], with ui-type capitalized.
+           
+           Initialization functions are responsible for the following:
+           - Binding the appropriate change event (e.g. a click for a list or change for a selection). 
+           - Adding its parent facet to the query queue by assigning it a 'data-enqueue' attribute.
+           - Adding a 'data-selected' attribute to any selected item.
+           - Resetting the facet if a user selects an “all” or “none” value, indicated in the controller by a '*' data-value.
+           - Firing the controller’s submit method.
+           - Performing any UX event modifications (such as preventing default link behaviour on link lists).
+        */
+        
+        this.facets.each(function() {
+          var facet = $(this);
+          if (typeof facet.data('ui-type') === undefined) { return; }
+          var initfnc = "init" + facet.data('ui-type').ucfirst();
+          if (typeof self[initfnc] !== 'function') { return; }
+          self[initfnc](facet);
+        });
+      }
+                  
+      initList(facet) {
+        var self = this;
+        facet.find('[data-user-input-wrapper]').find('li').each(function() {
+          $(this).bind('click',function(event) {
+            event.preventDefault();
+            var item = $(this);
+            item.toggleClass('selected');
+            if (item.data('value') === '*') {
+              facet.removeAttr('data-enqueue');
+              item.siblings('li').removeAttr('data-selected');
+            } else {
+              facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
+              item[0].setAttribute('data-selected',''); 
+            }
+            self.submit();
+          });
+        });        
+      }
+      
+      initTextfield(facet) {
+        var self = this;
+        facet.find('[data-user-input]').each(function() {
+          $(this).bind('keypress',function(event) {
+            var input = $(this);
+            if(input.val().length > 2) { // Don’t submit if there are less than three characters in the text field
+              facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
+              input[0].setAttribute('data-selected','');
+              input.attr('data-value',input.val());
+              self.submit();
+            } else {
+              facet.removeAttr('data-enqueue');
+              input.removeAttr('data-selected');
+            }
+          })
+          .bind('keypress', function(event) { // intercepts return character which would otherwise "submit" the form
+            if ((event.keyCode ? event.keyCode : event.which) === 13) {
+              self.submit();
+              return false;
+            } else { 
+              return true;
+            }
+          });
+        });
+      }   
+      
+      /* 
+          Adds a list of data retrieval objects to the queue. Data retrieval objects contain a
+          data op (corresponding to a method of the data object) and values corresponding to its
+          arguments.
+      */   
+      
+      enqueue() {
+        var self = this;
+        this.queue = [];
+        this.controller.find('[data-enqueue]').each(function() {
+          var facet = $(this);
+          var values = [];
+          facet.find('[data-selected]').each(function() {
+            self.queue.push(
+              {
+                op: facet.data('op'),
+                values: facet.data('param').replace('%%',$(this).attr('data-value')).split('|')
+              }
+            );
+          });
+          
+        });
+      }
+      
+      submit() {
+        super.submit();
+        this.enqueue();
+        this.discoveryObj.stateChange();
+      }
+      
+      
     }
     
     class HTMLView extends DiscoveryView {
@@ -64,6 +181,12 @@
       // Placeholder. Will be particular to database implementation
       
       setSearchTerm(term,operator='contains') {
+        return this;
+      }
+      
+      // Placeholder. Will be particular to database implementation
+      
+      setDateIssed(value,operator='<') {
         return this;
       }
       
@@ -118,8 +241,6 @@
       }
       
       getResults() {
-        console.log('get results');
-        console.log(this.results);
         return this.results;
       }
       
@@ -135,7 +256,6 @@
         The success parameter is passed an array, which calls a second method for post-processing.
       */ 
                 
-        
       retrieve() {
         var self = this;
         $.ajax($.extend(this.XHROpts,{success: [function(data) { self.results = data; },self.xhrResultsHandler]}));
@@ -255,6 +375,12 @@
           name: parameter,
           value: value
           });
+        return this;
+      }
+      
+      // TO DO
+      
+      setDateIssed(term,operator='<') {
         return this;
       }
       
@@ -388,11 +514,41 @@
       
     }
     
+    /* !DISCOVERY CLASS */
+    
     class Discovery {
       constructor() {
-        // this.controller = new DiscoveryController();
+        this.dataOpQueue = [];
+        this.results = {};
+        // this.controller = new DiscoveryController(this);
         // this.view = new DiscoveryView();
         // this.DataHandler = new DiscoveryDataHandler();
+      }
+      
+      // fired by Controller when it changes state
+      
+      stateChange() {
+        this.dataOpQueue = this.controller.queue;
+        console.log("Operations Queue");
+        console.log(this.dataOpQueue);
+        this.retrieveData();
+      }
+      
+      // Clears data parameters
+      
+      resetDataParameters() {
+        this.data.resetQueryParameters();
+      }
+      
+      retrieveData() {
+        var self = this;
+        self.resetDataParameters();
+        this.dataOpQueue.forEach(function(item){
+          self.data[item.op].apply(self.data,item.values);
+        });
+        self.results = self.data.performQuery().getResults();
+        console.log('results');
+        console.log(self.results);
       }
     }
     
@@ -412,13 +568,17 @@
     class ECommonsOntarioDiscovery extends Discovery {
       constructor(vars) {
         super();
-        this.controller = new HTMLUIController(vars.controllerID);
-        this.view = new PaginatedHTMLView(vars.viewID);
+        this.controller = new HTMLUIController(this);
+        this.view = new PaginatedHTMLView();
         this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
         
       }
+      
+      resetDataParameters() {
+        super.resetDataParameters();
+        this.data.includeMetaData();
+      }
     }
-    
     
     /* !DOCUMENT READY */
     
@@ -426,18 +586,20 @@
             
       var discovery = new ECommonsOntarioDiscovery
         ({
-          controllerID: '#discovery-interface',
-          viewID:       '#results',
           dbURI:        'books.spi.ryerson.ca/rest',
           dbmethod:     'https'
         });
       
-      var results = discovery.data.setSearchTerm('Electrical').includeMetaData().performQuery().getResults();
+      // var results = discovery.data.setSearchTerm('Electrical').includeMetaData().performQuery().getResults();
       
     });
   
     
 })(jQuery);
+
+String.prototype.ucfirst = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 
 
