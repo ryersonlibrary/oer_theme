@@ -2,34 +2,67 @@
 //needed for function hoisting for build 
 
 (function($) {
+  
+    /* DISCOVERY CONTROLLER CLASS */
+    
+    // Core Controller Class
     
     class DiscoveryController {
       constructor(discoveryObj) {
         this.discoveryObj = discoveryObj;
         this.controller = null;
-        this.facets = null;
-        this.queue = [];
       }  
-      
-      enqueue() {
-        
-      }
-      
+            
       submit() {
         
       }
       
     }
     
-    class DiscoveryView {
-      contructor() {
+    // Manages UIs that submit filter criteria.
+    
+    class CriteriaSelectionController extends DiscoveryController {
+      constructor(discoveryObj) {
+        super(discoveryObj);
+        this.facets = null;
+        this.queue = [];
+      }
+      
+      enqueue() {
         
       }
     }
     
+    // Manages Pagination UIs.
+    
+    class PaginationController extends DiscoveryController {
+      constructor(discoveryObj) {
+        super(discoveryObj);
+        this.nextPage = null;
+        this.previousPage = null;
+        this.pageMarkers = null;
+      }
+    }
+    
+    // Manages HTML5-Based Pagination UIs
+    
+    class HTMLPaginationController extends PaginationController {
+      constructor(discoveryObj) {
+        super(discoveryObj);
+      }
+    }
+    
+    // Manages standalone Search Box UIs
+    
+    class HTMLSearchBox extends CriteriaSelectionController {
+      constructor(discoveryObj) {
+        super(discoveryObj);
+      }
+    }
+        
     /* !HTMLUIController */
         
-    class HTMLUIController extends DiscoveryController {
+    class HTMLCriteriaController extends CriteriaSelectionController {
       constructor(discoveryObj) {
         super(discoveryObj);
         this.controller = $("[data-widget='discovery-controller']");
@@ -140,21 +173,94 @@
       
     }
     
+    /* !DISCOVERY VIEW CLASS */
+    
+    class DiscoveryView {
+      contructor(discoveryObj) {
+        this.items = [];
+      }
+      
+      setItems(items) {
+        this.items = items;
+        return this;
+      }
+      
+      displayQueryResults() {
+
+      }
+    }
+    
+    
+    /* !HTML VIEW CLASS */
+    
+    
+    // Displays results on HTML5 Stage
+    
     class HTMLView extends DiscoveryView {
-      constructor(viewID) {
-        super();
-        this.id = $(viewID);
+      constructor(discoveryObj) {
+        super(discoveryObj);
+        this.view = $('[data-view-results]');
+        this.stage = this.view.find('[data-view-stage]');
+        this.titleStage = this.view.find('[data-view-title-stage]');
+        this.templates = {};
         
+        this.parseTemplates();        
+      }
+      
+      // Finds templates in the DOM and adds them to the templates object.
+      // Templates are designated in the DOM by a [data-view-template-wrapper] boolean attribute.
+      // This script expects that each wrapper have [data-template-name], which will be used as
+      // an object property. The template block is then removed from the DOM.
+      
+      parseTemplates() {
+        var self = this;
+        var templates = this.view.find('[data-view-templates]');
+        templates.find('[data-view-template-wrapper]').each(function(){
+          var twrapper = $(this);
+          self.templates[twrapper.data('view-template-name')] = twrapper.html();
+        })
+        .remove();
+      }
+      
+      // Tokens are processed as follows:  
+      // %%DataKey%%
+      
+      processTokens(template,item) {
+        var processed = template;
+        template.match(/\%\%[^\%]*\%\%/g).forEach(function(token) {
+          var key = token.replaceAll('%%','');
+          processed = processed.replaceAll(token,item.values[key]);
+        });
+        
+        return processed;
+      }
+      
+      displayQueryResults() {
+        var self = this;
+        self.stage.html('');
+        
+        this.items.forEach(function(item) {
+          self.stage.append(self.processTokens(self.templates.book_capsule,item));
+        });
       }
     }
     
-    class PaginatedHTMLView extends DiscoveryView {
-      constructor() {
-        super();
-        
+    // Displays controller particular to the ECommonsOntario site
+    
+    class ECommonsOntarioCriteriaController extends HTMLCriteriaController {
+      constructor(discoveryObj) {
+        super(discoveryObj);
       }
     }
     
+    // Displays results particular to the ECommonsOntario site
+    
+    class ECommonsOntarioHTMLView extends HTMLView {
+      constructor(discoveryObject) {
+        super(discoveryObject);
+      }
+    }
+        
     /* !DATA HANDLER */
     
     class DiscoveryDataHandler {
@@ -240,7 +346,12 @@
         return this;     
       }
       
+      processResults() {
+        
+      }
+      
       getResults() {
+        this.processResults();
         return this.results;
       }
       
@@ -328,7 +439,9 @@
         this.query = [];
       }
   
-      /* Available operators:
+      /* 
+        
+        Available operators:
         
         exists
         doesnt_exist
@@ -340,6 +453,7 @@
         doesnt_contain
         matches
         doesnt_match
+    
       */
 
       
@@ -368,6 +482,65 @@
       setSearchTerm(value,operator='contains') {
         this.setQueryParameter('*',value,operator);
         return this;
+      }
+      
+      processResults() {
+        super.processResults();
+        var self = this;
+        var items = this.results.items;
+        
+        for(var i=0; i<items.length; i++) {
+          var item = this.results.items[i];
+          
+          // Set default values.
+                  
+          var values = {
+            uuid: item.uuid,
+            subject: '',
+            byline: '',
+            title: ''
+          };
+          
+          if (typeof item.metadata !== "undefined") {
+            for(var j=0; j<item.metadata.length; j++) {
+              var md = item.metadata[j];
+              var key = md.key;
+              if (typeof values[key] === "undefined") {
+                values[key] = [];
+              }
+              values[key].push(md.value);
+            }
+          }
+          
+          // Join multiple values as single string
+          
+          for(var prop in values) {
+            if (values[prop] === "undefined" || typeof values[prop] !== 'object') {
+              values[prop] = '';
+            } else {
+              values[prop] = values[prop].join('%%');
+            }
+          }
+          
+
+          
+          // Process contributors
+          values.byline = self.serializeDisplayString(values,'dc.contributor.author');
+          values.subjects = self.serializeDisplayString(values,'dc.subject');
+          
+          this.results.items[i].values = values;
+        }
+      }
+      
+      serializeDisplayString(values,key) {
+        var output = '';
+        
+        if (typeof values[key] !== "undefined") {
+          output = values[key].replaceAll('%%',', ');
+          output = output.replaceLast(',',' and');
+        }
+        
+        return output;
       }
       
       setAdditionalParameter(parameter,value) {
@@ -478,7 +651,7 @@
               }         
           },
           bitstreams: { 
-            list: {                                // Returns all bitstreams in DSpace
+            list: {                               // Returns all bitstreams in DSpace
               method: "GET",
               path:     "bitsreams"
             },
@@ -496,11 +669,11 @@
             }
           },
           schemas: {
-            list: {                        // Returns a list of all schemas
+            list: {                               // Returns a list of all schemas
               method: "GET",
               path:     "registries/schema"
             },
-            item: {                             // Returns a metadata schema with schema prefix %%
+            item: {                               // Returns a metadata schema with schema prefix %%
               method: "GET",
               path:     "registries/schema/%%"
             },
@@ -520,18 +693,25 @@
       constructor() {
         this.dataOpQueue = [];
         this.results = {};
-        // this.controller = new DiscoveryController(this);
-        // this.view = new DiscoveryView();
-        // this.DataHandler = new DiscoveryDataHandler();
+        this.items = [];
+        this.view = {};
+        
+        /* Example:
+          this.criteriaController = new ECommonsOntarioCriteriaController(this);
+          this.paginationController = new HTMLPaginationController(this);
+          this.view = new ECommonsOntarioHTMLView(this);
+          this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
+        */
       }
       
       // fired by Controller when it changes state
       
       stateChange() {
-        this.dataOpQueue = this.controller.queue;
-        console.log("Operations Queue");
-        console.log(this.dataOpQueue);
-        this.retrieveData();
+        this.dataOpQueue = this.criteriaController.queue;
+        this.retrieveData().extractItems(); // populates this items
+        this.view
+          .setItems(this.items)
+          .displayQueryResults();
       }
       
       // Clears data parameters
@@ -547,8 +727,15 @@
           self.data[item.op].apply(self.data,item.values);
         });
         self.results = self.data.performQuery().getResults();
-        console.log('results');
-        console.log(self.results);
+        return this;
+      }
+      
+      // The Discovery class expects the results object to have an “items” property
+      // containing an array of items.
+      
+      extractItems() {
+        this.items = typeof this.results.items !== undefined ? this.results.items : [];
+        return this;
       }
     }
     
@@ -557,9 +744,7 @@
       vars expects:
       
       {
-        controllerID: '#discovery-interface',
-        viewID:       '#results',
-        dbURI:        'books.spi.ryerson.ca/rest',
+        dbURI:      'books.spi.ryerson.ca/rest',
         dbmethod:   'https'
       }
       
@@ -568,16 +753,17 @@
     class ECommonsOntarioDiscovery extends Discovery {
       constructor(vars) {
         super();
-        this.controller = new HTMLUIController(this);
-        this.view = new PaginatedHTMLView();
+        this.criteriaController = new ECommonsOntarioCriteriaController(this);
+        this.paginationController = new HTMLPaginationController(this);
+        this.view = new ECommonsOntarioHTMLView(this);
         this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
-        
       }
       
       resetDataParameters() {
         super.resetDataParameters();
         this.data.includeMetaData();
       }
+      
     }
     
     /* !DOCUMENT READY */
@@ -594,11 +780,29 @@
       
     });
   
-    
 })(jQuery);
+
+// Functions like PHP’s ucfirst()
 
 String.prototype.ucfirst = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+// Replaces all instances of a string
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+String.prototype.replaceLast = function(find, replace) {
+  var index = this.lastIndexOf(find);
+
+  if (index >= 0) {
+      return this.substring(0, index) + replace + this.substring(index + find.length);
+  }
+
+  return this.toString();
 };
 
 
