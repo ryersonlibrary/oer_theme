@@ -70,7 +70,7 @@ $clr2-dark: darken($clr2,20%);
 $clr2-med: darken($clr2,20%);
 $clr2-light: lighten($clr2,20%);
 //$clr3-dark: darken($clr3,20%);
-$clr3-light: lighten($clr3,20%);
+$clr3-light: #d6ddc6;
 $clr4-dark: darken($clr4,20%);
 $clr4-darker: #d47c1d;
 $clr4-lighter: #efe2cb;
@@ -122,4 +122,54 @@ $padding-base-vertical: 6px;
 $padding-base-horizontal: 12px;
 
 //forms
-$border-color: darken($clr4,50%);;
+$border-color: darken($clr4,50%);
+
+
+@mixin educatoractionbox($color, $border-color, $background-color) {
+  @extend .infobox;
+  background-color: $background-color;
+  color: $color;
+  border: 1px solid $border-color;
+  margin-bottom:2em;
+  min-height:500px;
+  position:relative;
+  hr {
+    @extend .headerbar;
+    background-color:$color;
+  }
+  .btn {
+    padding: 1em 3em;
+  }
+  p.footer {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 2.3em;
+    width: 100%;
+    box-sizing: border-box;
+    .btn {
+      display: inline-block;
+    }
+    /* XS styling */
+    @media (max-width: $screen-xs-max) {
+      .btn {
+        padding: 1em;
+      }
+    }
+    /* SM styling */
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      .btn {
+      
+      }
+    }
+  }
+  /* XS styling */
+  @media (max-width: $screen-xs-max) {
+    p.footer {
+      position: relative;
+      margin-bottom: 0;
+      margin-top: 1em;
+    }
+  }
+}

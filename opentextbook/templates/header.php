@@ -1,4 +1,4 @@
-<header id="main-header" class="bgimg-1 bgbox">
+<header id="main-header" class="<?php if(is_page('find') || is_page('catalogue') || is_page('preview')){ print "librarybg";}?> bgimg-1 bgbox">
   <div class="container">
   <img src="<?= get_template_directory_uri(); ?>/dist/images/ecampus_logo_dark.png" id="headerlogo">
 	<?php if ( has_nav_menu( 'primary-menu' ) ) : ?>
@@ -15,7 +15,7 @@
 				?>
 			</nav><!-- .main-navigation -->
 			<div id="social-controls">
-				<a href="/catalogue/find/"><img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-yellow.png" class="icon"></a>
+				<a href="/catalogue/"><img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-yellow.png" class="icon"></a>
 				<a href="http://www.twitter.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon"></a>
 				<a href="http://www.facebook.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon"></a>
 				<a href="http://www.linkedin.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/linkedin-icon-dark.png" class="icon"></a>
@@ -50,13 +50,13 @@ if( $showquicksearch ): ?>
            	<?php endif;?>
            	<div id="quick-search" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
            		<div id="quick-searchbox" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-           			<form action="/catalogue/find/" method="get" id="quick-search">
+           			<form action="/catalogue/" method="get" id="quick-search">
            				<input value="" id="quick-search-term" name="quick-search-term" placeholder="SEARCH FOR TEXTBOOKS BY TITLE, AUTHOR AND KEYWORD" type="text">
            				<img id="quick-search-btn" src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-dark.png" title="quick search for this term">
            			</form>
            		</div>
            		<div id="quick-browsebox" class="col-lg-3 col-lg-push-1 col-md-3 col-md-push-1 col-sm-12 col-xs-12">
-           			<a href="/catalogue/find/" class="btn btn-primary" id="browse-btn">Browse the Catalogue</a>
+           			<a href="/catalogue/" class="btn btn-primary" id="browse-btn">Browse the Catalogue</a>
            		</div>
            	</div>
     	</div>

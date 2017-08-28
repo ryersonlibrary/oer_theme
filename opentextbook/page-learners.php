@@ -17,3 +17,8 @@ use Roots\Sage\Wrapper;
     	</div>
 	</div>
 </section>
+<section id="page-footer" class="bgimg-2 bgbox">
+    <div class="container">
+    	<div class="content row"></div>
+	</div>
+</section>

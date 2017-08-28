@@ -102,14 +102,14 @@ use Roots\Sage\Wrapper;
             			<div id="twitterfeed" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             				<h3><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-green.png" id="openeducation-twitter-logo" alt="" title="Twitter Logo"></h3>
             				<p><a class="twitter-timeline" href="https://twitter.com/eCampusOntario">Tweets by eCampusOntario</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-            				<a href="" class="btn btn-tertiary" id="twitter-btn">Visit our Twitter Feed</a>
+            				<a href="https://twitter.com/eCampusOntario" class="btn btn-tertiary" id="twitter-btn">Visit our Twitter Feed</a>
         	    		</div>
             			<div id="rssfeed" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             				<h3><img src="<?= get_template_directory_uri(); ?>/dist/images/rss-icon-green.png" id="openeducation-rss-logo" alt="" title="RSS Logo"></h3>
             				<?php
 echo do_shortcode( '[wp_rss_aggregator limit="10" links_before=\'<ul class="rss-aggregator">\' link_before=\'<li class="feed-item-link">\']' );
 ?>
-            				<a href="" class="btn btn-tertiary" id="rss-btn">Subscribe to our RSS Feed</a>
+            				<a href="https://www.diigo.com/rss/profile/Clintlalonde/open?query=%23open&sort=updated" class="btn btn-tertiary" id="rss-btn">Subscribe to our RSS Feed</a>
             			</div>
             		</div>
                 </div>
