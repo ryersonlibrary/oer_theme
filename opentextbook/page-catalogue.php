@@ -9,7 +9,7 @@ use Roots\Sage\Wrapper;
         	<div id="discovery" class="row">
             	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3" data-controller-criteria>
                 	<h4>Find a Textbook</h4>
-                	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|contains' data-ui-type="textfield">
+                	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|matches' data-ui-type="textfield">
                 		<input id='search-value' data-user-input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="Author or Keyword" data-value>
                 	</div>
                 	<div id="discovery-facets">

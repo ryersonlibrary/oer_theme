@@ -3,7 +3,7 @@
 
 (function($) {
   
-    /* DISCOVERY CONTROLLER CLASS */
+    /* !DISCOVERY CONTROLLER CLASS */
     
     // Core Controller Class
     
@@ -21,6 +21,8 @@
     
     // Manages UIs that submit filter criteria.
     
+    /* !CRITERIA SELECTION CONTROLLER CLASS */
+    
     class CriteriaSelectionController extends DiscoveryController {
       constructor(discoveryObj) {
         super(discoveryObj);
@@ -33,6 +35,7 @@
       }
     }
     
+    /* !PAGINATION CONTROLLER CLASS */
     // Manages Pagination UIs.
     
     class PaginationController extends DiscoveryController {
@@ -45,13 +48,13 @@
     }
     
     // Manages HTML5-Based Pagination UIs
-    
     class HTMLPaginationController extends PaginationController {
       constructor(discoveryObj) {
         super(discoveryObj);
       }
     }
     
+    /* !HTML SEARCH BOX CLASS */
     // Manages standalone Search Box UIs
     
     class HTMLSearchBox extends CriteriaSelectionController {
@@ -203,7 +206,6 @@
         this.stage = this.view.find('[data-view-stage]');
         this.titleStage = this.view.find('[data-view-title-stage]');
         this.templates = {};
-        
         this.parseTemplates();        
       }
       
@@ -238,7 +240,6 @@
       displayQueryResults() {
         var self = this;
         self.stage.html('');
-        
         this.items.forEach(function(item) {
           self.stage.append(self.processTokens(self.templates.book_capsule,item));
         });
@@ -268,11 +269,11 @@
         this.dburl = dbmethod + '://' + dbURI;
         this.paths = this.build_paths();
         this.query = {};
+        this.resultsComplete;
         this.XHROpts = this.resetXHROpts();
         this.results = {};
-                
       }
-      
+            
       resetQueryParameters() {
         this.query = {};
       }
@@ -286,7 +287,7 @@
       
       // Placeholder. Will be particular to database implementation
       
-      setSearchTerm(term,operator='contains') {
+      setSearchTerm(term,operator='matches') {
         return this;
       }
       
@@ -312,13 +313,14 @@
       
       resetXHROpts() {
         this.XHROpts = {
-          async: false,
+          async: true,
           method: "GET", // default
-          traditional: true,
-          crossOrigin: true,
+          //traditional: true,
+          //crossOrigin: true,
           error: this.xhrError,
-          success: this.xhrResultsHandler
         };
+        
+        this.resultsComplete= $.Deferred()
       }
       
       // Set AJAX option as per http://api.jquery.com/jquery.ajax/
@@ -336,8 +338,9 @@
       
       // Performs filtered query
       
-      performQuery() {
+      executeQuery() {
         this.resetXHROpts();
+        this.prepareQuery();
         this
           .setXHROpt('url',this.makeURL(this.paths.query.filtered_items.path))
           .setXHROpt('method',this.paths.query.filtered_items.method)
@@ -347,11 +350,15 @@
       }
       
       processResults() {
-        
+        var self = this;
+        $.when(this.resultsComplete).done(function() {
+          
+        });
       }
       
+      // A shortcut to the results. Can only be called when this.resultsComplete is resolved.
+      
       getResults() {
-        this.processResults();
         return this.results;
       }
       
@@ -360,16 +367,20 @@
       }
       
       /* ! -- AJAX call */
-      
-      /*
-        A number of things are going on here. The data results need to be scoped to the object instance so the success
-        a function expression was needed. The $.extend method allows us to do this and retain our this.XHROpts property.
-        The success parameter is passed an array, which calls a second method for post-processing.
-      */ 
-                
+                      
       retrieve() {
         var self = this;
-        $.ajax($.extend(this.XHROpts,{success: [function(data) { self.results = data; },self.xhrResultsHandler]}));
+        $.ajax($.extend(this.XHROpts,
+          {
+            success: 
+              function(data,textStatus,jqXHR) { 
+                self.results = data; 
+                self.xhrResultsHandler(data,textStatus,jqXHR,self);
+                self.processResults();
+                self.resultsComplete.resolve(); 
+              },
+          }
+        ));
       }
       
       xhrError(xhr, ajaxOptions, thrownError) {
@@ -379,8 +390,9 @@
       }
       
       // called after a successful ajax request 
+      // marks resultsComplete as resolve.
       
-      xhrResultsHandler(data,textStatus,jqXHR) {
+      xhrResultsHandler(data,textStatus,jqXHR,self) {
       
       }
       
@@ -429,14 +441,14 @@
     class DSpaceDataHandler extends DiscoveryDataHandler {
       constructor(dbURI, dbmethod) {
         super(dbURI, dbmethod);
-        this.query = [];
-        this.expansion = []; // expands the dataset
-        this.filters = [];  // adds filters
-        this.fields = []; // fields to show
+        this.resetQueryParameters();
       }
       
       resetQueryParameters() {
         this.query = [];
+        this.expansion = []; // expands the dataset
+        this.filters = [];  // adds filters
+        this.fields = []; // fields to show
       }
   
       /* 
@@ -456,7 +468,6 @@
     
       */
 
-      
       setQueryParameter(parameter,value,operator='like') {
         
         this.query.push({
@@ -477,20 +488,34 @@
         return this;  
       }
       
-      // A search term is general across all metadata
+      // Handles any special processing
       
-      setSearchTerm(value,operator='contains') {
-        this.setQueryParameter('*',value,operator);
+      prepareQuery() {
+
+      }
+      
+      // A search term is general across all metadata
+      // Note: the “matches” operator alongside framing wildcards (“*value*”) returns a general case-insensitive result.
+      
+      setSearchTerm(value,operator='matches') {
+        this.setQueryParameter('*','(?i).*' + value + '*',operator);
         return this;
+      }
+      
+      // called after a successful ajax request 
+      
+      xhrResultsHandler(data,textStatus,jqXHR) {
+        super.xhrResultsHandler(data,textStatus,jqXHR);
+        if (typeof this.results.items === 'undefined') {
+          this.results.items = [];
+        }
       }
       
       processResults() {
         super.processResults();
         var self = this;
-        var items = this.results.items;
-        
-        for(var i=0; i<items.length; i++) {
-          var item = this.results.items[i];
+        for(var i=0; i<self.results.items.length; i++) {
+          var item = self.results.items[i];
           
           // Set default values.
                   
@@ -521,14 +546,12 @@
               values[prop] = values[prop].join('%%');
             }
           }
-          
-
-          
+                      
           // Process contributors
           values.byline = self.serializeDisplayString(values,'dc.contributor.author');
           values.subjects = self.serializeDisplayString(values,'dc.subject');
           
-          this.results.items[i].values = values;
+          self.results.items[i].values = values;
         }
       }
       
@@ -581,9 +604,11 @@
             parentCommunityList
       */
             
-      expandQuery(expansion) {
-        this.expansion.push(expansion);
-        this.setAdditionalParameter('expand',this.expansion.join(','));
+      expandQuery(expansionValue) {
+        if (this.expansion.includes(expansionValue) === false) {
+          this.expansion.push(expansionValue);
+          this.setAdditionalParameter('expand',this.expansion.join(','));
+        }
         return this;
       }
       
@@ -708,11 +733,18 @@
       
       controllerStateChange() {
         this.dataOpQueue = this.criteriaController.queue;
-        this.retrieveData().extractItems(); // populates this items
-        this.displayResults();
+        this.execute();
       }
-      
+            
       setDataOp(op,values) {
+
+        // remove spaces from values
+                
+        values = values.map(function(val){
+          val = val.trim();
+          return val;
+        });
+        
         this.dataOpQueue.push({
           op: op,
           values: values
@@ -722,19 +754,25 @@
       quickSearch(term) {
         this.dataOpQueue = [];
         this.setDataOp('setSearchTerm',[term]);
-        this.retrieveData().extractItems().displayResults();
+        this.execute();
       }
-      
-      displayResults() {
-        this.view
-          .setItems(this.items)
-          .displayQueryResults();
-      }
-      
+            
       // Clears data parameters
       
       resetDataParameters() {
         this.data.resetQueryParameters();
+      }
+      
+      // retrieves and displays data
+      
+      execute() {
+        var self = this;
+        self.retrieveData();
+        $.when(this.data.resultsComplete).done(function(){
+          self.results = self.data.getResults();
+          self.items = typeof self.results.items !== "undefined" ? self.results.items : [];
+          self.displayResults();
+        });
       }
       
       retrieveData() {
@@ -743,16 +781,16 @@
         this.dataOpQueue.forEach(function(item){
           self.data[item.op].apply(self.data,item.values);
         });
-        self.results = self.data.performQuery().getResults();
+        self.data.executeQuery();
         return this;
-      }
+      }      
       
-      // The Discovery class expects the results object to have an “items” property
-      // containing an array of items.
+      // This function can only be called when this.data.resultsComplete has been resolved.
       
-      extractItems() {
-        this.items = typeof this.results.items !== undefined ? this.results.items : [];
-        return this;
+      displayResults() {
+        this.view
+          .setItems(this.items)
+          .displayQueryResults();
       }
     }
     
@@ -788,7 +826,7 @@
           $('#search-value').val(value);
         } else {
           this.setDataOp('setQueryParameter',['dc:language','en']);
-          this.retrieveData().extractItems().displayResults();
+          this.execute();
         }
         
         
@@ -811,7 +849,7 @@
           dbmethod:     'https'
         });
       
-      // var results = discovery.data.setSearchTerm('Electrical').includeMetaData().performQuery().getResults();
+      // var results = discovery.data.setSearchTerm('Electrical').includeMetaData().executeQuery().getResults();
       
     });
   
