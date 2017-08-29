@@ -60,6 +60,19 @@
     blockquote {
       border-left: 10px solid $clr2;
     }
+    /* XS styling */
+    @media (max-width: $screen-xs-max) {
+      h1 {
+        font-size:2.3em;
+        letter-spacing: 0;
+      }
+      h2{
+        font-size: 1.5em;
+      }
+      h3{
+        font-size: 1.1em;
+      }
+    }
   }  
   .entry-content > :first-child{
     margin-top: 0;
