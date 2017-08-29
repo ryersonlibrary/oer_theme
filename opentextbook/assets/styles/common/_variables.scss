@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Frutiger LT Std';
+  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Frutiger LT Std Italic';
+  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Frutiger LT Std Bold';
+  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Frutiger LT Std Bold Italic';
+  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
 // Glyphicons font path
 $icon-font-path:        '../fonts/';
 
@@ -109,9 +134,9 @@ $btn-inverted-border: #fff;
 // Fonts
 $font-size-base: 16px;
 $font-family-serif: 'Spectral', serif;
-$font-family-sans-serif: 'Karla', sans-serif;
-$font-family-base: $font-family-serif;
-$font-family-header: 'Karla', sans-serif;
+$font-family-sans-serif: 'Frutiger LT Std', Helvetica, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$font-family-header: 'Frutiger LT Std', Helvetica, sans-serif;
 
 // Buttons
 $btn-border-radius-base: 2px;

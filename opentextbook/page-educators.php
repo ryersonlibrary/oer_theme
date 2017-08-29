@@ -6,7 +6,7 @@ use Roots\Sage\Wrapper;
 <section id="educators-section" class="whitebox">
 <div class="container">
     <div class="content row">
-    	<div id="educator-tools" class="page-content col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+    	<div id="educator-tools">
     		<div id="educator-header" class="row box-header">
         		<hr>
         		<h2 class="entry-title">Tools for Educators</h2>

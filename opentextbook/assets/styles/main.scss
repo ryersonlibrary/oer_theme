@@ -475,6 +475,8 @@ section.bgbox{
   background-color:darken($clr4,20%);
   padding: 36px;
   color: #fff;
+  border-radius: 4px;
+  border: 2px solid darken($clr4,20%);
   .box-header {
     background-color:darken($clr4,20%);
     hr {

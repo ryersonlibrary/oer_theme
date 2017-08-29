@@ -70,7 +70,7 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\setup' );
  */
 function assets() {
     wp_enqueue_style( 'opentextbook-publisher/css', Assets\asset_path( 'styles/main.css' ), false, null );
-    wp_enqueue_style( 'opentextbook-publisher/fonts', 'https://fonts.googleapis.com/css?family=Karla:400,700|Spectral:400,400i,700&amp;subset=latin-ext', false, null );
+    //wp_enqueue_style( 'opentextbook-publisher/fonts', 'https://fonts.googleapis.com/css?family=Karla:400,700|Spectral:400,400i,700&amp;subset=latin-ext', false, null );
     wp_enqueue_script( 'opentextbook-publisher/skip-link-focus-fix', Assets\asset_path( 'scripts/skip-link-focus-fix.js' ), [], null, true );
     wp_enqueue_script( 'opentextbook-publisher/match-height', Assets\asset_path( 'scripts/matchheight.js' ), [ 'jquery' ], null, true );
     wp_enqueue_script( 'opentextbook-publisher/js', Assets\asset_path( 'scripts/main.js' ), [ 'jquery' ], null, true );
