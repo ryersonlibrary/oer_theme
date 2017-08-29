@@ -1,27 +1,44 @@
 @font-face {
   font-family: 'Frutiger LT Std';
-  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Roman.otf') format('opentype');
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Frutiger LT Std Italic';
-  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Italic.otf') format('opentype');
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Italic.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Italic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Italic.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: normal;
   font-style: italic;
 }
+
 @font-face {
   font-family: 'Frutiger LT Std Bold';
-  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-Bold.otf') format('opentype');
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: bold;
   font-style: normal;
 }
+
+
 @font-face {
   font-family: 'Frutiger LT Std Bold Italic';
-  src: url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.eot?') format('eot'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.woff') format('woff'), url('http://opentextbook.agile.dev.wok/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd/FrutigerLtStd-BoldItalic.otf') format('opentype');
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: bold;
   font-style: italic;
 }
+
 
 // Glyphicons font path
 $icon-font-path:        '../fonts/';
