@@ -3,10 +3,10 @@
 use Roots\Sage\Setup;
 use Roots\Sage\Wrapper;
 ?>
-<section id="discovery" class="whitebox">
+<section id="discovery-section" class="whitebox">
 	<div class="container">
     	<div class="content row">
-        	<div id="discovery-box" class="row">
+        	<div id="discovery" class="row">
             	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3" data-controller-criteria>
                 	<h4>Find a Textbook</h4>
                 	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|contains' data-ui-type="textfield">
@@ -53,7 +53,7 @@ use Roots\Sage\Wrapper;
     	               		<li data-value="<?php print (time() - (5 * 365 * 24 * 60 * 60)); ?>">Past Five Years</li>
                       	</ul>
                   	  </div>
-                  	  
+
                   	  <!--
                     	<h5>Peer Review <img class="icon" src="<?= get_template_directory_uri(); ?>/dist/images/ui-star-dark.svg"></h5>
                     	<ul id="discovery-ui-peerreview" data-param="peerreview">
@@ -83,8 +83,8 @@ use Roots\Sage\Wrapper;
                 		<span id="discovery-reset-btn" class="btn" data-reset>Reset and Start Again</span>
                 	</div>
             	</div>
-            	
-            	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9" data-view-results> 
+
+            	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9" data-view-results>
               	  <div id="results-templates"  style='display: none' data-view-templates>
                 	  <div data-view-template-name='book_capsule' data-view-template-wrapper>
                   	  <div class="result-item col-lg-3 col-md-4 col-sm-6 col-xs-6">
@@ -136,7 +136,7 @@ use Roots\Sage\Wrapper;
 		</div>
 	</div>
 </section>
-<section id="page-footer" class="bgimg-2 bgbox">
+<section id="page-footer-section" class="bgimg-2 bgbox">
     <div class="container">
     	<div class="content row"></div>
 	</div>

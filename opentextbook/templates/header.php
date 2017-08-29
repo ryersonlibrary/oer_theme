@@ -16,10 +16,10 @@
 			</nav><!-- .main-navigation -->
 			<div id="social-controls">
 				<a href="/catalogue/"><img src="<?= get_template_directory_uri(); ?>/dist/images/search-icon-yellow.png" class="icon"></a>
-				<a href="http://www.twitter.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon"></a>
-				<a href="http://www.facebook.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon"></a>
-				<a href="http://www.linkedin.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/linkedin-icon-dark.png" class="icon"></a>
-				<a href="http://www.youtube.com" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/youtube-icon-dark.png" class="icon"></a>
+				<a href="http://www.twitter.com/ecampusontario" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/twitter-icon-dark.png" class="icon"></a>
+				<a href="https://www.facebook.com/ecampusontario/" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/facebook-icon-dark.png" class="icon"></a>
+				<a href="https://ca.linkedin.com/company/ecampusontario" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/linkedin-icon-dark.png" class="icon"></a>
+				<a href="https://www.youtube.com/channel/UCwVGE7c6gCnNpxV2OLzJQEg" target="_blank"><img src="<?= get_template_directory_uri(); ?>/dist/images/youtube-icon-dark.png" class="icon"></a>
 			</div>
 		</div><!-- .site-header-menu -->
 	<?php endif; ?>

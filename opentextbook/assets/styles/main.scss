@@ -104,16 +104,16 @@ main{
 #main-header{
   background-image: url('../images/ryerson_stock_bg.jpg');
 }
-#front-getinvolved{
+#front-getinvolved-section{
   background-image: url('../images/ryerson_stock_bg_2.jpg');
 }
-#front-openeducation{
+#front-openeducation-section, #learners-getinvolved-section{
   background-image: url('../images/ryerson_stock_bg_3.jpg');
 }
-#page-footer {
+#page-footer-section {
   background-image: url('../images/ryerson_stock_bg_3.jpg');
 }
-#educators-recentlyadded{
+#educators-recentlyadded-section{
   background-image: url('../images/ryerson_stock_bg_2.jpg');
 }
 #main-header.librarybg {
@@ -245,45 +245,46 @@ section.bgbox{
     }
   }
 }
-
 #educator-tools,#catalogue{
   text-align:center;
-  .box-header{
-    p {
-      margin: 1em 0 3em;
-    }
-    hr {
-      @extend .headerbar;
-      background-color:$clr2-dark;
-    }
+}
+
+.box-header{
+  text-align:center;
+  p {
+    margin: 1em 0 3em;
+  }
+  hr {
+    @extend .headerbar;
+    background-color:$clr2-dark;
+  }
+  h2 {
+    font-size:3em;
+    margin:0.15em 0 1em 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $clr2-dark;
+  }
+}
+/* XS styling */
+@media (max-width: $screen-xs-max) {
+  .box-header {
     h2 {
-      font-size:3em;
-      margin:0.15em 0 1em 0;
-      text-transform: uppercase;
-      font-weight: bold;
-      color: $clr2-dark;
+      margin: 1em 0;
+    }
+    p {
+      margin: 1em 1em 2em;
     }
   }
-  /* XS styling */
-  @media (max-width: $screen-xs-max) {
-    .box-header {
-      h2 {
-        margin: 1em 0;
-      }
-      p {
-        margin: 1em 1em 2em;
-      }
+}
+/* SM styling */
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .box-header {
+    h2 {
+      margin: 1em;
     }
-  }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-    .box-header {
-      h2 {
-        margin: 1em;
-      }
-      p {
-        margin: 1em 3em 2em;
-      }
+    p {
+      margin: 1em 3em 2em;
     }
   }
 }
@@ -296,7 +297,6 @@ section.bgbox{
   padding: 0;
   .box-header {
     hr {
-      @extend .headerbar;
       margin-top: 4em;
       background-color:darken($clr4,20%);
     }
@@ -317,17 +317,6 @@ section.bgbox{
   }
   /* XS styling */
   @media (max-width: $screen-xs-max) {
-    .box-header {
-      h2 {
-        margin: 1em;
-      }
-      p {
-        margin: 1em 3em 2em;
-      }
-    }
-  }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     .box-header {
       h2 {
         margin: 1em;
@@ -365,7 +354,6 @@ section.bgbox{
   padding: 0;
   .box-header {
     hr {
-      @extend .headerbar;
       margin-top: 4em;
       background-color:darken($clr4,20%);
     }
@@ -388,17 +376,6 @@ section.bgbox{
       }
     }
   }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-    .box-header {
-      h2 {
-        margin: 1em;
-      }
-      p {
-        margin: 1em 3em 2em;
-      }
-    }
-  }
 }
 
 #peerreview {
@@ -408,7 +385,6 @@ section.bgbox{
   .box-header {
     background: #fff;
     hr {
-      @extend .headerbar;
       background-color:$clr2-med;
     }
     h2 {
@@ -421,17 +397,6 @@ section.bgbox{
   }
   /* XS styling */
   @media (max-width: $screen-xs-max) {
-    .box-header {
-      h2 {
-        margin: 1em;
-      }
-      p {
-        margin: 1em 3em 2em;
-      }
-    }
-  }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     .box-header {
       h2 {
         margin: 1em;
@@ -496,6 +461,48 @@ section.bgbox{
   }
 }
 
+#learners-resources-box {
+  ul{
+    font-size: 1.3em;
+    li{
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+#learners-getinvolved{
+  @extend #peerreview;
+  background-color:darken($clr4,20%);
+  padding: 36px;
+  color: #fff;
+  .box-header {
+    background-color:darken($clr4,20%);
+    hr {
+      background-color:#fff;
+    }
+    h2 {
+      font-size:2.8em;
+      margin:0.15em 0 1em 0;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+  #learners-getinvolved-box {
+    @extend .infobox;
+    text-align:left;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    padding:0px;
+    min-height:unset;
+    h5{
+      font-size:1.5em;
+      text-transform:uppercase;
+    }
+  }
+}
+
 #openeducation {
   text-align:center;
   border: 2px solid $clr3;
@@ -520,18 +527,7 @@ section.bgbox{
   @media (max-width: $screen-xs-max) {
     .box-header {
       h2 {
-        margin: 1em;
-      }
-      p {
-        margin: 1em 3em 2em;
-      }
-    }
-  }
-  /* SM styling */
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-    .box-header {
-      h2 {
-        margin: 1em;
+        margin: 0;
       }
       p {
         margin: 1em 3em 2em;
@@ -570,6 +566,12 @@ section.bgbox{
         overflow: auto;
         margin: 15px;
       }
+      /* XS styling */
+      @media (max-width: $screen-xs-max) {
+        #twitterfeed p {
+          margin:0;
+        }
+      }
       #rssfeed {
         .nav-links{
           display:none;
@@ -587,7 +589,7 @@ section.bgbox{
             word-wrap: break-word;
             background-color: $clr3-light;
             margin-bottom: 6px;
-            padding:5px;
+            padding:8px;
             
             .wprss-feed-meta {
               font-size: 0.8em;
@@ -599,6 +601,12 @@ section.bgbox{
           .feed-item-link::before {
             padding:0;
             content:'';
+          }
+        }
+        /* XS styling */
+        @media (max-width: $screen-xs-max) {
+          ul{
+            margin:0;
           }
         }
       }

@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-#discovery-box{
+#discovery{
   border: 1px solid $clr1;
   border-radius: 2px;
   background-color: #fff;
@@ -355,7 +355,7 @@
   .result-item .textbook .textbook-footer{
     width: 95%;
   }
-  #discovery-box {
+  #discovery {
     border: none;
     padding: 0;
   }
@@ -388,7 +388,7 @@
   #discovery-results,#recentlyadded-box {
     padding: 0;
   }
-  #discovery-box {
+  #discovery {
     
   }
   .result-item .textbook .textbook-footer{

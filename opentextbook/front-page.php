@@ -4,7 +4,7 @@ use Roots\Sage\Setup;
 use Roots\Sage\Wrapper;
 ?>
 
-<section id="front-educators" class="whitebox">
+<section id="front-educators-section" class="whitebox">
 	<div class="container">
     	<div class="content row">
         	<div id="educator-tools" class="row">
@@ -17,7 +17,7 @@ use Roots\Sage\Wrapper;
             		<div id="adopt">
             			<hr>
                			<h3>Adopt</h3>
-               			<p>Search our collection of open textbooks.This high-quality, curated collection features resources on some of the top subject areas in post-secondary education in Ontario today. Many of the textbooks have been reviewed and vetted by educators across Canada.</p>
+               			<p>Search our collection of open textbooks. This high-quality, curated collection features resources on some of the top subject areas in post-secondary education in Ontario today. Many of the textbooks have been reviewed and vetted by educators across Canada.</p>
                			<p class="footer"><a href="" class="btn btn-inverted" id="adopt-btn">Find and Adopt</a></p>
                		</div>
                	</div>
@@ -41,7 +41,7 @@ use Roots\Sage\Wrapper;
 		</div>
 	</div>
 </section>
-<section id="front-getinvolved" class="bgimg-2 bgbox">
+<section id="front-getinvolved-section" class="bgimg-2 bgbox">
 	<div class="container">
     	<div class="content row">
         	<div id="getinvolved" class="center col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
@@ -59,7 +59,7 @@ use Roots\Sage\Wrapper;
 		</div>
 	</div>
 </section>
-<section id="front-peerreview" class="whitebox">
+<section id="front-peerreview-section" class="whitebox">
 	<div class="container">
 		<div class="content row">
   			<div id="peerreview"  class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
@@ -89,7 +89,7 @@ use Roots\Sage\Wrapper;
 		</div>
      </div>
 </section>
-<section id="front-openeducation"  class="bgimg-3 bgbox">
+<section id="front-openeducation-section"  class="bgimg-3 bgbox">
 	<div class="container">
     	<div class="content row">
             <div id="openeducation"class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">

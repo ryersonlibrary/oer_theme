@@ -3,13 +3,13 @@
 use Roots\Sage\Setup;
 use Roots\Sage\Wrapper;
 ?>
-<section id="educators" class="whitebox">
+<section id="educators-section" class="whitebox">
 <div class="container">
     <div class="content row">
-    	<div id="educator-tools">
+    	<div id="educator-tools" class="page-content col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
     		<div id="educator-header" class="row box-header">
         		<hr>
-        		<h2>Tools for Educators</h2>
+        		<h2 class="entry-title">Tools for Educators</h2>
         		<p>Make an open textbook part of your next course, adapt an existing resource, remix open materials or write your own open textbook. </p>
     		</div>
     		<div class="col-lg-4 col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12">
@@ -40,7 +40,7 @@ use Roots\Sage\Wrapper;
 	</div>
 </section>
 
-<section id="educators-recentlyadded" class="bgimg-2 bgbox">
+<section id="educators-recentlyadded-section" class="bgimg-2 bgbox">
 	<div class="container">
     	<div class="content row">
         	<div id="recentlyadded" class="center col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
