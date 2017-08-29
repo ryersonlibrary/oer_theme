@@ -11,7 +11,7 @@ var qs = $('#quick-search');
 if (qs.length > 0) {
   var qsbox = qs.find('#quick-search-term');
   var qsbtn = qs.find('#browse-btn');
-  
+    
   qsbox.attr('placeholder','Search for textbooks by author, title or keyword');
   qsbtn.bind('click',function(event) {
     event.preventDefault();
@@ -20,6 +20,13 @@ if (qs.length > 0) {
     } else {
       window.location.href = "catalogue";
     }
+  });
+  
+  // Replaced default search form submit behaviour with onclick processing above.
+  
+  qs.submit(function(event){
+    event.preventDefault();
+    qsbtn.trigger('click');
   });
 }
 
