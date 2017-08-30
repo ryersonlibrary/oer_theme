@@ -9,7 +9,7 @@ use Roots\Sage\Wrapper;
         	<div id="discovery" class="row">
             	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3" data-controller-criteria>
                 	<h4>Find a Textbook</h4>
-                	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|matches' data-ui-type="textfield">
+                	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|contains' data-ui-type="textfield">
                 		<input id='search-value' data-user-input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="Author or Keyword" data-value>
                 	</div>
                 	<div id="discovery-facets">
@@ -107,7 +107,8 @@ use Roots\Sage\Wrapper;
                 	<div id="results-header" class="row">
                 		<h3 data-view-title-stage>Displaying <span class="searchterm" id="search-limitations"></span> items <span class="searchterm" id="search-subject"></span> <span class="searchterm" id="search-keyword"></span> <span class="searchterm" id="search-created"></span></h3>
                 	</div>
-                	<div id="results-box" class="row">
+                  <div data-controller-item-limit='6' data-controller-current-page='1' data-controller-paginator>
+                	  <div id="results-box" class="row">
                     	<div id="results-prev" class="col-lg-1 col-md-1">
                     		<span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous>&lt;</span>
                     	</div>
@@ -120,17 +121,18 @@ use Roots\Sage\Wrapper;
                     		<span id="results-next-btn" class="catalogue-results-nav" data-controller-next>&gt;</span>
                     	</div>
                 	</div>
-                	<div id="results-footer" class="row">
+                	  <div id="results-footer" class="row">
                 		<div id="results-more" class="row">
                     		<span id="results-more-btn" class="btn">View More</span>
-                    	</div>
-                		<div id="results-pagecounter" class="row" data-controller-paginator>
-                			<p id="results-pagecounter-pages"><span class="resultspage" id="resultspage-1">1</span><span class="resultspage" id="resultspage-2">2</span></p>
+                    </div>
+                		<div id="results-pagecounter" class="row" >
+                			<p id="results-pagecounter-pages" data-controller-pagebtns><span class="resultspage" id="resultspage-1">%%</span></p>
                 		</div>
                 		<div id="results-counterdetails" class="row">
-                			<p>Showing <span id="results-counter-thispage">1</span> of <span id="results-counter-totalpages">5</span> of <span id="results-counter-totalresults">20</span> Results</p>
+                			<p>Showing <span id="results-counter-thispage" data-controller-visible-results>1</span> of <span id="results-counter-totalpages">5</span> of <span id="results-counter-totalresults" data-controller-total-results>20</span> Results</p>
                 		</div>
                 	</div>
+                  </div>
             	</div>
             </div>
 		</div>

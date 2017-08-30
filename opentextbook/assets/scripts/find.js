@@ -11,7 +11,12 @@
       constructor(discoveryObj) {
         this.discoveryObj = discoveryObj;
         this.controller = null;
+        this.queue = [];
       }  
+      
+      enqueue() {
+        
+      }
             
       submit() {
         
@@ -27,10 +32,10 @@
       constructor(discoveryObj) {
         super(discoveryObj);
         this.facets = null;
-        this.queue = [];
       }
       
       enqueue() {
+        super.enqueue();
         
       }
     }
@@ -41,9 +46,10 @@
     class PaginationController extends DiscoveryController {
       constructor(discoveryObj) {
         super(discoveryObj);
-        this.nextPage = null;
-        this.previousPage = null;
-        this.pageMarkers = null;
+      }
+      
+      initUI() {
+        
       }
     }
     
@@ -51,7 +57,39 @@
     class HTMLPaginationController extends PaginationController {
       constructor(discoveryObj) {
         super(discoveryObj);
+        
+        // Components
+        this.paginator = $('[data-controller-paginator]');
+        this.nextbtn = this.paginator.find('[data-controller-next]');
+        this.prevbtn = this.paginator.find('[data-controller-previous]');
+        this.pagebtns = this.paginator.find('[data-controller-pagebtns]');
+        this.pageIndicator = this.pagebtns.html();
+        
+        // Settings
+        
+        this.itemLimit = this.paginator.data('controller-item-limit');
+        this.currentPage = this.paginator.data('controller-current-page');
+        
+        // Setup
+        
+        console.log('paginator');
+        console.log(this);
+        
+        this.pagebtns.html(''); // Remove page indicator
+        discoveryObj.setItemLimit(this.itemLimit,this.currentPage);
+        
+        this.initUI();
       }
+      
+      initUI() {
+        super.initUI();
+        
+        var self = this;
+        
+        
+      }
+      
+      
     }
     
     /* !HTML SEARCH BOX CLASS */
@@ -187,7 +225,7 @@
         this.items = items;
         return this;
       }
-      
+            
       displayQueryResults() {
 
       }
@@ -269,7 +307,7 @@
         this.dburl = dbmethod + '://' + dbURI;
         this.paths = this.build_paths();
         this.query = {};
-        this.resultsComplete;
+        this.resultsComplete = null;
         this.XHROpts = this.resetXHROpts();
         this.results = {};
       }
@@ -289,8 +327,7 @@
       
       setSearchTerm(term,operator='matches') {
         return this;
-      }
-      
+      }      
       // Placeholder. Will be particular to database implementation
       
       setDateIssed(value,operator='<') {
@@ -299,7 +336,8 @@
       
       // Placeholder. Will be particualar to database implementation. 
       
-      setLimit(limit,offset) {
+      setItemLimit(limit,page) {
+        var offset= limit * (page - 1);
         return this;
       }      
       
@@ -320,7 +358,7 @@
           error: this.xhrError,
         };
         
-        this.resultsComplete= $.Deferred()
+        this.resultsComplete= $.Deferred();
       }
       
       // Set AJAX option as per http://api.jquery.com/jquery.ajax/
@@ -579,10 +617,9 @@
       setDateIssed(term,operator='<') {
         return this;
       }
-      
-      // Rudimentary. Will be particualar to database implementation. 
-      
-      setLimit(limit=100,offset=0) {
+            
+      setItemLimit(limit=6,page=1) {
+        var offset= limit * (page - 1);
         this
           .setAdditionalParameter('limit',limit)
           .setAdditionalParameter('offset',offset);
@@ -720,6 +757,8 @@
         this.results = {};
         this.items = [];
         this.view = {};
+        this.itemLimit = 6;
+        this.page = 1;
         
         /* Example:
           this.criteriaController = new ECommonsOntarioCriteriaController(this);
@@ -729,11 +768,21 @@
         */
       }
       
+      inboundState() {
+        
+      }
+            
       // fired by Controller when it changes state
       
       controllerStateChange() {
         this.dataOpQueue = this.criteriaController.queue;
         this.execute();
+      }
+      
+      setItemLimit(limit,page) {
+        this.itemLimit = limit;
+        this.page = page;
+        this.data.setItemLimit(this.itemLimit,this.page);
       }
             
       setDataOp(op,values) {
@@ -761,6 +810,9 @@
       
       resetDataParameters() {
         this.data.resetQueryParameters();
+        if (this.itemLimit !== 0) {
+          this.data.setItemLimit(this.itemLimit,this.page);
+        }
       }
       
       // retrieves and displays data
@@ -775,9 +827,14 @@
         });
       }
       
+      // An Alias for reset Data Parameters
+      
+      newQuery() {
+         this.resetDataParameters();
+      }
+      
       retrieveData() {
         var self = this;
-        self.resetDataParameters();
         this.dataOpQueue.forEach(function(item){
           self.data[item.op].apply(self.data,item.values);
         });
@@ -808,10 +865,12 @@
     class ECommonsOntarioDiscovery extends Discovery {
       constructor(vars) {
         super();
+        this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
         this.criteriaController = new ECommonsOntarioCriteriaController(this);
         this.paginationController = new HTMLPaginationController(this);
         this.view = new ECommonsOntarioHTMLView(this);
-        this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
+        console.log('eco');
+        console.log(this);
         this.inboundState();
       }
       
@@ -820,16 +879,20 @@
       inboundState() {
         var op = getUrlParameter('op');
         var value = decodeURIComponent(getUrlParameter('value'));
-                
+        
+        this.newQuery();
+
         if (op === 'setSearchTerm') {
           this.quickSearch(value);
           $('#search-value').val(value);
         } else {
           this.setDataOp('setQueryParameter',['dc:language','en']);
           this.execute();
-        }
-        
-        
+        }        
+      }
+      
+      setItemLimit(limit,page) {
+        super.setItemLimit(limit,page);
       }
       
       resetDataParameters() {
