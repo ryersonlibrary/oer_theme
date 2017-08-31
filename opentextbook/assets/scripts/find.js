@@ -296,10 +296,10 @@
       initList(facet,self) {
         var itemcnt = 0;
         var showmore = false;
-        facet.find('[data-user-input-wrapper]').find('li').each(function() {
+        facet.find('[data-user-input-wrapper]').find('li > a').each(function() {
           $(this).bind('click',function(event) {
             event.preventDefault();
-            var item = $(this);
+            var item = $(this).closest('li');
             item.toggleClass('selected');
             if (item.data('value') === '*') {
               facet.removeAttr('data-enqueue');
@@ -312,7 +312,7 @@
           });
           
           if (itemcnt++ > self.maxlistitems) {
-            $(this).hide();
+            $(this).closest('li').hide();
             showmore = true;
           }
         });  
