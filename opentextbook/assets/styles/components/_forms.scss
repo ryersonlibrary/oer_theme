@@ -19,3 +19,69 @@
     }
   }
 }
+
+.wpcf7-form-control-wrap {
+  position: relative;
+  width: 500px;
+  display: block;
+  .wpcf7-text{
+    font-weight: normal;
+    color: #000;
+    letter-spacing: 0.015em;
+  }
+  .wpcf7-textarea,.wpcf7-select {
+    @extend .form-control;
+    width:100%;
+    font-weight: normal;
+    color: #000;
+    letter-spacing: 0.015em;
+  }
+}
+
+.wpcf7-captchac {
+  display: block;
+  margin: 10px 0;
+  border: solid 1px #aeaeae;
+  height: 50px;
+  width: 100px;
+}
+
+.wpcf7-submit{
+  @extend .btn;
+  @extend .btn-primary;
+  padding: 1em 3em;
+  font-weight: bold;
+}
+
+.wpcf7-response-output {
+  margin: 0;
+  padding: 1em;
+  font-weight:bold;
+  color:#000;
+  border-radius:2px;
+}
+
+.wpcf7-mail-sent-ng {
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.wpcf7-validation-errors {
+  border: 1px solid rgba(247,231,0, 0.4);
+  background-color: rgba(247,231,0, 0.2);
+}
+
+/* XS styling */
+@media (max-width: $screen-xs-max) {
+  .wpcf7-form-control-wrap {
+    position: relative;
+    width: 250px;
+  }
+}
+
+/* SM styling */
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .wpcf7-form-control-wrap {
+    width: 300px;
+  }
+}

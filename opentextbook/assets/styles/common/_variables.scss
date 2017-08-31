@@ -1,3 +1,45 @@
+@font-face {
+  font-family: 'Frutiger LT Std';
+  src: url('../fonts/FrutigerLtStd-Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-Light.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-Light.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Frutiger LT Std Italic';
+  src: url('../fonts/FrutigerLtStd-LightItalic.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-LightItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-LightItalic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-LightItalic.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Frutiger LT Std Bold';
+  src: url('../fonts/FrutigerLtStd-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-Bold.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-Bold.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Frutiger LT Std Bold Italic';
+  src: url('../fonts/FrutigerLtStd-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-BoldItalic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-BoldItalic.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: bold;
+  font-style: italic;
+}
+
+
 // Glyphicons font path
 $icon-font-path:        '../fonts/';
 
@@ -70,7 +112,7 @@ $clr2-dark: darken($clr2,20%);
 $clr2-med: darken($clr2,20%);
 $clr2-light: lighten($clr2,20%);
 //$clr3-dark: darken($clr3,20%);
-$clr3-light: lighten($clr3,20%);
+$clr3-light: #d6ddc6;
 $clr4-dark: darken($clr4,20%);
 $clr4-darker: #d47c1d;
 $clr4-lighter: #efe2cb;
@@ -109,9 +151,9 @@ $btn-inverted-border: #fff;
 // Fonts
 $font-size-base: 16px;
 $font-family-serif: 'Spectral', serif;
-$font-family-sans-serif: 'Karla', sans-serif;
-$font-family-base: $font-family-serif;
-$font-family-header: 'Karla', sans-serif;
+$font-family-sans-serif: 'Frutiger LT Std', Helvetica, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$font-family-header: 'Frutiger LT Std', Helvetica, sans-serif;
 
 // Buttons
 $btn-border-radius-base: 2px;
@@ -122,4 +164,80 @@ $padding-base-vertical: 6px;
 $padding-base-horizontal: 12px;
 
 //forms
-$border-color: darken($clr4,50%);;
+$border-color: darken($clr4,50%);
+
+@mixin educatoractionbox($color, $border-color, $background-color) {
+  @extend .infobox;
+  background-color: $background-color;
+  color: $color;
+  border: 1px solid $border-color;
+  margin-bottom:2em;
+  position:relative;
+  padding: 36px 50px;
+  hr {
+    @extend .headerbar;
+    background-color:$color;
+  }
+  .btn {
+    padding: 1em 3em;
+  }
+  p{
+    font-size:1.1em;
+    line-height:1.6em;
+    letter-spacing:0.05em;
+  }
+  p.footer {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 2.3em;
+    width: 100%;
+    box-sizing: border-box;
+    .btn {
+      display: inline-block;
+    }
+    /* XS styling */
+    @media (max-width: $screen-xs-max) {
+      .btn {
+        padding: 1em;
+      }
+      p{
+        font-size:1em;
+      }
+    }
+  }
+  /* XXS styling */
+  @media (max-width: $screen-sm-min) {
+    padding: 25px 50px;
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
+    }
+  }
+  /* XS styling */
+  @media (min-width: $screen-sm-min) and (max-width: $screen-xs-max) {
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
+    }
+  }
+  /* SM styling */
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
+    }
+  }
+  /* MD styling */
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    min-height:660px;
+  }
+  /* LG styling */
+  @media (min-width: $screen-lg-min) {
+    min-height:550px;
+  }
+}
