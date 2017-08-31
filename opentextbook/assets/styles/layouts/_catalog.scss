@@ -105,10 +105,10 @@
           background-position: 0.1em 0.1em;
           background-repeat: no-repeat;
         }
-        li.selectedfacet {
+        li.selected {
     	  font-weight:bold;
         }
-        li.selectedfacet::before {
+        li.selected::before {
     	  content: ">";
           background-image: url(../images/ui-bullet.svg);
         }

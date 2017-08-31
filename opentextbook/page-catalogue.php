@@ -16,7 +16,7 @@ use Roots\Sage\Wrapper;
               		<input id='search-value' data-user-input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="Author or Keyword" data-value>
               	</div>
               	<div id="discovery-facets">
-                	  <div id="discovery-ui-subject" class='facet' data-facet data-op='setQueryParameter' data-values="dc:subject|%%" data-ui-type="list">
+                	  <div id="discovery-ui-subject" class='facet' data-facet data-op='setQueryParameter' data-param="dc:subject|%%" data-ui-type="list">
                     	<h5 class='facet-title'>Subject</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select All Subjects">All Subjects</a></li>
@@ -70,7 +70,7 @@ use Roots\Sage\Wrapper;
                         <li data-value='Teaching'><a title="Select Teaching">Teaching</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-type="list">
+                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-restriction='single' data-ui-type="list">
                     	<h5 class='facet-title'>Language</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select English and French">English and French</a></li>
@@ -78,13 +78,13 @@ use Roots\Sage\Wrapper;
     	               		<li data-value="fr"><a title="Select French">French</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc:date.issued|%%" data-ui-type="list">
+                	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc.date.updated|%%|equals" data-ui-restriction='single' data-ui-type="list">
                     	<h5 class='facet-title'>Date of Creation</h5>
                     	<ul data-user-input-wrapper>
                   		<li data-value="*" class="createdfacet"><a title='Select items created anytime'>Any Date</a></li>
-                  		<li data-value="<?php print (time() - (90 * 24 * 60 * 60)); ?>"><a title="Select items created in the past 3 months">Past 3 Months</a></li>
-                  		<li data-value="<?php print (time() - (365 * 24 * 60 * 60)); ?>"><a title="Select items created in the past year">Past Year</a></li>
-  	               		<li data-value="<?php print (time() - (5 * 365 * 24 * 60 * 60)); ?>"><a title="Select items created in the past five years">Past Five Years</li>
+                  		<li data-value="NOW-3MONTHS"><a title="Select items created in the past 3 months">Past 3 Months</a></li>
+                  		<li data-value="NOW-1YEAR"><a title="Select items created in the past year">Past Year</a></li>
+  	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</li>
                     	</ul>
                 	  </div>
 

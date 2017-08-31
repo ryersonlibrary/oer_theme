@@ -256,20 +256,56 @@
         this.setDefaultState();
         this.initUI();
         
-        
       }
       
       // Finds any item marked 'data-default-value' and sets it for inclusion in the queue.
       
       setDefaultState() {
+        
+        this.controller.find('.selected').removeClass('selected');
+        
         this.controller.find('[data-default-value]').each(function(){
           $(this)[0].setAttribute('data-selected','');
           $(this).closest('[data-facet]')[0].setAttribute('data-enqueue','');
+          $(this).addClass('selected');
         });
+        
+          
+        var facets = this.controller.find('[data-facet]');
+        
+        // Mark generic (*) value as selected if no other facet items are.
+        
+        facets.find('li').each(function(){
+          var item = $(this);
+          if(item.data('value') === '*' && item.siblings('[data-selected]').length === 0) {
+            item.addClass('selected');
+          }
+        });
+        
+        // Clear all user input forms
+        
+        facets.find('[data-user-input]').val('');
+        
+        
       }
       
       initUI() {
         var self = this;
+        
+        // Submit Button
+        
+        this.controller.find('[data-submit]').bind('click',function(event){
+          event.preventDefault();
+          self.submit();
+        });
+        
+        // Reset Button
+        
+        this.controller.find('[data-reset]').bind('click',function(event){
+          event.preventDefault();
+          self.discoveryObj.resetControllers();
+          self.submit();
+        });
         
         /* 
            Allows us to define widget initialization methods based on the ui-type.
@@ -291,15 +327,18 @@
           if (typeof self[initfnc] !== 'function') { return; }
           self[initfnc](facet,self);
         });
+        
+        
       }
                   
       initList(facet,self) {
         var itemcnt = 0;
         var showmore = false;
         facet.find('[data-user-input-wrapper]').find('li > a').each(function() {
+          var item = $(this).closest('li');
+                    
           $(this).bind('click',function(event) {
             event.preventDefault();
-            var item = $(this).closest('li');
             item.toggleClass('selected');
             if (item.data('value') === '*') {
               facet.removeAttr('data-enqueue');
@@ -308,6 +347,13 @@
               facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
               item[0].setAttribute('data-selected',''); 
             }
+            
+            // Facet only allows a single value
+                        
+            if(typeof facet.data('ui-restriction') !== "undefined" && facet.data('ui-restriction') === 'single') {
+              item.siblings('li').removeAttr('data-selected').removeClass('selected');
+            }
+            
             self.submit();
           });
           
@@ -393,6 +439,8 @@
         this.controller.find('[data-selected]').each(function(){
           $(this).removeAttr('data-selected');
         });
+        
+        this.setDefaultState();
       }
       
       /* 
@@ -417,6 +465,9 @@
           });
           
         });
+        
+        console.log('Criteria Queue');
+        console.log(this.queue);
       }
       
       submit() {
@@ -862,8 +913,14 @@
       
       // TO DO
       
-      setDateIssed(term,operator='<') {
+      setDateIssed(date,operator='<') {
         return this;
+      }
+      
+      setDateUpdated(timestamp) {
+        var now = new Date(Date.now()).toUTCString();
+        var from = new Date(timestamp * 1000).toUTCString();
+        this.setQueryParameter('dc.date.updated',"[" + from + " TO " + now + "]","equals");        
       }
             
       setItemLimit(limit=6,page=1) {
@@ -956,6 +1013,7 @@
               function(data,textStatus,jqXHR) { 
                 self.expandedResults = data;
                 self.processResults();
+                console.log(self.results);
                 self.resultsComplete.resolve(); 
               }
             });
@@ -1135,6 +1193,14 @@
       updateControllers() {
         for(var controller in this.controllers) {
           this.controllers[controller].updateController();
+        } 
+      }
+      
+      // Resets all controllers
+      
+      resetControllers() {
+        for(var controller in this.controllers) {
+          this.controllers[controller].reset();
         } 
       }
       
