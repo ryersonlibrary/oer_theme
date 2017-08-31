@@ -121,13 +121,13 @@
       
       nextPage() {
         var resultsInfo = this.discoveryObj.data.getResultInfo();
-        var nextPage = (resultsInfo.currentPage + 1) > resultsInfo.totalPages ? 1 : (resultsInfo.currentPage + 1)
+        var nextPage = (resultsInfo.currentPage + 1) > resultsInfo.totalPages ? 1 : (resultsInfo.currentPage + 1);
         this.viewPage(nextPage);
       }
       
       previousPage() {
         var resultsInfo = this.discoveryObj.data.getResultInfo();
-        var prevPage = (resultsInfo.currentPage - 1) === 0 ? resultsInfo.totalPages : (resultsInfo.currentPage - 1)
+        var prevPage = (resultsInfo.currentPage - 1) === 0 ? resultsInfo.totalPages : (resultsInfo.currentPage - 1);
         this.viewPage(prevPage);
       }
             
@@ -1191,8 +1191,8 @@
             
       var discovery = new ECommonsOntarioDiscovery
         ({
-          dbURI:        'books.spi.ryerson.ca/rest',
-          dbmethod:     'https'
+          dbURI:        'dsweb.semiprodint.ryerson.ca/rest',
+          dbmethod:     'http'
         });
       
       // var results = discovery.data.setSearchTerm('Electrical').includeMetaData().executeQuery().getResults();
