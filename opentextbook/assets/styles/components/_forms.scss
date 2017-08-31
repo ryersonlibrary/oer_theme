@@ -29,7 +29,7 @@
     color: #000;
     letter-spacing: 0.015em;
   }
-  .wpcf7-textarea {
+  .wpcf7-textarea,.wpcf7-select {
     @extend .form-control;
     width:100%;
     font-weight: normal;
@@ -69,4 +69,19 @@
 .wpcf7-validation-errors {
   border: 1px solid rgba(247,231,0, 0.4);
   background-color: rgba(247,231,0, 0.2);
+}
+
+/* XS styling */
+@media (max-width: $screen-xs-max) {
+  .wpcf7-form-control-wrap {
+    position: relative;
+    width: 250px;
+  }
+}
+
+/* SM styling */
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .wpcf7-form-control-wrap {
+    width: 300px;
+  }
 }

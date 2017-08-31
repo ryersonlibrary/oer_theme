@@ -336,7 +336,9 @@ section.bgbox{
       background-repeat: no-repeat;
       background-size: cover;
       
-      .btn-primary {
+      #findoutmore-btn {
+        @extend .btn;
+        @extend .btn-primary;
         @include button-variant($btn-tertiary-color, darken($clr4,20%), darken($clr4,20%));
         margin: 0 auto;
         font-size: 1.2em;
@@ -434,14 +436,16 @@ section.bgbox{
     }
     #submitapplication-box {
       padding: 4em 0;
-      .btn-inverted {
+      #peerreview-btn {
+        @extend .btn;
+        @extend .btn-inverted;
         margin: 0 auto;
         padding: 1em 3em;
         font-size: 1.2em;
       }
       /* XS styling */
       @media (max-width: $screen-xs-max) {
-        .btn-inverted {
+        #peerreview-btn {
           width: 100%;
           padding: 1em;
         }
@@ -449,12 +453,6 @@ section.bgbox{
          display:block;
          float:none;
          margin: 3em auto 0;
-        }
-      }
-      /* SM styling */
-      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-        .btn-inverted {
-          
         }
       }
     }
@@ -537,20 +535,16 @@ section.bgbox{
     }
   }
   #openeducation-box {
-    .btn-tertiary {
+    #twitter-btn,#rss-btn{
+      @extend .btn;
+      @extend .btn-tertiary;
       font-weight: 600;
       padding: 0.75em 1.5em;
     }
     /* XS styling */
     @media (max-width: $screen-xs-max) {
-      .btn-tertiary {
+      #twitter-btn,#rss-btn {
         width:100%;
-      }
-    }
-    /* SM styling */
-    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-      .btn-tertiary {
-
       }
     }
     #social-media-box {
@@ -618,18 +612,46 @@ section.bgbox{
 
 #review {
   @include educatoractionbox(#fff,$clr1,$clr1);
+  #review-btn{
+    @extend .btn;
+    @extend .btn-inverted;
+  }
+  #review-btn:hover{
+    background-color:lighten($clr1,10%);
+  }
 }
 
 #adopt {
   @include educatoractionbox(#fff,$clr2-dark,$clr2-dark);
+  #adopt-btn{
+    @extend .btn;
+    @extend .btn-inverted;
+  }
+  #adopt-btn:hover{
+    background-color:lighten($clr2-dark,10%);
+  }
 }
 
 #adapt {
   @include educatoractionbox($clr2-dark,$clr2-light,$clr2-light);
+  #adapt-btn{
+    @extend .btn;
+    @extend .btn-secondary;
+  }
+  #adapt-btn:hover{
+    background-color:lighten($clr2-light,10%);
+  }
 }
 
 #create {
   @include educatoractionbox($clr2-dark,$clr2-dark,#fff);
+  #create-btn{
+    @extend .btn;
+    @extend .btn-secondary;
+  }
+  #create-btn:hover{
+    background-color:lighten($clr2-light,30%);
+  }
 }
 
 #maintitle{

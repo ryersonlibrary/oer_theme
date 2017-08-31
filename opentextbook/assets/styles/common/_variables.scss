@@ -1,29 +1,29 @@
 @font-face {
   font-family: 'Frutiger LT Std';
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Light.eot'); /* IE9 Compat Modes */
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Light.otf')  format('ttf'), /* Safari, Android, iOS */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Light.woff') format('woff'); /* Pretty Modern Browsers */
+  src: url('../fonts/FrutigerLtStd-Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-Light.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-Light.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Frutiger LT Std Italic';
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-LightItalic.eot'); /* IE9 Compat Modes */
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-LightItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-LightItalic.otf')  format('ttf'), /* Safari, Android, iOS */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-LightItalic.woff') format('woff'); /* Pretty Modern Browsers */
+  src: url('../fonts/FrutigerLtStd-LightItalic.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-LightItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-LightItalic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-LightItalic.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Frutiger LT Std Bold';
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot'); /* IE9 Compat Modes */
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.otf')  format('ttf'), /* Safari, Android, iOS */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.woff') format('woff'); /* Pretty Modern Browsers */
+  src: url('../fonts/FrutigerLtStd-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-Bold.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-Bold.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: bold;
   font-style: normal;
 }
@@ -31,10 +31,10 @@
 
 @font-face {
   font-family: 'Frutiger LT Std Bold Italic';
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.eot'); /* IE9 Compat Modes */
-  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.otf')  format('ttf'), /* Safari, Android, iOS */
-       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-BoldItalic.woff') format('woff'); /* Pretty Modern Browsers */
+  src: url('../fonts/FrutigerLtStd-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/FrutigerLtStd-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/FrutigerLtStd-BoldItalic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('../fonts/FrutigerLtStd-BoldItalic.woff') format('woff'); /* Pretty Modern Browsers */
   font-weight: bold;
   font-style: italic;
 }
@@ -166,14 +166,12 @@ $padding-base-horizontal: 12px;
 //forms
 $border-color: darken($clr4,50%);
 
-
 @mixin educatoractionbox($color, $border-color, $background-color) {
   @extend .infobox;
   background-color: $background-color;
   color: $color;
   border: 1px solid $border-color;
   margin-bottom:2em;
-  min-height:550px;
   position:relative;
   padding: 36px 50px;
   hr {
@@ -208,19 +206,38 @@ $border-color: darken($clr4,50%);
         font-size:1em;
       }
     }
-    /* SM styling */
-    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-      .btn {
-      
-      }
+  }
+  /* XXS styling */
+  @media (max-width: $screen-sm-min) {
+    padding: 25px 50px;
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
     }
   }
   /* XS styling */
-  @media (max-width: $screen-xs-max) {
+  @media (min-width: $screen-sm-min) and (max-width: $screen-xs-max) {
     p.footer {
       position: relative;
-      margin-bottom: 0;
+      margin-bottom: 1.5em;
       margin-top: 1em;
     }
+  }
+  /* SM styling */
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
+    }
+  }
+  /* MD styling */
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    min-height:660px;
+  }
+  /* LG styling */
+  @media (min-width: $screen-lg-min) {
+    min-height:550px;
   }
 }
