@@ -166,14 +166,12 @@ $padding-base-horizontal: 12px;
 //forms
 $border-color: darken($clr4,50%);
 
-
 @mixin educatoractionbox($color, $border-color, $background-color) {
   @extend .infobox;
   background-color: $background-color;
   color: $color;
   border: 1px solid $border-color;
   margin-bottom:2em;
-  min-height:550px;
   position:relative;
   padding: 36px 50px;
   hr {
@@ -208,19 +206,38 @@ $border-color: darken($clr4,50%);
         font-size:1em;
       }
     }
-    /* SM styling */
-    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-      .btn {
-      
-      }
+  }
+  /* XXS styling */
+  @media (max-width: $screen-sm-min) {
+    padding: 25px 50px;
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
     }
   }
   /* XS styling */
-  @media (max-width: $screen-xs-max) {
+  @media (min-width: $screen-sm-min) and (max-width: $screen-xs-max) {
     p.footer {
       position: relative;
-      margin-bottom: 0;
+      margin-bottom: 1.5em;
       margin-top: 1em;
     }
+  }
+  /* SM styling */
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    p.footer {
+      position: relative;
+      margin-bottom: 1.5em;
+      margin-top: 1em;
+    }
+  }
+  /* MD styling */
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    min-height:660px;
+  }
+  /* LG styling */
+  @media (min-width: $screen-lg-min) {
+    min-height:550px;
   }
 }
