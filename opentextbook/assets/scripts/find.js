@@ -145,11 +145,7 @@
         
         var self = this;
         var resultsInfo = this.discoveryObj.data.getResultInfo();
-        
-        console.log('initUI');
-        console.log('resultsInfo');
-        console.log(resultsInfo);
-                
+                        
         // Resent click event handlers and hide control elements.        
         
         if (this.nextbtn.length > 0) {
@@ -190,7 +186,6 @@
           
           if (resultsInfo.totalPages > 0) {
             for (var i=1;i<resultsInfo.totalPages+1;i++) {
-              console.log('appending');
               this.pagebtns.append(this.pageIndicator.replaceAll('%%',i)); 
             }
                         
@@ -231,11 +226,7 @@
           {
             op: 'setItemLimit',
             values: [this.paginator.attr('data-controller-item-limit'),this.paginator.attr('data-controller-current-page')]
-          });
-          
-        console.log('pagination queue');
-        console.log(this.queue);
-          
+          });          
       }
       
       
@@ -257,8 +248,15 @@
         super(discoveryObj);
         this.controller = $("[data-widget='discovery-controller']");
         this.facets = this.controller.find("[data-facet]");
+        
+        // Settings
+        this.maxlistitems = 10;
+        
+        // Init
         this.setDefaultState();
         this.initUI();
+        
+        
       }
       
       // Finds any item marked 'data-default-value' and sets it for inclusion in the queue.
@@ -291,12 +289,13 @@
           if (typeof facet.data('ui-type') === undefined) { return; }
           var initfnc = "init" + facet.data('ui-type').ucfirst();
           if (typeof self[initfnc] !== 'function') { return; }
-          self[initfnc](facet);
+          self[initfnc](facet,self);
         });
       }
                   
-      initList(facet) {
-        var self = this;
+      initList(facet,self) {
+        var itemcnt = 0;
+        var showmore = false;
         facet.find('[data-user-input-wrapper]').find('li').each(function() {
           $(this).bind('click',function(event) {
             event.preventDefault();
@@ -311,11 +310,57 @@
             }
             self.submit();
           });
-        });        
+          
+          if (itemcnt++ > self.maxlistitems) {
+            $(this).hide();
+            showmore = true;
+          }
+        });  
+        
+        // UI Animation for showing and hiding long item lists
+        
+        if (showmore === true) {
+                    
+          var morebtn = $("<p data-controller-ui-showmore><a title='Show all items'>Show all items</a><p>");
+          var fewerbtn = $("<p data-controller-ui-showfewer><a title='Show fewer items'>Show fewer items</a><p>");
+          
+          morebtn
+            .css('cursor','pointer')
+            .addClass('showmore')
+            .bind('click',function(event) {
+              event.preventDefault();
+              facet.find('li:hidden').each(function(){
+                $(this).fadeIn(200);
+              });
+              $(this).hide();
+              facet.find('[data-controller-ui-showfewer]').fadeIn(200);
+            });
+            
+          fewerbtn
+            .css('cursor','pointer')
+            .css('display','none')
+            .addClass('showmore')
+            .bind('click',function(event) {
+              event.preventDefault();
+              var i=0;
+              facet.find('li').each(function(){
+                if (i++ > self.maxlistitems) {
+                  $(this).fadeOut(200);
+                }
+              });
+              $(this).hide();
+              facet.find('[data-controller-ui-showmore]').fadeIn(200);
+              $('html, body').animate({
+                  scrollTop: self.controller.offset().top
+              }, 800);
+            });
+          
+          facet.append([morebtn,fewerbtn]); 
+          
+        }      
       }
       
-      initTextfield(facet) {
-        var self = this;
+      initTextfield(facet,self) {
         facet.find('[data-user-input]').each(function() {
           $(this).bind('keypress',function(event) {
             var input = $(this);
@@ -559,8 +604,6 @@
           .setXHROpt('url',this.makeURL(this.paths.query.filtered_items.path))
           .setXHROpt('method',this.paths.query.filtered_items.method)
           .setXHROpt('data',this.query);  
-        console.log('xhr');
-        console.log(this.XHROpts);
         this.retrieve(); 
         return this;     
       }
@@ -575,7 +618,6 @@
       // To be called after results are processed. Each data class must return a total result count outside of filter limits.
       
       updateResultsInfo(totalResults) {
-        console.log('update total results');
         this.totalResults = totalResults;
         this.totalPages = Math.ceil(this.totalResults / this.itemLimit);
       }
@@ -1163,7 +1205,6 @@
         
         
         for(var controller in this.controllers) {
-          console.log('calling controller: ' + controller);
 
           this.controllers[controller].enqueue();
         }
