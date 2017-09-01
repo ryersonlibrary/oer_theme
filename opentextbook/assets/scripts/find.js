@@ -12,6 +12,10 @@
         this.discoveryObj = discoveryObj;
         this.controller = null;
         this.queue = [];
+        this.labels = {
+          before: [],
+          after: []
+        };
       }  
       
       // To be called when results return from the data handler. Used to update results-dependent control devices such as paginators.
@@ -24,6 +28,34 @@
       // { op: 'dataOpName', value: [list,of,op,arguments] }
       
       enqueue() {
+        
+      }
+      
+      /*  Audit the controller and build the title labels object. The Discovery class will retrieve all labels and hand them to the 
+          View to build the descriptive title. The labels will have the following form:
+          
+          this.labels = {
+          before: [{
+            label: "label"
+            plural: "plural label"
+            values: []
+          }, {...}  
+          ],
+          after: [{... as above ...}]
+        };
+        
+        Should be called as part of the enqueue process.
+          
+      */
+      
+      buildLabels() {
+        this.labels = {
+          before: [],
+          after: []
+        };
+      }
+      
+      addLabel() {
         
       }
       
@@ -52,6 +84,11 @@
         super(discoveryObj);
         this.facets = null;
       }
+      
+      buildLabels() {
+        super.buildLabels();
+      }
+
       
       updateController() {
         super.updateController();
@@ -255,7 +292,6 @@
         // Init
         this.setDefaultState();
         this.initUI();
-        
       }
       
       // Finds any item marked 'data-default-value' and sets it for inclusion in the queue.
@@ -270,12 +306,10 @@
           $(this).addClass('selected');
         });
         
-          
-        var facets = this.controller.find('[data-facet]');
-        
+                  
         // Mark generic (*) value as selected if no other facet items are.
         
-        facets.find('li').each(function(){
+        this.facets.find('li').each(function(){
           var item = $(this);
           if(item.data('value') === '*' && item.siblings('[data-selected]').length === 0) {
             item.addClass('selected');
@@ -284,7 +318,7 @@
         
         // Clear all user input forms
         
-        facets.find('[data-user-input]').val('');
+        this.facets.find('[data-user-input]').val('');
         
         
       }
@@ -340,10 +374,20 @@
           $(this).bind('click',function(event) {
             event.preventDefault();
             item.toggleClass('selected');
-            if (item.data('value') === '*') {
+            if (item.data('value') === '*') { // Handles neutral state selection.
               facet.removeAttr('data-enqueue');
               item.siblings('li').removeAttr('data-selected');
-            } else {
+            } else if (item[0].hasAttribute('data-selected') && item.data('value') !== '*') { // Handles deselection. Checks to see if siblings are selected and sets to neutral if not.
+              item.removeAttr('data-selected');              
+              if (item.siblings('[data-selected]').length === 0) {
+                facet.removeAttr('data-enqueue');
+                item.siblings().each(function(){
+                  if($(this).data('value')==='*') {
+                    $(this).addClass('selected');
+                  }
+                });
+              }
+            } else { // Handles selection.
               facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
               item[0].setAttribute('data-selected',''); 
             }
@@ -351,7 +395,12 @@
             // Facet only allows a single value
                         
             if(typeof facet.data('ui-restriction') !== "undefined" && facet.data('ui-restriction') === 'single') {
-              item.siblings('li').removeAttr('data-selected').removeClass('selected');
+              item.siblings('li').each(function(){
+                $(this).removeAttr('data-selected');
+                if ($(this).data('value') !== '*') {
+                  $(this).removeClass('selected');
+                }
+              });
             }
             
             self.submit();
@@ -408,7 +457,7 @@
       
       initTextfield(facet,self) {
         facet.find('[data-user-input]').each(function() {
-          $(this).bind('keypress',function(event) {
+          $(this).bind('keyup',function(event) {
             var input = $(this);
             if(input.val().length > 2) { // Don’t submit if there are less than three characters in the text field
               facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
@@ -430,6 +479,39 @@
           });
         });
       }   
+      
+      buildLabels() {
+        super.buildLabels(); // Resets labels
+        var self = this;
+        this.controller.find('[data-enqueue]').each(function() {
+          var facet = $(this);
+          var data = facet.data();    
+          var values = [];
+          
+          // TO DO: Create a proper extraction function for each UI type
+          
+          switch(data.uiType) {
+            case 'list':
+              facet.find('[data-selected] > a').each(function() {
+                values.push($(this).html());
+              });
+              break;
+            case 'textfield':
+              facet.find('[data-user-input]').each(function() {
+                values.push($(this).val());
+              });
+              break;            
+          }
+                  
+          self.labels[data.labelPosition].push(
+            {
+              label:  typeof data.label !== 'undefined' ? data.label : '',
+              plural: typeof data.labelPlural !== 'undefined' ? data.labelPlural : '',
+              values: values
+            }
+          );
+        });
+      }
       
       reset() {
         this.controller.find('[data-enqueue]').each(function(){
@@ -466,8 +548,7 @@
           
         });
         
-        console.log('Criteria Queue');
-        console.log(this.queue);
+        this.buildLabels();        
       }
       
       submit() {
@@ -507,7 +588,11 @@
         this.stage = this.view.find('[data-view-stage]');
         this.titleStage = this.view.find('[data-view-title-stage]');
         this.templates = {};
-        this.parseTemplates();        
+        this.parseTemplates();  
+        this.titleLabels = {
+          before: [],
+          after: []
+        };     
       }
       
       // Finds templates in the DOM and adds them to the templates object.
@@ -538,12 +623,50 @@
         return processed;
       }
       
+      setTitleLabels(labels) {
+        this.titleLabels = labels;
+        return this;
+      }
+      
+      
       displayQueryResults() {
         var self = this;
         self.stage.html('');
         this.items.forEach(function(item) {
           self.stage.append(self.processTokens(self.templates.book_capsule,item));
         });
+        
+        this.displayTitle();
+      }
+      
+      displayTitle() {
+        
+        var titleStageData = this.titleStage.data();
+        
+        var labels = {
+          before: [],
+          after: []
+        };
+                
+        for (var position in this.titleLabels) {
+          for(var i=0;i < this.titleLabels[position].length; i++) {
+            var item = this.titleLabels[position][i];
+            var type = item.values.length > 1 ? "plural" : "label";
+                        
+            for (var j=0; j < item.values.length; j++) {
+              var span = "<span class='" + titleStageData.viewTitleTermClass + "'>" + item.values[j] + "</span>";
+              item.values[j] = span;
+            }
+            
+            labels[position].push(item[type].replaceAll('%%',item.values.concatToSentence()));
+          }
+        }
+        
+        var title = this.items.length > 0 ?
+            titleStageData.viewTitlePrefix + " " + labels.before.concatToSentence() + " " + titleStageData.viewTitleLabel + " " + labels.after.concatToSentence() :
+            titleStageData.viewTitleNone;        
+        
+        this.titleStage.html(title.trim());
       }
     }
     
@@ -604,14 +727,14 @@
         return this;
       }
       
-      // Placeholder. Will be particualar to database implementation. 
+      // Sets item limits.
       
       setItemLimit(limit,page) {
         var offset = limit * (page - 1);
         this.itemLimit = limit;
         this.currentPage = page;
         return this;
-      }      
+      }            
       
       // A wrapper for the query Parameter
       
@@ -711,7 +834,6 @@
           }
         ));
       }
-      
       
       // Handles XHR Errors. This function must be explicity set as part of the $.ajax() parameters.
       
@@ -1013,7 +1135,6 @@
               function(data,textStatus,jqXHR) { 
                 self.expandedResults = data;
                 self.processResults();
-                console.log(self.results);
                 self.resultsComplete.resolve(); 
               }
             });
@@ -1107,6 +1228,10 @@
         this.items = [];
         this.view = {};
         this.controllers = {};
+        this.titleLabels = {
+          before: [],
+          after: []
+        };
 
         
         /* Example:
@@ -1133,7 +1258,7 @@
         for (var controller in this.controllers) {
           if (this.controllers[controller].queue.length > 0) {
             this.dataOpQueue = this.dataOpQueue.concat(this.controllers[controller].queue);
-          }
+          }          
         }
                         
         this.execute();
@@ -1182,10 +1307,27 @@
         $.when(this.data.resultsComplete).done(function(){
           self.results = self.data.getResults();
           self.items = typeof self.results.items !== "undefined" ? self.results.items : [];
-          self.displayResults();
-          self.updateControllers();
-          
+          self
+            .updateTitleLabels()
+            .displayResults()
+            .updateControllers();
         });
+      }
+      
+      updateTitleLabels() {
+        
+        this.titleLabels = {
+          before: [],
+          after: []
+        };
+        
+        for (var controller in this.controllers) {
+          this.titleLabels.before = this.titleLabels.before.concat(this.controllers[controller].labels.before);
+          this.titleLabels.after = this.titleLabels.after.concat(this.controllers[controller].labels.after);
+        }
+        
+        return this;
+
       }
       
       // Updates all registered controllers
@@ -1227,7 +1369,10 @@
       displayResults() {
         this.view
           .setItems(this.items)
+          .setTitleLabels(this.titleLabels)
           .displayQueryResults();
+          
+        return this;
       }
     }
     
@@ -1329,6 +1474,13 @@ String.prototype.replaceLast = function(find, replace) {
   }
 
   return this.toString();
+};
+
+// Helper function comma delimits an array and replaces the last comma with a conjunction.
+
+Array.prototype.concatToSentence = function(conjunction = 'and') {
+  var sentence = this.join(', ');
+  return sentence.replaceLast(',',' ' + conjunction);
 };
 
 // With thanks to http://www.jquerybyexample.net/2012/06/get-url-parameters-using-jquery.html
