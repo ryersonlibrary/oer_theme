@@ -49,7 +49,7 @@ use Roots\Sage\Wrapper;
                         <li data-value='Literature'><a title="Select Literature">Literature</a></li>
                         <li data-value='Mass media'><a title="Select Mass media">Mass media</a></li>
                         <li data-value='Medical personnel'><a title="Select Medical personnel">Medical personnel</a></li>
-                        <li data-value='Medival'><a title="Select Medival">Medival</a></li>
+                        <li data-value='Medieval'><a title="Select Medieval">Medieval</a></li>
                         <li data-value='Meteorology'><a title="Select Meteorology">Meteorology</a></li>
                         <li data-value='Microbiology'><a title="Select Microbiology">Microbiology</a></li>
                         <li data-value='Non-governmental organizations'><a title="Select Non-governmental organizations">Non-governmental organizations</a></li>
@@ -125,7 +125,7 @@ use Roots\Sage\Wrapper;
             	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9" data-view-results>
               	  <div id="results-templates"  style='display: none' data-view-templates>
                 	  <div data-view-template-name='book_capsule' data-view-template-wrapper>
-                  	  <div class="result-item col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  	  <div class="result-item col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     	  <span id="%%uuid%%" class="textbook"><span id="%%uuid%%-cover" class="textbook-cover"></span>
                     	  <p class="textbook-header">%%subjects%%</p><h4 class="textbook-title">%%dc.title%%</h4>
                     	  <p class="textbook-authors">%%byline%%</p>
@@ -133,7 +133,7 @@ use Roots\Sage\Wrapper;
                 	    </div>
                 	  </div>
                 	  <div data-view-template-name='new_book_capsule' data-view-template-wrapper>
-                  	  <div class="result-item create-new-item col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  	  <div class="result-item create-new-item col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     	  <span id="new-textbook" class="textbook"><span class="textbook-cover"></span>
                     	  <p class="textbook-header">&nbsp;</p>
                     	  <h4 class="textbook-title">Create your own textbook</h4>
@@ -164,10 +164,12 @@ use Roots\Sage\Wrapper;
                     		<span id="results-more-btn" class="btn">View More</span>
                     </div>
                 		<div id="results-pagecounter" class="row" >
-                		<span id="results-next-btn" class="catalogue-results-nav" data-controller-next>&gt;</span>
-                			<p id="results-pagecounter-pages" data-controller-pagebtns>
+
+                		<span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-left.png"></span>
+                			<span id="results-pagecounter-pages" data-controller-pagebtns>
                 				<a href='#' class="resultspage" data-pageref='%%' title='Show page %% of results' data-controller-pagebtn>%%</a>
-                			</p>
+                			</span>
+                			<span id="results-next-btn" class="catalogue-results-nav" data-controller-next><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-right.png"></span>
                 		</div>
                 		<div id="results-counterdetails" class="row">
                 			<p>Showing <span id="results-counter" data-controller-current-range></span> of <span id="results-counter-totalresults" data-controller-total-results></span> Results</p>

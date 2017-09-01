@@ -89,6 +89,7 @@
           line-height: 16px;
           font-size: 0.9em;
           cursor: pointer;
+          margin-bottom: 0.25em;
         }
         li::before {
           content: "\00a0";
@@ -163,10 +164,11 @@
     font-size: 1.1em;
     z-index: 2;
     position: relative;
+    line-height: 1.3em;
   }
   .textbook-authors {
     font-size: 0.85em;
-    line-height: 1.1em;
+    line-height: 1.3em;
     z-index: 2;
     position: relative;
   }
@@ -247,6 +249,9 @@
     padding: 0px;
     .result-item {
       padding-left: 0;
+    }
+    .result-item.col-xs-6:nth-child(even) {
+      padding-right: 0;
     }
     
     .create-new-item {
@@ -353,6 +358,19 @@
 
 /* XS styling */
 @media (max-width: $screen-xs-max) {
+  .textbook{
+    height: 17em;
+    font-size: 1em;
+    
+    .textbook-title {
+      font-size: 1em;
+      line-height: 1.2em;
+    }
+    .textbook-authors {
+      font-size: 0.8em;
+      line-height: 1.2em;
+    }
+  }
   #discovery-results,#recentlyadded-box {
     padding: 0;
   }
