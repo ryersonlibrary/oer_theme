@@ -631,9 +631,14 @@
       
       displayQueryResults() {
         var self = this;
+        
+        console.log(self.templates);
+        
+        
         self.stage.html('');
         this.items.forEach(function(item) {
           self.stage.append(self.processTokens(self.templates.book_capsule,item));
+          
         });
         
         this.displayTitle();
