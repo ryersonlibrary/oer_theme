@@ -12,11 +12,11 @@ use Roots\Sage\Wrapper;
           	
             	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3" data-controller-criteria>
               	<h4>Find a Textbook</h4>
-              	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|matches' data-ui-type="textfield">
+              	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|matches' data-ui-type="textfield" data-label='containing the term %%' data-label-plural='containing the Terms %%' data-label-position='after'>
               		<input id='search-value' data-user-input type="text" value="<?php if(isset($_GET['quick-search-term'])){ echo urldecode($_GET['quick-search-term']);}?>" id="discovery-keyword-term" placeholder="Author or Keyword" data-value>
               	</div>
               	<div id="discovery-facets">
-                	  <div id="discovery-ui-subject" class='facet' data-facet data-op='setQueryParameter' data-param="dc:subject|%%" data-ui-type="list">
+                	  <div id="discovery-ui-subject" class='facet' data-facet data-op='setQueryParameter' data-param="dc:subject|%%" data-ui-type="list" data-label='with the subject %%' data-label-plural='with the subjects %%' data-label-position='after'>
                     	<h5 class='facet-title'>Subject</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select All Subjects">All Subjects</a></li>
@@ -70,7 +70,7 @@ use Roots\Sage\Wrapper;
                         <li data-value='Teaching'><a title="Select Teaching">Teaching</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-restriction='single' data-ui-type="list">
+                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-restriction='single' data-ui-type="list" data-label='%%' data-label-position='before'>
                     	<h5 class='facet-title'>Language</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select English and French">English and French</a></li>
@@ -78,13 +78,13 @@ use Roots\Sage\Wrapper;
     	               		<li data-value="fr"><a title="Select French">French</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc.date.updated|%%|equals" data-ui-restriction='single' data-ui-type="list">
+                	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc.date.updated|%%|equals" data-ui-restriction='single' data-ui-type="list"  data-label='updated in the %%' data-label-position='after'>
                     	<h5 class='facet-title'>Date of Creation</h5>
                     	<ul data-user-input-wrapper>
-                  		<li data-value="*" class="createdfacet"><a title='Select items created anytime'>Any Date</a></li>
-                  		<li data-value="NOW-3MONTHS"><a title="Select items created in the past 3 months">Past 3 Months</a></li>
-                  		<li data-value="NOW-1YEAR"><a title="Select items created in the past year">Past Year</a></li>
-  	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</li>
+                    		<li data-value="*" class="createdfacet"><a title='Select items created anytime'>Any Date</a></li>
+                    		<li data-value="NOW-3MONTHS"><a title="Select items created in the past 3 months">Past 3 Months</a></li>
+                    		<li data-value="NOW-1YEAR"><a title="Select items created in the past year">Past Year</a></li>
+    	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</li>
                     	</ul>
                 	  </div>
 
@@ -143,7 +143,12 @@ use Roots\Sage\Wrapper;
                 	  </div>
                   </div>
                 	<div id="results-header" class="row">
-                		<h3 data-view-title-stage>Displaying <span class="searchterm" id="search-limitations"></span> items <span class="searchterm" id="search-subject"></span> <span class="searchterm" id="search-keyword"></span> <span class="searchterm" id="search-created"></span></h3>
+                  	
+                  	<!-- Discovery UI: View Title Stage-->
+                  	
+                		<h3 data-view-title-term-class='searchterm' data-view-title-prefix='Viewing all' data-view-title-none='Sorry, we can’t find any items that match your selection' data-view-title-label='items' data-view-title-stage></h3>
+                		
+                		<!-- View Title Stage End -->
                 	</div>
                 	                	
                 	<!-- Discovery UI: Pagination Controller -->
