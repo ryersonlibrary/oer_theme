@@ -7,9 +7,9 @@ use Roots\Sage\Wrapper;
 	<div class="container">
     	<div class="content row">
         	<div id="discovery" class="row">
-          	
+
           	  <!-- Discovery UI: Criteria Selection Controller -->
-          	
+
             	<div id="discovery-interface" data-widget='discovery-controller' class="col-lg-3 col-md-3 col-sm-3" data-controller-criteria>
               	<h4>Find a Textbook</h4>
               	<div id="discovery-keyword" class='facet' data-facet data-op='setSearchTerm' data-param='%%|matches' data-ui-type="textfield" data-label='containing the term %%' data-label-plural='containing the Terms %%' data-label-position='after'>
@@ -117,9 +117,9 @@ use Roots\Sage\Wrapper;
               		<span id="discovery-reset-btn" class="btn" data-reset>Reset and Start Again</span>
               	</div>
             	</div>
-      
+
               <!-- Criteria Selection Controller End -->
-              
+
               <!-- Discovery UI: Results View -->
 
             	<div id="discovery-results" class="col-lg-9 col-md-9 col-sm-9" data-view-results>
@@ -143,47 +143,42 @@ use Roots\Sage\Wrapper;
                 	  </div>
                   </div>
                 	<div id="results-header" class="row">
-                  	
+
                   	<!-- Discovery UI: View Title Stage-->
-                  	
+
                 		<h3 data-view-title-term-class='searchterm' data-view-title-prefix='Viewing all' data-view-title-none='Sorry, we can’t find any items that match your selection' data-view-title-label='items' data-view-title-stage></h3>
-                		
+
                 		<!-- View Title Stage End -->
                 	</div>
-                	                	
+
                 	<!-- Discovery UI: Pagination Controller -->
-                	
+
                   <div data-widget='discovery-controller' data-controller-item-limit='6' data-controller-current-page='1' data-controller-paginator>
                 	  <div id="results-box" class="row">
-                    	<div id="results-prev" class="col-lg-1 col-md-1">
-                    		<span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous>&lt;</span>
-                    	</div>
-                    	<div id="results" class="col-lg-10 col-md-10 col-sm-12">
-                      	<div id="results-list" class="results-row row" data-view-stage>
+                      		<div id="results-list" class="results-row row" data-view-stage>
 
-                  		  </div>
-                    	</div>
-                    	<div id="results-next" class="col-lg-1 col-md-1">
-                    		<span id="results-next-btn" class="catalogue-results-nav" data-controller-next>&gt;</span>
-                    	</div>
+                  			</div>
                 	  </div>
                 	  <div id="results-footer" class="row">
                 		<div id="results-more" class="row">
                     		<span id="results-more-btn" class="btn">View More</span>
                     </div>
                 		<div id="results-pagecounter" class="row" >
-                			<p id="results-pagecounter-pages" data-controller-pagebtns><a href='#' class="resultspage" data-pageref='%%' title='Show page %% of results' data-controller-pagebtn>%%</a></p>
+                		<span id="results-next-btn" class="catalogue-results-nav" data-controller-next>&gt;</span>
+                			<p id="results-pagecounter-pages" data-controller-pagebtns>
+                				<a href='#' class="resultspage" data-pageref='%%' title='Show page %% of results' data-controller-pagebtn>%%</a>
+                			</p>
                 		</div>
                 		<div id="results-counterdetails" class="row">
                 			<p>Showing <span id="results-counter" data-controller-current-range></span> of <span id="results-counter-totalresults" data-controller-total-results></span> Results</p>
                 		</div>
                 	</div>
                 </div>
-                
+
                 <!-- Pagination Controller End -->
-                
+
             	</div>
-            	
+
               <!-- Results View End -->
 
             </div>
