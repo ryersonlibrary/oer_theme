@@ -84,7 +84,7 @@ use Roots\Sage\Wrapper;
                     		<li data-value="*" class="createdfacet"><a title='Select items created anytime'>Any Date</a></li>
                     		<li data-value="NOW-3MONTHS"><a title="Select items created in the past 3 months">Past 3 Months</a></li>
                     		<li data-value="NOW-1YEAR"><a title="Select items created in the past year">Past Year</a></li>
-    	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</li>
+    	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</a></li>
                     	</ul>
                 	  </div>
 
