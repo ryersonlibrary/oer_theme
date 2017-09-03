@@ -129,7 +129,7 @@ use Roots\Sage\Wrapper;
                     	  <span id="%%uuid%%" class="textbook"><span id="%%uuid%%-cover" class="textbook-cover"></span>
                     	  <p class="textbook-header">%%subjects%%</p><h4 class="textbook-title">%%dc.title%%</h4>
                     	  <p class="textbook-authors">%%byline%%</p>
-                    	  <p class="textbook-footer"><a href="preview/?id=%%uuid%%'" title='About this book'>About this book</a></p>
+                    	  <p class="textbook-footer"><a href="preview/?id=%%uuid%%" title='About this book'>About this book</a></p>
                 	    </div>
                 	  </div>
                 	  <div data-view-template-name='new_book_capsule' data-view-template-wrapper>

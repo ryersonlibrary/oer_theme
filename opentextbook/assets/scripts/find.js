@@ -644,12 +644,10 @@
       
       
       displayQueryResults() {
-        var self = this;
-                
+        var self = this;                
         self.stage.html('');
         this.items.forEach(function(item) {
           self.stage.append(self.processTokens(self.templates.book_capsule,item));
-          
         });
         
         this.displayTitle();
@@ -695,6 +693,8 @@
     }
     
     // Displays results particular to the ECommonsOntario site
+    
+    /* !ECO VIEW CLASS */
     
     class ECommonsOntarioHTMLView extends HTMLView {
       constructor(discoveryObject) {
@@ -995,7 +995,6 @@
           // Set default values.
                   
           var values = {
-            uuid: item.uuid,
             subject: '',
             byline: '',
             title: ''
@@ -1021,7 +1020,9 @@
               values[prop] = values[prop].join('%%');
             }
           }
-                      
+          
+          values.uuid = item.uuid.trim();
+
           // Process contributors
           values.byline = self.serializeDisplayString(values,'dc.contributor.author');
           values.subjects = self.serializeDisplayString(values,'dc.subject');
@@ -1433,7 +1434,8 @@
           this.controllers.criteriaController.reset();
           var searchElement = $("#search-value");
           searchElement.val(value);
-          // TO DO: this step should somehow be bundled in with markControlForInclusion. The latter function needs more sophistication to be able to handle different input controls.
+          // TO DO: this step should somehow be bundled in with markControlForInclusion.
+          // The latter function needs more sophistication to be able to handle different input controls.
           searchElement.attr('data-value',value); 
           this.controllers.criteriaController.markControlForInclusion(searchElement);
         }
