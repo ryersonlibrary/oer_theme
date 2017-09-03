@@ -181,7 +181,13 @@
         super.initUI();
         
         var self = this;
+        
         var resultsInfo = this.discoveryObj.data.getResultInfo();
+        
+        // Hide pagination until there are results to display.
+        
+        this.paginator.hide();
+        
                         
         // Resent click event handlers and hide control elements.        
         
@@ -252,7 +258,9 @@
               this.currentRangeIndicator.html(start + " – " + end);
             }
             
-            this.paginator.show();
+            if (resultsInfo.totalResults !== 0) {
+              this.paginator.show();
+            }            
           }
         }        
       }
@@ -297,13 +305,11 @@
       // Finds any item marked 'data-default-value' and sets it for inclusion in the queue.
       
       setDefaultState() {
-        
+        var self = this;
         this.controller.find('.selected').removeClass('selected');
         
         this.controller.find('[data-default-value]').each(function(){
-          $(this)[0].setAttribute('data-selected','');
-          $(this).closest('[data-facet]')[0].setAttribute('data-enqueue','');
-          $(this).addClass('selected');
+          self.markControlForInclusion($(this));
         });
         
                   
@@ -321,6 +327,14 @@
         this.facets.find('[data-user-input]').val('');
         
         
+      }
+      
+      // Accepts a jQuery object. Marks it for inclusion in the controller queue.
+      
+      markControlForInclusion(element) {
+        element[0].setAttribute('data-selected','');
+        element.closest('[data-facet]')[0].setAttribute('data-enqueue','');
+        element.addClass('selected');
       }
       
       initUI() {
@@ -631,10 +645,7 @@
       
       displayQueryResults() {
         var self = this;
-        
-        console.log(self.templates);
-        
-        
+                
         self.stage.html('');
         this.items.forEach(function(item) {
           self.stage.append(self.processTokens(self.templates.book_capsule,item));
@@ -1245,6 +1256,10 @@
         */
       }
       
+      init() {
+        this.inboundState();
+      }
+      
       registerController(label,controller) {
         this.controllers[label] = controller;
       }
@@ -1403,32 +1418,33 @@
         this.registerController('criteriaController',new ECommonsOntarioCriteriaController(this));
         this.registerController('paginationController', new HTMLPaginationController(this));
         
-        this.inboundState();
       }
       
       /* !--Initial State of Application */
       
-      // Right now only accepts search parameters
+      // Right now only accepts search and language parameters
+      // Called by init() function
       
       inboundState() {
         var op = getUrlParameter('op');
         var value = decodeURIComponent(getUrlParameter('value'));
   
         if (op === 'setSearchTerm') {
-          this.controller.criteriaController.reset();
-          $('#search-value').val(value);
+          this.controllers.criteriaController.reset();
+          var searchElement = $("#search-value");
+          searchElement.val(value);
+          // TO DO: this step should somehow be bundled in with markControlForInclusion. The latter function needs more sophistication to be able to handle different input controls.
+          searchElement.attr('data-value',value); 
+          this.controllers.criteriaController.markControlForInclusion(searchElement);
         }
         
-        
         for(var controller in this.controllers) {
-
           this.controllers[controller].enqueue();
         }
         
         // Executes the initial state of the controllers.
         
         this.controllerStateChange();
-        
       }
       
       setItemLimit(limit,page) {
@@ -1452,7 +1468,7 @@
           dbmethod:     'http'
         });
       
-      // var results = discovery.data.setSearchTerm('Electrical').includeMetaData().executeQuery().getResults();
+      discovery.init();
       
     });
   

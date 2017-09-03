@@ -70,7 +70,7 @@ use Roots\Sage\Wrapper;
                         <li data-value='Teaching'><a title="Select Teaching">Teaching</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-restriction='single' data-ui-type="list" data-label='%%' data-label-position='before'>
+                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.rfc3066|%%" data-ui-restriction='single' data-ui-type="list" data-label='%%' data-label-position='before'>
                     	<h5 class='facet-title'>Language</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select English and French">English and French</a></li>
