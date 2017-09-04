@@ -707,17 +707,18 @@ class ECommonsOntarioHTMLView extends HTMLView {
 class DiscoveryDataHandler {
   constructor(dbURI, dbmethod) {
     this.dburl = dbmethod + '://' + dbURI;
-    
     this.paths = this.build_paths();
     this.query = {};
     this.resultsComplete = null;
+    this.itemComplete = null;
     this.XHROpts = this.resetXHROpts();
     this.results = {};
     this.itemLimit = 6;
     this.currentPage = 0;
     this.totalResults = 0;
     this.totalPages = 0;
-    
+    this.resultItem = {};
+    this.resultItemError = {};
     this.expandedResults = {}; // results without limits
   }
         
@@ -784,7 +785,7 @@ class DiscoveryDataHandler {
   getXHROpts() {
     return this.XHROpts;
   }
-  
+    
   // Performs filtered query
   
   executeQuery() {
@@ -796,7 +797,8 @@ class DiscoveryDataHandler {
       .setXHROpt('data',this.query);  
     this.retrieve(); 
     return this;     
-  }
+  } 
+  
   
   processResults() {
     var self = this;
@@ -827,6 +829,16 @@ class DiscoveryDataHandler {
   
   getResults() {
     return this.results;
+  }
+  
+  getItem() {
+    return this.resultItem;
+  }
+  
+  // TO DO: Standardize methodology between item sets, individual items and data
+  
+  retrieveItem(id) {
+    
   }
   
   makeURL(path) {
@@ -907,6 +919,11 @@ class DiscoveryDataHandler {
 }
 
 /* !DSPACE DATA HANDLER */
+
+/* TO DO: The data handler needs more granulation. It should handle ANY kind of DSpace request. Right now it's primarily designed
+   to retrieve filtered items, with a few methods to get individual items tacked on for convenience.
+   Each type of request should have its own handler, following the DSpace REST API’s structure.
+*/
 
 class DSpaceDataHandler extends DiscoveryDataHandler {
   constructor(dbURI, dbmethod) {
@@ -1155,6 +1172,63 @@ class DSpaceDataHandler extends DiscoveryDataHandler {
             self.resultsComplete.resolve(); 
           }
         });
+  }
+  
+  // TO DO: Some duct tape here. Standardize data retrieval methods for filtered items, individual items and bitstreams.
+  
+  retrieveItem(id) {
+    var self = this;
+    var item = {};
+    
+    this.prepareItemQuery();
+    this.itemComplete = $.Deferred();
+    
+    var opts = {
+      url: this.makeURL(this.paths.items.item.path.replace('%%',id)),
+      method: this.paths.items.item.method,
+      data: {
+        expand: 'metadata'
+      }
+    };
+    
+    $.ajax($.extend(opts,
+      {
+        success: 
+          function(data,textStatus,jqXHR) { 
+            item = data; 
+            item.networkInfo = {
+              textStatus: textStatus,
+              xhr: jqXHR,
+              error: false,
+              errorData: {}
+            };
+            
+            self.resultItem = item;
+                        
+            self.itemComplete.resolve();
+          },
+        error:
+          function (xhr, ajaxOptions, thrownError) {
+            item.networkInfo = {
+              textStatus: 'error',
+              xhr: xhr,
+              error: true,
+              errorData: {
+                thrownError: thrownError,
+                options: ajaxOptions,
+              }
+            };
+            
+            self.itemComplete.resolve();
+            
+          }
+      }
+    ));
+    
+  }
+  
+  prepareItemQuery() {
+    
   }
 
         
@@ -1459,6 +1533,165 @@ class ECommonsOntarioDiscovery extends Discovery {
   }
   
 }
+
+/* !CATALOGUE ITEM VIEW */
+
+class CatalogueItemView {
+  constructor(discoveryObj,itemObj) {
+    this.discoveryObj = discoveryObj;
+    this.itemObj = itemObj;
+    this.item = {};
+  }
+  
+  displayItemResults() {
+    var self = this;   
+    this.item = this.itemObj.item;            
+  }
+  
+  processTokens() {
+    
+  }
+
+}
+
+/* !HTML ITEM VIEW */
+
+/* TO DO: Need to rationalize this with the View classes above. Ultimately we need to commit to a
+   portable templating system that can be used consistently. */
+
+class HTMLItemView extends CatalogueItemView {
+  constructor(discoveryObj,itemObj) {
+    super(discoveryObj,itemObj);
+    this.initDisplay();
+  }
+  
+  displayItemResults() {
+    super.displayItemResults();
+    this.processTokens();
+  }
+  
+  initDisplay() {
+    $('#available-versions').hide();
+  }
+  
+  // TO DO: This leverages original code. Will work to incorporate a consistent templating system.
+  
+  processTokens() {
+    
+  var data = this.item;
+
+	$('#textbook-title').text(data.name);
+	var author='';
+	var subjects=[];
+	
+	$.each(data.metadata,function(k,v){
+		if(v.key==='dc.contributor.author'){
+			var authorelement='<div class="author-info"><h4 class="author-name">'+v.value+'</h4><p class="author-bio">';
+			if(v.image_url){
+				authorelement=authorelement+'<img class="author-portrait" src="'+v.image_url+'" class="author-portrait">';
+			}
+			if(v.bio){
+				authorelement=authorelement+v.bio;
+			}
+			authorelement=authorelement+'</p></div>';
+			$('#authors').append(authorelement);
+			$('#textbook-title-authors').text(v.value);
+		}
+		if(v.key==='dc.subject'){
+			subjects.push(v.value);
+		}
+		if(v.key==='dc.description.abstract'){
+			$('#textbook-description-info').html('<p>'+v.value+'</p>');
+		}
+		if(v.key==='LRMI.EducationalAudience'){
+			$('#level').text(v.value);
+		}
+		if(v.key==='dc.date.created'){
+			$('#date-published').text(v.value);
+		}
+		if(v.key==='dc.type'){
+			$('#type').text(v.value);
+		}
+	});
+	
+	var subj=subjects.join(",");
+	$('#subjects').text(subj);
+	$('#preview-bookcover').attr('src',data.cover_url);
+
+	//$('#textbook-table-of-contents-info').html();
+	//$('#adapted-from').text();
+	//$('#adoption-count').text();
+	//$('#peerreview-count').text();
+	
+	if (data.bitstreams !== null) {
+  	$.each(data.bitstreams,function(k,v){
+  		$('#available-versions ul').append('<li><a href="'+v.retrieveLink+'" target="_blank">'+v.format+'</a></li>');
+  	});
+	} else {
+  	$('#read-versions').hide();
+	}
+
+	$('#download-btn').click(function(){
+		$('#download-btn').toggleClass('noradiusbtn');
+		$('#available-versions').toggle();
+	});
+	
+	// Cleanup
+	
+	// Kludgy.
+	
+	$('.metadata-item').each(function(){
+  	var item = $(this);
+  	if (item.find('p').text() === '') {
+    	item.hide();
+  	}
+	})
+	
+	$('#textbook-social-media').hide();
+    
+    
+    
+  }
+}
+
+/* !CATALOGUE ITEM CLASS */
+
+class CatalogueItem {
+  constructor(discoveryObj) {
+    this.discoveryObj = discoveryObj;
+    this.id = null;
+    this.item = {};
+    //this.view = new CatalogueItemView;
+  }
+  
+  displayResults() {
+    this.view.displayItemResults();
+  }
+}
+
+/* !ECO CATALOGUE ITEM CLASS */
+
+class ECommonsOntarioCatalogueItem extends CatalogueItem {
+  constructor(discoveryObj) {
+    super(discoveryObj);
+    this.view = new HTMLItemView(discoveryObj,this);
+    
+    var self = this;
+            
+    this.id = decodeURIComponent(getUrlParameter('id'));
+    this.discoveryObj.data.retrieveItem(this.id);
+    
+    $.when(discoveryObj.data.itemComplete).done(function(){
+      self.item = self.discoveryObj.data.getItem();
+      self.displayResults();
+    });
+  }
+  
+  displayResults() {
+    super.displayResults();    
+  }
+}
+
 
 // Functions like PHP’s ucfirst()
 
