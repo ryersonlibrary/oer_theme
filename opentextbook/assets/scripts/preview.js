@@ -7,7 +7,8 @@
                   
       var catalogueItem = new ECommonsOntarioCatalogueItem(new ECommonsOntarioDiscovery
         ({
-          dbURI:        'dsweb.semiprodint.ryerson.ca/rest',
+          dbURI:        'dsweb.semiprodint.ryerson.ca',
+          dbPath:       '/rest',
           dbmethod:     'http'
         }));
     });

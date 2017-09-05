@@ -757,8 +757,11 @@ class ECommonsOntarioHTMLView extends HTMLView {
 /* !DISCOVERY DATA HANDLER */
 
 class DiscoveryDataHandler {
-  constructor(dbURI, dbmethod) {
-    this.dburl = dbmethod + '://' + dbURI;
+  constructor(dbURI,dbPath,dbMethod) {
+    this.dburl = dbMethod + '://' + dbURI + dbPath;
+    this.dbURI = dbURI;
+    this.dbPath = dbPath;
+    this.dbMethod = dbMethod;
     this.paths = this.build_paths();
     this.query = {};
     this.resultsComplete = null;
@@ -978,8 +981,8 @@ class DiscoveryDataHandler {
 */
 
 class DSpaceDataHandler extends DiscoveryDataHandler {
-  constructor(dbURI, dbmethod) {
-    super(dbURI, dbmethod);
+  constructor(dbURI,dbPath,dbmethod) {
+    super(dbURI,dbPath,dbmethod);
     this.resetQueryParameters();
   }
   
@@ -1239,7 +1242,7 @@ class DSpaceDataHandler extends DiscoveryDataHandler {
       url: this.makeURL(this.paths.items.item.path.replace('%%',id)),
       method: this.paths.items.item.method,
       data: {
-        expand: 'metadata'
+        expand: 'metadata,bitstreams'
       }
     };
     
@@ -1254,6 +1257,8 @@ class DSpaceDataHandler extends DiscoveryDataHandler {
               error: false,
               errorData: {}
             };
+            
+            console.log(item);
             
             self.resultItem = item;
                         
@@ -1538,7 +1543,7 @@ class Discovery {
 class ECommonsOntarioDiscovery extends Discovery {
   constructor(vars) {
     super();
-    this.data = new DSpaceDataHandler(vars.dbURI, vars.dbmethod);
+    this.data = new DSpaceDataHandler(vars.dbURI, vars.dbPath, vars.dbmethod);
     this.view = new ECommonsOntarioHTMLView(this);
     
     // TO DO: There could be auto-discovery here
@@ -1632,6 +1637,7 @@ class HTMLItemView extends CatalogueItemView {
   processTokens() {
     
   var data = this.item;
+  var self = this;
 
 	$('#textbook-title').text(data.name);
 	var author='';
@@ -1676,9 +1682,11 @@ class HTMLItemView extends CatalogueItemView {
 	//$('#adoption-count').text();
 	//$('#peerreview-count').text();
 	
+	console.log(self.discoveryObj.data.dbURI);
+	
 	if (data.bitstreams !== null) {
   	$.each(data.bitstreams,function(k,v){
-  		$('#available-versions ul').append('<li><a href="'+v.retrieveLink+'" target="_blank">'+v.format+'</a></li>');
+  		$('#available-versions ul').append('<li><a href="' + self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink + '" target="_blank">'+v.format+'</a></li>');
   	});
 	} else {
   	$('#read-versions').hide();
