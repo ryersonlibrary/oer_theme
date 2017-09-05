@@ -1642,10 +1642,10 @@ class HTMLItemView extends CatalogueItemView {
 	var subjects=[];
 	
 	var secondaryBtn = $('#print-btn');
-	secondaryBtn.hide();
+	//secondaryBtn.hide();
 	
   var downloadMimeTypes = [
-  	"application/pdf","application/epub+zip","application/epub","text/html","video/mpg","audio/mp3","audio/ogg","audio/m4a"
+  	"application/pdf","application/epub+zip","application/epub","text/html","video/mpeg","audio/mp3","audio/ogg","audio/m4a"
 	];
 	
 	var cover = {
@@ -1701,7 +1701,8 @@ class HTMLItemView extends CatalogueItemView {
     	if (downloadMimeTypes.indexOf(v.mimeType) !== -1) {
       	
     		$('#available-versions ul').append('<li><a mime-type="' + v.mimeType + '" href="' + self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink + '" title="Download" download>'+v.format+'</a></li>');
-  		}  		
+  		} 
+  				
   		if ((v.format === "image/png" || v.format === "image/jpeg") && v.name.indexOf('cover') > -1) {
     		cover.bitstream = self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink;
     		cover.link = "<img id='preview-bookcover' alt='cover' src='" + cover.bitstream + "' />";
@@ -1717,6 +1718,8 @@ class HTMLItemView extends CatalogueItemView {
   }
   
   // Read online
+  
+  var haslink = false;
 	
 	$.each(data.metadata,function(){
   	if (this.key === "dc.relation.isformatof") {
@@ -1726,14 +1729,25 @@ class HTMLItemView extends CatalogueItemView {
           link = url;
         });  
         
+      // Another workaround.
+        
       if (link !== null) {
     		secondaryBtn
     		  .attr('href',link)
     		  .show();
-  		}
-    }      
+    		haslink = true;
+  		} 
+    }   
   	
 	});
+	
+  if (haslink === false) {
+  	secondaryBtn
+  	  .text('Order print version')
+  	  .attr('href','#')
+  	  .show();
+  }
+
 	
   // Review this text
     
