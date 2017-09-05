@@ -78,6 +78,7 @@ use Roots\Sage\Wrapper;
     	               		<li data-value="fr"><a title="Select French">French</a></li>
                     	</ul>
                 	  </div>
+                	  <!--
                 	  <div id="discovery-ui-date"  class='facet' data-facet data-op='setQueryParameter' data-param="dc.date.updated|%%|equals" data-ui-restriction='single' data-ui-type="list"  data-label='updated in the %%' data-label-position='after'>
                     	<h5 class='facet-title'>Date of Creation</h5>
                     	<ul data-user-input-wrapper>
@@ -87,6 +88,7 @@ use Roots\Sage\Wrapper;
     	               		<li data-value="NOW-5YEARS"><a title="Select items created in the past five years">Past Five Years</a></li>
                     	</ul>
                 	  </div>
+                	  -->
 
                 	  <!--
                   	<h5>Peer Review <img class="icon" src="<?= get_template_directory_uri(); ?>/dist/images/ui-star-dark.svg"></h5>
@@ -127,7 +129,7 @@ use Roots\Sage\Wrapper;
                 	  <div data-view-template-name='book_capsule' data-view-template-wrapper>
                   	  <div class="result-item col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     	  <span id="%%uuid%%" class="textbook"><span id="%%uuid%%-cover" class="textbook-cover"></span>
-                    	  <p class="textbook-header">%%subjects%%</p><h4 class="textbook-title">%%dc.title%%</h4>
+                    	  <p class="textbook-header">%%subjects%%</p><h4 class="textbook-title"><a href="preview/?id=%%uuid%%" title='About this book'>%%dc.title%%</a></h4>
                     	  <p class="textbook-authors">%%byline%%</p>
                     	  <p class="textbook-footer"><a href="preview/?id=%%uuid%%" title='About this book'>About this book</a></p>
                 	    </div>
@@ -160,16 +162,18 @@ use Roots\Sage\Wrapper;
                   			</div>
                 	  </div>
                 	  <div id="results-footer" class="row">
+                    <!--
                 		<div id="results-more" class="row">
                     		<span id="results-more-btn" class="btn">View More</span>
                     </div>
+                    -->
                 		<div id="results-pagecounter" class="row" >
-
-                		<span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-left.png"></span>
+                      
+                		  <!-- <span id="results-prev-btn" class="catalogue-results-nav" data-controller-previous><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-left.png"></span> -->
                 			<span id="results-pagecounter-pages" data-controller-pagebtns>
                 				<a href='#' class="resultspage" data-pageref='%%' title='Show page %% of results' data-controller-pagebtn>%%</a>
                 			</span>
-                			<span id="results-next-btn" class="catalogue-results-nav" data-controller-next><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-right.png"></span>
+                			<!-- <span id="results-next-btn" class="catalogue-results-nav" data-controller-next><img src="/wp-content/themes/opentextbook/dist/images/ui-darkbullet-right.png"></span> -->
                 		</div>
                 		<div id="results-counterdetails" class="row">
                 			<p>Showing <span id="results-counter" data-controller-current-range></span> of <span id="results-counter-totalresults" data-controller-total-results></span> Results</p>
