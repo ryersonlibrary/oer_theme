@@ -5,6 +5,26 @@ use Roots\Sage\Wrapper;
 ?>
 <section id="educators-section" class="whitebox">
 <div class="container">
+    	<div class="content row">
+    		<div id="educator-resources" class="page-content col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+        		<div id="educators-resources-header" class="row box-header">
+            		<hr>
+            		<h2 class="entry-title">Get Involved</h2>
+        		</div>
+            	<div id="educators-resources-box" class="entry-content">
+                <p>Listed here are the groups and initiatives for educators of which eCampusOntario is aware. With the spread of awareness and uptake on open educational resources and open textbooks, there are likely more groups forming. There will be different ways to get involved and stay informed through connecting with the following initiatives.</p>
+                <p>Feel free to alert eCampusOntario when you hear of new initiatives happening around open textbooks by emailing <a href="mailto:open@ecampusontario.ca" target="_blank" rel="noopener noreferrer">open@ecampusontario.ca</a>.</p>
+                <h4><a href="https://creativecommons.org/about/program-areas/education-oer/">Creative Commons</a></h4>
+                <p>From its site: “Creative Commons helps you legally share your knowledge and creativity to build a more equitable, accessible, and innovative world — unlocking the full potential of the internet to drive a new era of development, growth, and productivity.” Education | OERs is a main program area of Creative Commons and it has <a href="https://creativecommons.org/about/program-areas/education-oer/">many different ways to contribute</a> depending on your level of commitment.</p>
+                <h4><a href="https://rebus.foundation/"><strong>Rebus Foundation</strong></a></h4>
+                <p>From its site: “The Rebus Foundation builds new models and technology for open book publishing and reading on the web, to encourage deeper engagement, and to enable people (and machines) to use and build on books and reading in new and meaningful ways.” It formed working teams of members interested in the different aspects of open book publishing.</p>
+                <p style="padding-left: 30px;"><a href="https://forum.rebus.community/">The Rebus Community</a> (basic, overarching community)</p>
+                <p style="padding-left: 30px;"><a href="https://press.rebus.community/">Rebus Community Press</a> (for open textbook production)</p>
+                <h4><a href="https://www.oercommons.org/"><strong>OER Commons</strong></a></h4>
+                <p>From its site: “OER Commons is a dynamic digital library and network. Explore open education resources and join our network of educators dedicated to curriculum improvement.” Once you register with OER Commons, it facilitates your connection with other groups or “hubs” within its larger community.</p>
+            	</div>
+            </div>
+    	</div>
     <div class="content row">
     	<div id="educator-tools">
     		<div id="educator-header" class="row box-header">

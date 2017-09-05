@@ -52,7 +52,7 @@ use Roots\Sage\Wrapper;
                     	<p>Become part of the global open educational resources (OER) community. The OER movement is playing a central role in making education affordable, putting higher education within reach for more Ontarians. Any individual who has attended college or university knows the financial burden of buying expensive textbooks. Help students and instructors lower the costs of higher education by becoming part of the community today.</p>
                 	</div>
                 	<div id="findoutmore-box" class="row">
-                    	<a href="" id="findoutmore-btn">Find out more</a>
+                    	<a href="/educators" id="findoutmore-btn">Find out more</a>
                     </div>
 				</div>
 			</div>
@@ -82,7 +82,7 @@ use Roots\Sage\Wrapper;
             			<img src="<?= get_template_directory_uri(); ?>/dist/images/ecampuslogo-white-trans.png">
             		</div>
             		<div id="submitapplication-box" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            			<a href="" id="peerreview-btn">Submit an Application</a>
+            			<a href="/contact" id="peerreview-btn">Submit an Application</a>
             		</div>
             	</div>
             </div>

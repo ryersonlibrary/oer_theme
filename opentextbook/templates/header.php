@@ -25,7 +25,7 @@
 	<?php endif; ?>
 	</div>
 	<?php $showquicksearch=false;
-	$showquicksearchon=array('educators','learners');
+	$showquicksearchon=array();
 	if( is_front_page() ):
 	    $showquicksearch=true;
 	endif;
@@ -70,12 +70,47 @@ if( $showquicksearch ): ?>
            	</div>
       	</div>
     </div>
+<?php elseif(is_page('learners')):?>
+    <div id="maintitle" class="container">
+    	<div class="content row">
+    		<div id="discovery-title" class="row">
+           		<h1>Learners</h1>
+           		<p>Learn more about Open Textbooks.</p>
+           	</div>
+      	</div>
+    </div>
+<?php elseif(is_page('educators')):?>
+    <div id="maintitle" class="container">
+    	<div class="content row">
+    		<div id="discovery-title" class="row">
+           		<h1>Educators</h1>
+           		<p>Adopt, adapt and create your own textbooks.</p>
+           	</div>
+      	</div>
+    </div>
 <?php elseif(is_page('catalogue')):?>
     <div id="maintitle" class="container">
     	<div class="content row">
     		<div id="discovery-title" class="row">
            		<h1>Open Library Catalogue</h1>
            		<p>Your home for finding free and open educational resources to support your higher education goals</p>
+           	</div>
+      	</div>
+    </div>
+<?php elseif(is_page('contact')):?>
+    <div id="maintitle" class="container">
+    	<div class="content row">
+    		<div id="discovery-title" class="row">
+           		<h1>Contact</h1>
+           		<p>Submit your inquiries and peer reviews using the form below.</p>
+           	</div>
+      	</div>
+    </div>
+<?php elseif(is_page('francais')):?>
+    <div id="maintitle" class="container">
+    	<div class="content row">
+    		<div id="discovery-title" class="row">
+           		<h1>Français</h1>
            	</div>
       	</div>
     </div>
