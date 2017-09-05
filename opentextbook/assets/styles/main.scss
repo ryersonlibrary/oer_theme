@@ -701,3 +701,11 @@ section.bgbox{
 #textbook-read-description {
   display: none;
 }
+
+#review-btn {
+  border: 1px solid $clr4;
+  
+  &:hover {
+    background-color: lighten($clr4,10%);
+  }
+}

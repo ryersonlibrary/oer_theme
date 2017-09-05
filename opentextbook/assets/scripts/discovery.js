@@ -1134,7 +1134,7 @@ class DSpaceDataHandler extends DiscoveryDataHandler {
     this.setQueryParameter('dc.date.updated',"[" + from + " TO " + now + "]","equals");        
   }
         
-  setItemLimit(limit=6,page=1) {
+  setItemLimit(limit=8,page=1) {
     super.setItemLimit(limit,page);
     var offset= limit * (page - 1);
     this
@@ -1257,9 +1257,7 @@ class DSpaceDataHandler extends DiscoveryDataHandler {
               error: false,
               errorData: {}
             };
-            
-            console.log(item);
-            
+                        
             self.resultItem = item;
                         
             self.itemComplete.resolve();
@@ -1603,7 +1601,7 @@ class CatalogueItemView {
   
   displayItemResults() {
     var self = this;   
-    this.item = this.itemObj.item;            
+    this.item = this.itemObj.item;     
   }
   
   processTokens() {
@@ -1643,6 +1641,21 @@ class HTMLItemView extends CatalogueItemView {
 	var author='';
 	var subjects=[];
 	
+	var secondaryBtn = $('#print-btn');
+	secondaryBtn.hide();
+	
+  var downloadMimeTypes = [
+  	"application/pdf","application/epub+zip","application/epub","text/html","video/mpg","audio/mp3","audio/ogg","audio/m4a"
+	];
+	
+	var cover = {
+    bitstream: null,
+    link: null
+  };
+	
+
+	
+	
 	$.each(data.metadata,function(k,v){
 		if(v.key==='dc.contributor.author'){
 			var authorelement='<div class="author-info"><h4 class="author-name">'+v.value+'</h4><p class="author-bio">';
@@ -1681,17 +1694,52 @@ class HTMLItemView extends CatalogueItemView {
 	//$('#adapted-from').text();
 	//$('#adoption-count').text();
 	//$('#peerreview-count').text();
-	
-	console.log(self.discoveryObj.data.dbURI);
-	
+			
 	if (data.bitstreams !== null) {
   	$.each(data.bitstreams,function(k,v){
-  		$('#available-versions ul').append('<li><a href="' + self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink + '" target="_blank">'+v.format+'</a></li>');
+    	
+    	if (downloadMimeTypes.indexOf(v.mimeType) !== -1) {
+      	
+    		$('#available-versions ul').append('<li><a mime-type="' + v.mimeType + '" href="' + self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink + '" title="Download" download>'+v.format+'</a></li>');
+  		}  		
+  		if ((v.format === "image/png" || v.format === "image/jpeg") && v.name.indexOf('cover') > -1) {
+    		cover.bitstream = self.discoveryObj.data.dbMethod + "://" + self.discoveryObj.data.dbURI + v.retrieveLink;
+    		cover.link = "<img id='preview-bookcover' alt='cover' src='" + cover.bitstream + "' />";
+      }
   	});
-	} else {
-  	$('#read-versions').hide();
-	}
+  	  
+  	if (cover.link !== null) {
+    	$('#preview-info').prepend(cover.link);
+  	}
+  	
+  } else {
+  	 $('#read-versions').hide();
+  }
+  
+  // Read online
+	
+	$.each(data.metadata,function(){
+  	if (this.key === "dc.relation.isformatof") {
+      var urlRegex = /(https?:\/\/[^\s]+)/g;
+      var link = null;
+      this.value.replace(urlRegex, function(url) {
+          link = url;
+        });  
+        
+      if (link !== null) {
+    		secondaryBtn
+    		  .attr('href',link)
+    		  .show();
+  		}
+    }      
+  	
+	});
+	
+  // Review this text
+    
+  //$('#review-btn > a').attr('href','/contact/?name=' + encodeURIComponent(data.name) + '&type=review');
 
+	
 	$('#download-btn').click(function(){
 		$('#download-btn').toggleClass('noradiusbtn');
 		$('#available-versions').toggle();
