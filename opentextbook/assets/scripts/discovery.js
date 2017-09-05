@@ -1715,6 +1715,8 @@ class HTMLItemView extends CatalogueItemView {
   } else {
   	 $('#read-versions').hide();
   }
+  
+  // Read online
 	
 	$.each(data.metadata,function(){
   	if (this.key === "dc.relation.isformatof") {
@@ -1729,10 +1731,14 @@ class HTMLItemView extends CatalogueItemView {
     		  .attr('href',link)
     		  .show();
   		}
-    }
-      
+    }      
   	
 	});
+	
+  // Review this text
+    
+  //$('#review-btn > a').attr('href','/contact/?name=' + encodeURIComponent(data.name) + '&type=review');
+
 	
 	$('#download-btn').click(function(){
 		$('#download-btn').toggleClass('noradiusbtn');

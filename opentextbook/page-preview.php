@@ -14,6 +14,7 @@ use Roots\Sage\Wrapper;
             		<span id="textbook-adopt-adapt">
             		<span class="btn btn-primary" id="adopt-btn">Adopt this text</span>
             		<span class="btn btn-inverted" id="adapt-btn">Adapt this text</span>
+            		<span class="btn btn-inverted" id="review-btn"><a href='/contact' title='Review this text'>Review this text</a></span>
             		</span>
             		<span id="textbook-description-info">
             		</span>
