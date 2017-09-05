@@ -70,7 +70,7 @@ use Roots\Sage\Wrapper;
                         <li data-value='Teaching'><a title="Select Teaching">Teaching</a></li>
                     	</ul>
                 	  </div>
-                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.rfc3066|%%" data-ui-restriction='single' data-ui-type="list" data-label='%%' data-label-position='before'>
+                	  <div id="discovery-ui-language" class='facet' data-facet data-op='setQueryParameter' data-param="dc:language.iso|%%" data-ui-restriction='single' data-ui-type="list" data-label='%%' data-label-position='before'>
                     	<h5 class='facet-title'>Language</h5>
                     	<ul data-user-input-wrapper>
                     		<li data-value="*"><a title="Select English and French">English and French</a></li>
@@ -131,7 +131,7 @@ use Roots\Sage\Wrapper;
                     	  <span id="%%uuid%%" class="textbook"><span id="%%uuid%%-cover" class="textbook-cover"></span>
                     	  <p class="textbook-header">%%subjects%%</p><h4 class="textbook-title"><a href="preview/?id=%%uuid%%" title='About this book'>%%dc.title%%</a></h4>
                     	  <p class="textbook-authors">%%byline%%</p>
-                    	  <p class="textbook-footer"><a href="preview/?id=%%uuid%%" title='About this book'>About this book</a></p>
+                    	  <p class="textbook-footer"><a href="preview/?id=%%uuid%%" title='About this book'>About this text</a></p>
                 	    </div>
                 	  </div>
                 	  <div data-view-template-name='new_book_capsule' data-view-template-wrapper>

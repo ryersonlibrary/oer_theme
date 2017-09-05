@@ -122,13 +122,13 @@ if( $showquicksearch ): ?>
            		<h3 id="textbook-title-authors"></h3>
 				<div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
                		<div id="read-versions" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-               			<span class="btn" id="download-btn">Download and Read ▼</span>
+               			<span class="btn" id="download-btn">Download ▼</span>
                			<div id="available-versions" style="display: none;">
                				<ul></ul>
                			</div>
                		</div>
                		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                   		<a href="" class="btn" id="print-btn">Order Print Version</a>
+                   		<a href="" class="btn" id="print-btn" target="_blank" title='Read online'>Read Online</a>
                    	</div>
 			    </div>
                	<div id="textbook-social-media" class="col-lg-2 col-md-2 col-lg-offset-5 col-md-offset-5 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
