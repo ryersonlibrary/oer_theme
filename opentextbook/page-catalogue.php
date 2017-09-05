@@ -155,7 +155,7 @@ use Roots\Sage\Wrapper;
 
                 	<!-- Discovery UI: Pagination Controller -->
 
-                  <div data-widget='discovery-controller' data-controller-item-limit='6' data-controller-current-page='1' data-controller-paginator>
+                  <div data-widget='discovery-controller' data-controller-item-limit='8' data-controller-current-page='1' data-controller-paginator>
                 	  <div id="results-box" class="row">
                       		<div id="results-list" class="results-row row" data-view-stage>
 
