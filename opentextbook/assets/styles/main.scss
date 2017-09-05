@@ -294,6 +294,7 @@ section.bgbox{
   border: 2px solid darken($clr4,20%);
   border-radius: 4px;
   background-color: #fff;
+  margin-left: 8.3333333%; /* HACK: stylesheet calls a margin-left: -1 from _modals.scss. needs troubleshooting. */
   padding: 0;
   .box-header {
     hr {
@@ -460,11 +461,8 @@ section.bgbox{
 }
 
 #learners-resources-box {
-  ul{
-    font-size: 1.3em;
-    li{
-      margin-bottom: 0.5em;
-    }
+  li{
+    margin-bottom: 0.5em;
   }
 }
 
@@ -496,9 +494,10 @@ section.bgbox{
     border-radius: 0;
     padding:0px;
     min-height:unset;
-    h5{
-      font-size:1.5em;
-      text-transform:uppercase;
+    h4{
+      font-size: 1em;
+      font-family: $font-family-alt-header;
+      margin: 1.5em 0 0 0;
     }
   }
 }
@@ -669,4 +668,32 @@ section.bgbox{
     font-weight: 400;
     line-height: 2em;
   }
+}
+
+/* EDUCATOR PAGE */
+
+#educators-resources-box {
+  margin-bottom: 2em;
+}
+
+#recentlyadded {
+  display: none;
+}
+
+/* !TEMP: Kludgy fixes */
+
+#post-8-section, #post-48-box {
+  h1 {
+    font-size: 1.8em;
+    text-transform: uppercase;  
+    margin-bottom: 0;
+  }
+  
+  br {
+    margin-bottom: 1em;
+  }
+}
+
+#post-13-header, #post-48-header {
+  display: none;
 }

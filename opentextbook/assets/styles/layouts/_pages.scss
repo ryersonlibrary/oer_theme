@@ -29,20 +29,36 @@
     border: 2px solid $clr2-dark;
     border-radius: 4px;
     text-align: left;
+    
+    a, a:link, a:visited {
+      color: $clr2-dark;
+    }
+    
     h1{
       font-size: 2.8em;
       text-transform: none;
       letter-spacing: 0.05em;
     }
     h2{
-      font-size: 1.8em;
+      font-size: 1.5em;
       text-transform: uppercase;
+      margin: 1.5em 0 0 0;
     }
     h3{
       font-size: 1.2em;
       text-transform: uppercase;
-      font-style:italic;
+      font-family: $font-family-alt-header;
+      margin: 1.5em 0 0 0;
     }
+    
+    h4{
+      font-size: 1em;
+      text-transform: uppercase;
+      font-family: $font-family-alt-header;
+      margin: 1.3em 0 0 0;
+      color: $clr2-dark;
+    }
+
     hr {
       @extend .headerbar;
       background-color:#fff;

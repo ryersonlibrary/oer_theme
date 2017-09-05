@@ -22,14 +22,19 @@
         "scripts/customizer.js"
       ]
     },
+    "discovery.js": {
+      "files": [
+        "scripts/discovery.js"
+      ]
+    },
     "preview.js": {
       "files": [
         "scripts/preview.js"
       ]
     },
-    "find.js": {
+    "catalogue.js": {
       "files": [
-        "scripts/find.js"
+        "scripts/catalogue.js"
       ]
     },
     "skip-link-focus-fix.js": {

@@ -19,6 +19,27 @@
 }
 
 @font-face {
+  font-family: 'Frutiger LT Std Roman';
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Roman.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLTStd-Roman.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Frutiger LT Std Roman Italic';
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLTStd-Italic.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLTStd-Italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLTStd-Italic.otf')  format('ttf'), /* Safari, Android, iOS */
+       url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLTStd-Italic.woff') format('woff'); /* Pretty Modern Browsers */
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
   font-family: 'Frutiger LT Std Bold';
   src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot'); /* IE9 Compat Modes */
   src: url('/wp-content/themes/opentextbook/dist/fonts/FrutigerLtStd-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -154,6 +175,7 @@ $font-family-serif: 'Spectral', serif;
 $font-family-sans-serif: 'Frutiger LT Std', Helvetica, sans-serif;
 $font-family-base: $font-family-sans-serif;
 $font-family-header: 'Frutiger LT Std', Helvetica, sans-serif;
+$font-family-alt-header: 'Frutiger LT Std Roman', Helvetica, sans-serif;
 
 // Buttons
 $btn-border-radius-base: 2px;
