@@ -7,7 +7,7 @@
                   
       var discovery = new ECommonsOntarioDiscovery
         ({
-          dbURI:        'dsweb.semiprodint.ryerson.ca',
+          dbURI:        'ecampusoer.semiprodint.ryerson.ca',
           dbPath:       '/rest',
           dbmethod:     'http'
         });
