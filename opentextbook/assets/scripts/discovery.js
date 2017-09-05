@@ -187,7 +187,6 @@ class HTMLPaginationController extends PaginationController {
     // Hide pagination until there are results to display.
     
     this.paginator.hide();
-    
                     
     // Resent click event handlers and hide control elements.        
     
@@ -238,10 +237,16 @@ class HTMLPaginationController extends PaginationController {
             self.viewPage($(this).attr('data-pageref'));
             self.submit();
           });
+          
+          if(parseInt($(this).attr('data-pageref')) === resultsInfo.currentPage) {
+            $(this).addClass('selected');
+          } else {
+            $(this).removeClass('selected');
+          }
+          
         });
         
         this.pagebtns.show();
-
         
         if (this.currentPageIndicator.length > 0) {
           this.currentPageIndicator.html(resultsInfo.currentPage);
@@ -388,10 +393,16 @@ class HTMLCriteriaController extends CriteriaSelectionController {
       $(this).bind('click',function(event) {
         event.preventDefault();
         item.toggleClass('selected');
-        if (item.data('value') === '*') { // Handles neutral state selection.
+        
+        // Handles neutral state selection.
+        
+        if (item.data('value') === '*') { 
           facet.removeAttr('data-enqueue');
-          item.siblings('li').removeAttr('data-selected');
-        } else if (item[0].hasAttribute('data-selected') && item.data('value') !== '*') { // Handles deselection. Checks to see if siblings are selected and sets to neutral if not.
+          item.siblings('li').removeAttr('data-selected').removeClass('selected');
+          
+        // Handles deselection. Checks to see if siblings are selected and sets to neutral if not.
+          
+        } else if (item[0].hasAttribute('data-selected') && item.data('value') !== '*') { 
           item.removeAttr('data-selected');              
           if (item.siblings('[data-selected]').length === 0) {
             facet.removeAttr('data-enqueue');
@@ -401,9 +412,19 @@ class HTMLCriteriaController extends CriteriaSelectionController {
               }
             });
           }
-        } else { // Handles selection.
-          facet[0].setAttribute('data-enqueue',''); // Use native JS to set boolean attribute
+        
+        // Handles selection   
+          
+        } else { 
+          facet[0].setAttribute('data-enqueue',''); // Note: this methodology (using Native JS located at $(obj)[0]) sets a boolean attribute.
           item[0].setAttribute('data-selected',''); 
+          if (item.data('value') !== '*') {
+            item.siblings().each(function(){
+              if($(this).data('value')==='*') {
+                $(this).removeClass('selected');
+              }
+            });
+          }
         }
         
         // Facet only allows a single value
@@ -607,6 +628,25 @@ class HTMLView extends DiscoveryView {
       before: [],
       after: []
     };     
+    this.heartbeat = 500;
+    this.animationComplete = $.Deferred();  
+    
+    this.paginator = $('[data-controller-paginator]');
+    
+    var self = this;
+    
+    $.when(this.animationComplete).done(function(){
+      self.postAnimation();
+    });  
+  }
+  
+  // Called when results transitions are completed
+  
+  postAnimation() {
+    var self=this;
+    if (self.paginator.length > 0) {
+    //  self.paginator.fadeIn(self.heartbeat);
+    }
   }
   
   // Finds templates in the DOM and adds them to the templates object.
@@ -644,13 +684,25 @@ class HTMLView extends DiscoveryView {
   
   
   displayQueryResults() {
-    var self = this;                
-    self.stage.html('');
-    this.items.forEach(function(item) {
-      self.stage.append(self.processTokens(self.templates.book_capsule,item));
-    });
+    var self = this;   
     
-    this.displayTitle();
+    // TO DO: Paginator fadeout is causing animation race conditions. Save implementaiton for later.
+    if (self.paginator.length > 0) {
+     // self.paginator.fadeOut(self.heartbeat);
+    }
+    
+                 
+    self.stage.fadeOut(self.heartbeat,function(){
+      self.stage.html('');
+      self.items.forEach(function(item) {
+        self.stage.append(self.processTokens(self.templates.book_capsule,item));
+      });
+      
+      self.displayTitle();
+      self.stage.fadeIn(self.heartbeat);
+      self.animationComplete.resolve();
+      self.animationComplete = $.Deferred();
+    });
   }
   
   displayTitle() {
@@ -1407,6 +1459,7 @@ class Discovery {
         .displayResults()
         .updateControllers();
     });
+    
   }
   
   updateTitleLabels() {
@@ -1645,7 +1698,7 @@ class HTMLItemView extends CatalogueItemView {
   	if (item.find('p').text() === '') {
     	item.hide();
   	}
-	})
+	});
 	
 	$('#textbook-social-media').hide();
     
